@@ -22,7 +22,6 @@ struct CIMLFinalView: View {
     @State var gridPlotView:Color = .black
     @State var gridNumberView:Color = .white
     
-    
     let data = Array(1...126).map { "\($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 30))
@@ -35,6 +34,7 @@ struct CIMLFinalView: View {
                     .frame(height: 680)
                     .frame(maxWidth: .infinity)
                     .foregroundColor(.yellow)
+                    .shadow(radius: 10)
                     .onAppear{
                         //Color or Gradient
                     }
