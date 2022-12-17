@@ -16,7 +16,7 @@ struct ContentView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Item>
 
-    @State var selectTab:Int = 0
+    @State var selectTab:Int = 1
     @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color("Prime1")]), startPoint: .topLeading, endPoint: .bottomTrailing)
     
     var body: some View {
