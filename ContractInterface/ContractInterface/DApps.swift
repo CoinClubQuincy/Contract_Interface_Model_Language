@@ -73,19 +73,26 @@ struct DApps: View {
                     ScrollView {
                         LazyVGrid(columns: layout, spacing: 20){
                             ForEach(data, id: \.self){item in
-                                    VStack {
-                                        Image("echo")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 60, height: 60)
-                                            .cornerRadius(10)
-                                            .shadow(radius: 10)
-                                            .padding(5)
-//                                            .onTapGesture(count: 1) {
-//                                                print("ontap")
-//                                            }
-                                        Text(item)
-                                            .font(.footnote)
+                                    HStack {
+                                        
+                                        Button(action: {}, label: {
+                                            VStack{
+                                            Image("echo")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 60, height: 60)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 10)
+                                                .padding(5)
+                                            //                                            .onTapGesture(count: 1) {
+                                            //                                                print("ontap")
+                                            //                                            }
+                                            Text(item)
+                                                .font(.footnote)
+                                                .foregroundColor(.black)
+                                        }
+                                        })
+                                        
                                     }
                                     .overlay(
                                         Circle()

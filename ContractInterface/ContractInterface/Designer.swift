@@ -18,11 +18,13 @@ import Foundation
 
 //MARK: Final View
 struct CIMLFinalView: View {
-    @State var gridStatus:Bool = true
+    @State var gridStatus:Bool = false
     @State var gridPlotView:Color = .black
     @State var gridNumberView:Color = .white
+    var deviceSize:Double = 1.0
     
-    let data = Array(1...126).map { "\($0)" }
+    
+    let data = Array(1...146).map { "\($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 30,maximum: 30))
     ]
@@ -32,10 +34,9 @@ struct CIMLFinalView: View {
             NavigationView{
                 GeometryReader{geo in
                     
-                    RoundedRectangle(cornerRadius: 10)
-                        .frame(width: geo.size.width * 0.99,height: geo.size.height * 0.95)
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
                         .foregroundColor(.yellow)
-                        .shadow(radius: 10)
                         .onAppear{
                             //Color or Gradient
                         }
@@ -44,14 +45,13 @@ struct CIMLFinalView: View {
                         ForEach(data, id: \.self){item in
                             ZStack {
                                 Circle()
-                                    .foregroundColor(gridPlotView)
-                                    .frame(height: geo.size.width * 0.1)
                                     .overlay{
                                         Text("\(item)")
                                             .foregroundColor(gridNumberView)
                                     }
-                                
                             }
+                            .foregroundColor(gridPlotView)
+                            .frame(height: geo.size.width * 0.1)
                             .overlay{
                                 Overlay(cordinates: Int(item)!)
                             }
@@ -77,7 +77,12 @@ struct CIMLFinalView: View {
                         })
             )
         }
-        .frame(width: 360, height: 640)
+        .cornerRadius(15)
+        .shadow(radius: 20)
+        .background(Color.clear)
+        .frame(width: 360*deviceSize, height: 640*deviceSize)
+        
+        
     }
     func gridPlotStatus(){
         if(gridStatus){
