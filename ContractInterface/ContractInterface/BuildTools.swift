@@ -16,7 +16,7 @@ struct BuildView: View {
     var body: some View {
         ZStack{
             backgroundColor
-                .ignoresSafeArea(.all  )
+                .ignoresSafeArea(.all)
         VStack{
             CIMLFinalView()
             if(showObjects){
@@ -25,9 +25,8 @@ struct BuildView: View {
             BuildTools(showObjects: $showObjects,showSettings: $showSettings)
                 .padding(.bottom)
                 .padding(.top)
+            }
         }
-        
-    }
     }
 }
 
@@ -35,10 +34,7 @@ struct BuildView: View {
 struct BuildTools: View {
     @Binding var showObjects:Bool
     @Binding var showSettings:Bool
-    let data = Array(1...3).map { "\($0)" }
-    let layout = [
-        GridItem(.adaptive(minimum: 80))
-    ]
+    @State var txField:String = ""
 
     var body: some View {
         HStack{
@@ -72,7 +68,7 @@ struct BuildTools: View {
             })
             .sheet(isPresented: $showSettings, content: {
                 SettingsPallet
-                    .presentationDetents([.fraction(0.50)])
+                    .presentationDetents([.fraction(0.40)])
             })
 
 
@@ -87,7 +83,7 @@ struct BuildTools: View {
             })
             .sheet(isPresented: $showObjects, content: {
                 ObjectsPallet
-                    .presentationDetents([.fraction(0.50)])
+                    .presentationDetents([.fraction(0.40)])
             })
             
             
@@ -98,51 +94,102 @@ struct BuildTools: View {
     }
     
     var ObjectsPallet: some View{
+        VStack{
             ScrollView{
-                HStack(alignment: .center){
-                    
-                    Button(action: {
+                VStack{
+                    HStack{
+                        Text("Text")
+                            .bold()
+                            .font(.title3)
+                            .foregroundColor(.black)
+                            .frame(width: 150,height: 60)
                         
-                    }, label: {
-                        Text("Variables")
+                        Text("Button")
                             .bold()
                             .foregroundColor(.black)
-                            .frame(width: 100,height: 30)
+                            .frame(width: 150,height: 60)
                             .background(Color.blue)
                             .cornerRadius(10)
-                    })
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Functions")
-                            .bold()
-                            .foregroundColor(.black)
-                            .frame(width: 100,height: 30)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    })
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Objects")
-                            .bold()
-                            .foregroundColor(.black)
-                            .frame(width: 100,height: 30)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    })
-                }.padding(.top)
-                    LazyVGrid(columns: layout){
-                        ForEach(data, id: \.self){item in
-                            //Objects
                     }
+                    TextField("TextField...", text: $txField)
+                        .bold()
+                        .foregroundColor(.black)
+                        .frame(width: 150,height: 60)
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                    
+                    Image(systemName: "questionmark.diamond.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.black)
+                        .frame(width: 170,height: 60)
+                        .cornerRadius(10)
+                    
                 }
-                .padding(.top,20)
-                .padding(.horizontal,20)
+                .padding(.top,30)
             }
+            HStack(alignment: .center){
+                
+                Button(action: {
+                    
+                }, label: {
+                    Text("Variables")
+                        .bold()
+                        .foregroundColor(.black)
+                        .frame(width: 100,height: 30)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                })
+                Button(action: {
+                    
+                }, label: {
+                    Text("Functions")
+                        .bold()
+                        .foregroundColor(.black)
+                        .frame(width: 100,height: 30)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                })
+                Button(action: {
+                    
+                }, label: {
+                    Text("Objects")
+                        .bold()
+                        .foregroundColor(.black)
+                        .frame(width: 100,height: 30)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                })
+            }
+            .padding(.top)
+        }
     }
     
     var SettingsPallet: some View{
-        Text("Settings")
+        ZStack{
+            List{
+                HStack{
+                    Circle()
+                        .frame(width: 30)
+                    Text("NAME : SYMBL")
+                }
+                Text("{App} Version: 0.0.0")
+                Text("CIML Version: 0.0.0")
+                Text("This is the description of the Dapp provided")
+                Text("Networks: XDC")
+                Text("Contract Origin: 0x0000000000000000")
+            }
+        }
     }
 }
+
+
+//"cimlVersion": "1.0.1",
+//"appVersion": "0.0.1",
+//"contractLanguage": "solidity ^0.8.10",
+//"name": "LedgerContract",
+//"symbol": "LC",
+//"logo": "https\\:ipfs.address.url.jpeg",
+//"thumbnail": "https\\:ipfs.address.url.jpeg",
+//"description": "This is the description of the Dapp provided",
+//"contractOrigin": "xdcerG45fCgvgh&%vhvctcr678BB",
