@@ -21,23 +21,47 @@ struct CIMLFinalView: View {
     @State var gridStatus:Bool = false
     @State var gridPlotView:Color = .black
     @State var gridNumberView:Color = .white
+    var deviceSize:Double = 1.0
     
     
-    let data = Array(1...126).map { "\($0)" }
+    let data = Array(1...146).map { "\($0)" }
     let layout = [
-        GridItem(.adaptive(minimum: 30))
+        GridItem(.adaptive(minimum: 30,maximum: 30))
     ]
     
     var body: some View {
         ZStack {
             NavigationView{
-                RoundedRectangle(cornerRadius: 5)
-                    .frame(height: 680)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.yellow)
-                    .onAppear{
-                        //Color or Gradient
+                GeometryReader{geo in
+                    
+                    RoundedRectangle(cornerRadius: 15)
+                        .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
+                        .foregroundColor(.yellow)
+                        .onAppear{
+                            //Color or Gradient
+                        }
+                    
+                    LazyVGrid(columns: layout){
+                        ForEach(data, id: \.self){item in
+                            ZStack {
+                                Circle()
+                                    .overlay{
+                                        Text("\(item)")
+                                            .foregroundColor(gridNumberView)
+                                    }
+                            }
+                            .foregroundColor(gridPlotView)
+                            .frame(height: geo.size.width * 0.1)
+                            .overlay{
+                                Overlay(cordinates: Int(item)!)
+                            }
+                            .onAppear{
+                                gridPlotStatus()
+                                
+                            }
+                        }
                     }
+                }
             }
             .navigationBarItems(
                 leading:
@@ -46,43 +70,19 @@ struct CIMLFinalView: View {
                 ,trailing:
                     NavigationLink(
                         destination: Text("Favorites")
-                        .navigationTitle("Favorites")
+                            .navigationTitle("Favorites")
                         ,label: {
                             Image(systemName: "plus")
                                 .foregroundColor(.blue)
                         })
             )
-
-            
-            VStack {
-                LazyVGrid(columns: layout, spacing: 20){
-                    ForEach(data, id: \.self){item in
-                        ZStack {
-                            Circle()
-                                .frame(width: 30,height: 30)
-                                .foregroundColor(gridPlotView)
-                                .overlay{
-                                    Text("\(item)")
-                                        .foregroundColor(gridNumberView)
-                                }
-                        }
-                        .overlay{
-                            Overlay(cordinates: Int(item)!)
-                        }
-                        .onAppear{
-                            gridPlotStatus()
-                        }
-                    }
-                }
-                .padding()
-            }
         }
-        .frame(height: 750)
-        .frame(maxWidth: .infinity)
-        .padding(10)
-        .overlay{
-            
-        }
+        .cornerRadius(15)
+        .shadow(radius: 20)
+        .background(Color.clear)
+        .frame(width: 360*deviceSize, height: 640*deviceSize)
+        
+        
     }
     func gridPlotStatus(){
         if(gridStatus){

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		661F807F294CE17600192F15 /* Designer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F807E294CE17600192F15 /* Designer.swift */; };
 		6634A9B5294CCD4400650A0E /* DApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634A9B4294CCD4300650A0E /* DApps.swift */; };
+		665A55DD2950C66B003D85FC /* BuildTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A55DC2950C66B003D85FC /* BuildTools.swift */; };
 		66D8A5532935A42A00D27FA8 /* ContractInterfaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5522935A42A00D27FA8 /* ContractInterfaceApp.swift */; };
 		66D8A5552935A42A00D27FA8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5542935A42A00D27FA8 /* Persistence.swift */; };
 		66D8A5582935A42A00D27FA8 /* ContractInterface.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5562935A42A00D27FA8 /* ContractInterface.xcdatamodeld */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		661F807E294CE17600192F15 /* Designer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designer.swift; sourceTree = "<group>"; };
 		6634A9B4294CCD4300650A0E /* DApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DApps.swift; sourceTree = "<group>"; };
+		665A55DC2950C66B003D85FC /* BuildTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildTools.swift; sourceTree = "<group>"; };
 		66D8A54F2935A42A00D27FA8 /* ContractInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContractInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D8A5522935A42A00D27FA8 /* ContractInterfaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInterfaceApp.swift; sourceTree = "<group>"; };
 		66D8A5542935A42A00D27FA8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				66D8A5542935A42A00D27FA8 /* Persistence.swift */,
 				66D8A5592935A42A00D27FA8 /* ContentView.swift */,
 				661F807E294CE17600192F15 /* Designer.swift */,
+				665A55DC2950C66B003D85FC /* BuildTools.swift */,
 				6634A9B4294CCD4300650A0E /* DApps.swift */,
 				66D8A55B2935A42B00D27FA8 /* Assets.xcassets */,
 				66D8A55D2935A42B00D27FA8 /* ContractInterface.entitlements */,
@@ -277,6 +280,7 @@
 				6634A9B5294CCD4400650A0E /* DApps.swift in Sources */,
 				66D8A55A2935A42A00D27FA8 /* ContentView.swift in Sources */,
 				66D8A5552935A42A00D27FA8 /* Persistence.swift in Sources */,
+				665A55DD2950C66B003D85FC /* BuildTools.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

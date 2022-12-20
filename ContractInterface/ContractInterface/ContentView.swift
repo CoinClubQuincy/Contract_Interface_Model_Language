@@ -16,27 +16,21 @@ struct ContentView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Item>
 
-    @State var selectTab:Int = 0
+    @State var selectTab:Int = 1
     @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color("Prime1")]), startPoint: .topLeading, endPoint: .bottomTrailing)
     
     var body: some View {
-        TabView{
+        TabView(selection: $selectTab){
             DApps(backgroundColor: $backgroundColor)
                 .tabItem{
                 Image(systemName: "app.badge.checkmark.fill")
                 Text("DApps")}
                 .tag(0)
-            CIMLFinalView()
+            BuildView(backgroundColor: $backgroundColor)
                 .tabItem{
                 Image(systemName: "plus.app.fill")
                 Text("Designer")}
                 .tag(1)
-            Text("Settings")
-                .tabItem{
-                Image(systemName: "gear")
-                Text("Settings")}
-                .tag(2)
-
         }
 //        NavigationView {
 //            List {
