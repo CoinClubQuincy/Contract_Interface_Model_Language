@@ -257,9 +257,12 @@ class DownloadCIMLDocument: ObservableObject {
                 return data
             }
             .decode(type: [CIML].self, decoder: JSONDecoder())
-            .sink { (completion) in
-                print("Completion: \(completion)")
-            } receiveValue: { [weak self] (returnedCIML) in
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error.localizedDescription)
+                }
+            } receiveValue: { [weak self] returnedCIML in
+                print("Completion: \(returnedCIML)")
                 self?.ciml = returnedCIML
             }
             .store(in: &cancellables)

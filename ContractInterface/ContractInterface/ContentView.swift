@@ -18,7 +18,7 @@ struct ContentView: View {
 
     @State var selectTab:Int = 1
     @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color("Prime1")]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    
+    @StateObject var networkManager = DownloadCIMLDocument()
     var body: some View {
         TabView(selection: $selectTab){
             DApps(backgroundColor: $backgroundColor)
@@ -31,6 +31,9 @@ struct ContentView: View {
                 Image(systemName: "plus.app.fill")
                 Text("Designer")}
                 .tag(1)
+        }
+        .onAppear {
+            networkManager.getCIML()
         }
 //        NavigationView {
 //            List {
