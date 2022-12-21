@@ -15,13 +15,17 @@
 import SwiftUI
 import Foundation
 
+class Grid: ObservableObject{
+    @Published var showGrid:Bool = false
+}
 
 //MARK: Final View
 struct CIMLFinalView: View {
-    @State var gridStatus:Bool = false
+    //@State var gridStatus:Bool = true
     @State var gridPlotView:Color = .black
     @State var gridNumberView:Color = .white
     var deviceSize:Double = 1.0
+    @StateObject var grid:Grid
     
     
     let data = Array(1...146).map { "\($0)" }
@@ -45,19 +49,16 @@ struct CIMLFinalView: View {
                         ForEach(data, id: \.self){item in
                             ZStack {
                                 Circle()
+                                    .foregroundColor(grid.showGrid ? .black : .clear)
                                     .overlay{
                                         Text("\(item)")
-                                            .foregroundColor(gridNumberView)
+                                            .foregroundColor(grid.showGrid ? .white : .clear)
                                     }
                             }
                             .foregroundColor(gridPlotView)
                             .frame(height: geo.size.width * 0.1)
                             .overlay{
                                 Overlay(cordinates: Int(item)!)
-                            }
-                            .onAppear{
-                                gridPlotStatus()
-                                
                             }
                         }
                     }
@@ -83,17 +84,7 @@ struct CIMLFinalView: View {
         .frame(width: 360*deviceSize, height: 640*deviceSize)
         
         
-    }
-    func gridPlotStatus(){
-        if(gridStatus){
-            gridPlotView = .black
-            gridNumberView = .white
-        } else {
-            gridPlotView = .clear
-            gridNumberView = .clear
-        }
-    }
-    
+    }    
 }
 
 //MARK: OverLay View
@@ -281,9 +272,3 @@ struct BUTTONS:View{
     }
 }
 
-//MARK: PreView
-struct CIML_Compiler_Previews: PreviewProvider {
-    static var previews: some View {
-        CIMLFinalView()
-    }
-}

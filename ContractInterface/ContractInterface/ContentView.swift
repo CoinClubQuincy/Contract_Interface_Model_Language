@@ -26,7 +26,7 @@ struct ContentView: View {
                 Image(systemName: "app.badge.checkmark.fill")
                 Text("DApps")}
                 .tag(0)
-            BuildView(backgroundColor: $backgroundColor)
+            BuildView(backgroundColor: $backgroundColor, grid: grid)
                 .tabItem{
                 Image(systemName: "plus.app.fill")
                 Text("Designer")}
@@ -103,6 +103,6 @@ private let itemFormatter: DateFormatter = {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView(grid: Grid())//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
