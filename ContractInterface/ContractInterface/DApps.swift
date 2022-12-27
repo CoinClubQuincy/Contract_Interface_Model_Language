@@ -19,8 +19,11 @@ import SwiftUI
 struct DApps: View {
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
+    @StateObject var vm = DownloadCIMLDocument.init()
+    @State var overlayinfo:Bool = false
+    @State var showDAppSettings:Bool = false
     
-    let data = Array(1...10).map { "DApp \($0)" }
+    let data = Array(0...0).map { "DApp \($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 80))
     ]
@@ -33,7 +36,7 @@ struct DApps: View {
                     .ignoresSafeArea(.all)
                     .navigationTitle("DApps")
                     .navigationBarItems(
-                        trailing:
+                        leading:
                             NavigationLink(
                                 destination: Text("Favorites")
                                 .navigationTitle("Favorites")
@@ -43,11 +46,27 @@ struct DApps: View {
                                         .scaledToFit()
                                         .foregroundColor(.black)
                                         .padding(.trailing,10)
-
-                                })
+                                }
+                            )
+                        ,
+                        trailing:
+                            NavigationLink(
+                                destination: Text("Favorites")
+                                .navigationTitle("Wallet")
+                                ,label: {
+                                    Image(systemName: "wallet.pass.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundColor(.black)
+                                        .padding(.trailing,10)
+                                }
+                            )
                     )
                 VStack {
                     HStack {
+//                        ForEach(vm.ciml){ciml in
+//                            Text(ciml.name ?? "Error")
+//                        }
                         TextField("Search...", text: $searchBar)
                             .frame(height: 50)
                             .padding(.leading)
@@ -84,9 +103,6 @@ struct DApps: View {
                                                 .cornerRadius(10)
                                                 .shadow(radius: 10)
                                                 .padding(5)
-                                            //                                            .onTapGesture(count: 1) {
-                                            //                                                print("ontap")
-                                            //                                            }
                                             Text(item)
                                                 .font(.footnote)
                                                 .foregroundColor(.black)
@@ -94,116 +110,115 @@ struct DApps: View {
                                         })
                                         
                                     }
+                                
                                     .overlay(
                                         Circle()
                                             .fill(Color.red)
                                             .frame(width: 20,height: 20)
+                                        
                                             .overlay(
-                                                Text("2")
-                                                    .font(.footnote)
-                                                    .foregroundColor(.white)
-                                            )
-                                        , alignment: .topLeading
-                                    )
-//                                    .overlay(// check isverifired == true
-//                                        Circle()
-//                                            .fill(Color.green)
-//                                            .frame(width: 20,height: 20)
-//                                            .overlay(
-//                                                Image(systemName: "checkmark.shield.fill")
+                                                
+                                                Button(action: {
+                                                    showDAppSettings.toggle()
+                                                }, label: {
+                                                    Image(systemName: "info.circle")
+                                                        .foregroundColor(.blue)
+                                                        .background(Color.white)
+                                                        .cornerRadius(50)
+                                                })
+                                                .sheet(isPresented: $showDAppSettings) {
+                                                    SettingsPallet
+                                                }
+//                                                Text("2")
 //                                                    .font(.footnote)
 //                                                    .foregroundColor(.white)
-//                                            )
-//                                        , alignment: .topTrailing
-//                                    )
-
+                                            )
+                                        
+                                        , alignment: .topLeading
+                                    )
                             }
                         }
                         .padding(.top)
                     }
                     
-                    
-                    
-                    /*
-                    HStack {
-                        VStack {
-                            Button(action: {}, label: {
-                                Image("storeLogo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 10)
-                                    .padding(5)
-                            })
-                            Text("DApp Store")
-                                .font(.footnote)
-                        }
-                        VStack {
-                            Button(action: {}, label: {
-                                Image("storeLogo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 10)
-                                    .padding(5)
-                            })
-                            Text("DApp Store")
-                                .font(.footnote)
-                        }
-                        
-                        VStack {
-                            Button(action: {}, label: {
-                                Image("storeLogo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 10)
-                                    .padding(5)
-                            })
-                            Text("DApp Store")
-                                .font(.footnote)
-                        }
-                        
-                        VStack {
-                            Button(action: {}, label: {
-                                Image("storeLogo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 10)
-                                    .padding(5)
-                            })
-                            Text("DApp Store")
-                                .font(.footnote)
-                        }
-                        
-                        VStack {
-                            Button(action: {}, label: {
-                                Image("storeLogo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 60, height: 60)
-                                    .cornerRadius(10)
-                                    .shadow(radius: 10)
-                                    .padding(5)
-                            })
-                            Text("DApp Store")
-                                .font(.footnote)
-                        }
-                        
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    */
+
                     Spacer()
                 }
                 .padding(.top)
                 .padding(.horizontal)
+            }
+        }
+    }
+    
+    var SettingsPallet: some View{
+        ZStack{
+            List{
+                Section("DApplet"){
+                    HStack{
+                        Circle()
+                            .frame(width: 30)
+                        Text("SYMBOL")
+                    }
+                    HStack{
+                        Text("{App} Version: ")
+                        Spacer()
+                        Text("0.0.0")
+                            .font(.title3)
+                            .bold()
+                    }
+                    
+                    Text("This is the description of the Dapp provided")
+                    
+                    HStack(){
+                        Text("Website:")
+                        Text(" https\\:DAppletSite.com")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                    }
+                    
+                    HStack{
+                        Text("Network:")
+                        Spacer()
+                        Text("XDC")
+                            .font(.title3)
+                            .bold()
+                    }
+                    HStack{
+                        VStack{
+                            Text("Contract:")
+                            Text("Explorer")
+                                .font(.footnote)
+                                .foregroundColor(.blue)
+                        }
+                        Spacer()
+                        Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
+                            .font(.body)
+                            .bold()
+                    }
+                    HStack{
+                        Text("BackgroundColor:")
+                    }
+                }
+                Section("Contract Interface"){
+                    HStack {
+                        Text("Version")
+                        Spacer()
+                        Text("v1.0.0")
+                            .bold()
+                    }
+                    }
+                Section("3rd Party Verification "){
+                    HStack {
+                        Text("CoinClubLabs")
+                        Spacer()
+                        HStack {
+                            Image(systemName: "checkmark.seal.fill")
+                                .foregroundColor(.green)
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
             }
         }
     }
@@ -228,12 +243,12 @@ import Combine
 
 // MARK: - CIML
 struct CIML: Codable,Identifiable {
-        let id: String = UUID().uuidString
-        let cimlVersion, appVersion, contractLanguage, name: String?
-        let symbol, logo, thumbnail, description: String?
-        let contractOrigin: String?
-        let screenShots, variables, functions, objects: [String]?
-        let views, metadata: [String]?
+        var id: String = UUID().uuidString
+        var cimlVersion, appVersion, contractLanguage, name: String?
+        var symbol, logo, thumbnail, description: String?
+        var contractOrigin: String?
+        var screenShots, variables, functions, objects: [String]?
+        var views, metadata: [String]?
 }
 
 class DownloadCIMLDocument: ObservableObject {
@@ -346,3 +361,50 @@ struct CIML_Lexer: Identifiable {
 
 
 
+//{
+//  "cimlVersion": "1.0.1",
+//  "appVersion": "0.0.1",
+//  "contractLanguage": "solidity ^0.8.10",
+//  "name": "LedgerContract",
+//  "symbol": "LC",
+//  "logo": "https\\:ipfs.address.url.jpeg",
+//  "thumbnail": "https\\:ipfs.address.url.jpeg",
+//  "websitelink":"https\\:DAppletSite.com",
+//  "ciml_url":"https\\:DAppletSite.com/ciml",
+//  "description": "This is the description of the Dapp provided",
+//  "networks":["XDC"],
+//  "contractMainnet": ["xdcerG45fCgvgh&%vhvctcr678BB"],
+//  "screenShots":[""],
+//  "abi": "func1(uint _count)",
+//  "byteCode": "--bytes--",
+//  "variables": [
+//    {
+//      "name": "var1",
+//      "type": "String",
+//      "value": "this is an object"
+//    }
+//  ],
+//  "functions": ["func1( _count)"],
+//  "objects": [
+//    {
+//      "name": "text1",
+//      "type": "Text",
+//      "value": "var1"
+//    }
+//  ],
+//  "views": [
+//    {
+//      "View": 0,
+//      "type": "0",
+//      "value": "Background(blue)",
+//      "obj": "text1",
+//      "location": 55
+//    }
+//  ],
+//  "metadata": [
+//    "Top Descriptor",
+//    "xdc",
+//    "document",
+//    "test"
+//  ]
+//}

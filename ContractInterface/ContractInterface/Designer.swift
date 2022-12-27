@@ -17,6 +17,7 @@ import Foundation
 
 class Grid: ObservableObject{
     @Published var showGrid:Bool = false
+    @Published var testnet:Bool = false
 }
 
 //MARK: Final View
@@ -41,6 +42,7 @@ struct CIMLFinalView: View {
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
                         .foregroundColor(.yellow)
+                        .background(Color.black)
                         .onAppear{
                             //Color or Gradient
                         }
@@ -196,6 +198,7 @@ struct TEXT_FIELD:View{
  
     var body: some View {
         TextField(text, text: $textField)
+            .padding(10)
             .frame(width: frame[0])
             .frame(height: frame[1])
             .foregroundColor(foreGroundColor)
