@@ -56,6 +56,8 @@ struct BuildTools: View {
     @State var objectPadding:CGFloat = 20
     @State var objectTextFieldAlignment:Edge.Set = .all
     
+    @State private var bgColor = Color.red
+    @State var sliderValue:Double = 3
     
     var body: some View {
         
@@ -120,7 +122,7 @@ struct BuildTools: View {
             })
             .sheet(isPresented: $showObjects, content: {
                 ObjectsPallet
-                    .presentationDetents([.fraction(0.90)])
+                    .presentationDetents([.fraction(1.00)])
             })
             
             
@@ -200,11 +202,111 @@ struct BuildTools: View {
         }
     }
     
+    //MARK: Objects Editor
+    var ObjectsEditor: some View{
+            VStack {
+                ColorPicker("Foreground Color", selection: $objectBackgroundColor)
+                ColorPicker("Background Color", selection: $objectBackgroundColor)
+                HStack{
+                    Text("Size:")
+                    Slider(
+                        value: $sliderValue,
+                        in: 1...10,
+                        step: 0.5)
+                    .accentColor(.red)
+                }
+                HStack{
+                    Text("Corner Radius:")
+                    Slider(
+                        value: $objectCornerRadius,
+                        in: 1...10,
+                        step: 0.5)
+                    .accentColor(.red)
+                }
+                HStack{
+                    Text("Shadow:")
+                    Slider(
+                        value: $objectShadow,
+                        in: 1...10,
+                        step: 0.5)
+                    .accentColor(.red)
+                }
+
+                HStack{
+                    Text("Padding:")
+                    Slider(
+                        value: $objectPadding,
+                        in: 1...10,
+                        step: 0.5)
+                    .accentColor(.red)
+                }
+
+                
+                HStack{
+                    switch objectTypeSelected {
+                    case 1:
+                    HStack{
+                        Text("Font:")
+                            .bold()
+//                        Picker(
+//                            selection: .constant(1),
+//                            label:
+//                                Text("Font"),
+//                            content: {
+//                                Text("headline").tag(1)
+//                                Text("heavy").tag(2)
+//                                Text("regular").tag(3)
+//                            })
+//                        Text("Bold:")
+//                            .bold()
+//                        Picker(
+//                            selection: .constant(1),
+//                            label:
+//                                Text("Font"),
+//                            content: {
+//                                Text("true").tag(1)
+//                                Text("false").tag(2)
+//                            })
+//                        Text("FontWeight:")
+//                            .bold()
+//                        Picker(
+//                            selection: .constant(1),
+//                            label:
+//                                Text("regular"),
+//                            content: {
+//                                Text("heavy").tag(1)
+//                                Text("light").tag(2)
+//                            })
+                    }
+                    case 2:
+                        HStack{
+                            Text("test1")
+                        }
+                    case 3:
+                        HStack{
+                            Text("test2")
+                        }
+                    case 4:
+                        HStack{
+                            Text("test3")
+                        }
+                    default:
+                        Text("Select an Object")
+                    }
+                }
+            }
+            .padding(.horizontal)
+            .padding(.vertical)
+            .frame(maxWidth: .infinity,maxHeight: .infinity)
+        
+    }
     //MARK: ObjectsSection
     var ObjectsSection: some View{
         VStack{
             switch objectTypeSelected {
             case 1:
+                ObjectsEditor
+                Spacer()
                 Text("Text")
                     .foregroundColor(objectForeGroundColor)
                     .font(objectFont)
@@ -216,6 +318,8 @@ struct BuildTools: View {
                     .shadow(radius: objectShadow)
                     .padding(objectPadding)
             case 2:
+                ObjectsEditor
+                Spacer()
                 Text("Button")
                     .foregroundColor(objectForeGroundColor)
                     .font(objectFont)
@@ -227,6 +331,8 @@ struct BuildTools: View {
                     .shadow(radius: objectShadow)
                     .padding(objectPadding)
             case 3:
+                ObjectsEditor
+                Spacer()
                 Text("TextField")
                     .padding()
                     .frame(width: objectTypeSelected == 3 ? 200:objectSize[0])
@@ -237,6 +343,8 @@ struct BuildTools: View {
                     .padding(objectTextFieldAlignment,objectPadding)
                     .shadow(radius: objectShadow)
             case 4:
+                ObjectsEditor
+                Spacer()
                 Image(systemName: "gear")
                     .resizable()
                     .scaledToFit()
