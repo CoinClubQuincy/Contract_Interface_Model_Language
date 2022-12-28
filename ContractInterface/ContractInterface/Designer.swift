@@ -18,6 +18,7 @@ import Foundation
 class Grid: ObservableObject{
     @Published var showGrid:Bool = false
     @Published var testnet:Bool = false
+    
 }
 
 //MARK: Final View
@@ -147,7 +148,7 @@ struct Overlay: View{
             print("total CIML Data from internet: \(vmCIML.ciml.count)")
         }
     }
-        func buildObjects(){}
+        func appendObject(){}
     
         mutating func buildText(text:String,foreGroundColor:Color,font:Font,frame:[CGFloat],alignment:Alignment,backgroundColor:Color,cornerRadius:CGFloat,bold:Bool,fontWeight:Font.Weight,shadow:CGFloat,padding:CGFloat,location:Int){
         
@@ -273,5 +274,6 @@ struct BUTTONS:View{
             })
         }
     }
+    
 }
 

@@ -15,6 +15,24 @@ struct BuildView: View {
     @State var showSettings:Bool = false
     @Binding var backgroundColor:LinearGradient
     @StateObject var grid:Grid
+    @State var toolbarStatus:Int=0
+    
+//    @State var objectForeGroundColor: Color
+//    @State var objectFont: Font
+//    @State var objectSize:[CGFloat]
+//    @State var objectAlignment:Alignment
+//
+//    @State var objectBackgroundColor:Color
+//    @State var objectCornerRadius:CGFloat
+//    @State var objectBold:Bool
+//    @State var objectFontWeightt:Font.Weight
+//    @State var objectShadow:CGFloat
+//    @State var objectPadding:CGFloat
+//    @State var objectTextFieldAlignment:Edge.Set
+//
+//    @State private var bgColor = Color.red
+//    @State var sliderValue:Double = 3
+//    @State var objectTypeSelected=0
     
     
     var body: some View {
@@ -23,10 +41,35 @@ struct BuildView: View {
                 .ignoresSafeArea(.all)
         VStack{
             CIMLFinalView(grid: grid)
-
-            BuildTools(showObjects: $showObjects,showSettings: $showSettings, grid: grid)
+            switch toolbarStatus {
+            case 0:
+                BuildTools(showObjects: $showObjects,
+                           showSettings: $showSettings,
+                           toolbarStatus: $toolbarStatus,
+                           grid: grid)
                 .padding(.bottom)
                 .padding(.top)
+//            case 1:
+//                PassingObject(type: <#Binding<String>#>,
+//                              objectForeGroundColor: <#T##Binding<Color>#>,
+//                              objectFont: <#T##Binding<Font>#>,
+//                              objectSize: <#T##Binding<[CGFloat]>#>,
+//                              objectAlignment: <#T##Binding<Alignment>#>,
+//                              objectBackgroundColor: <#T##Binding<Color>#>,
+//                              objectCornerRadius: <#T##Binding<CGFloat>#>,
+//                              objectBold: <#T##Binding<Bool>#>,
+//                              objectFontWeightt: <#T##Binding<Font.Weight>#>,
+//                              objectShadow: <#T##Binding<CGFloat>#>,
+//                              objectPadding: <#T##Binding<CGFloat>#>,
+//                              objectTextFieldAlignment: <#T##Binding<Edge.Set>#>)
+            default:
+                BuildTools(showObjects: $showObjects,
+                           showSettings: $showSettings,
+                           toolbarStatus: $toolbarStatus,
+                           grid: grid)
+                .padding(.bottom)
+                .padding(.top)
+            }
             }
         }
     }
@@ -36,6 +79,7 @@ struct BuildView: View {
 struct BuildTools: View {
     @Binding var showObjects:Bool
     @Binding var showSettings:Bool
+    @Binding var toolbarStatus:Int
     @StateObject var grid:Grid
     @State private var showObjectView = 0
     @State var objectTypeSelected=0
@@ -280,7 +324,37 @@ struct BuildTools: View {
                     }
                     case 2:
                         HStack{
-                            Text("test1")
+                            Text("Font:")
+                                .bold()
+    //                        Picker(
+    //                            selection: .constant(1),
+    //                            label:
+    //                                Text("Font"),
+    //                            content: {
+    //                                Text("headline").tag(1)
+    //                                Text("heavy").tag(2)
+    //                                Text("regular").tag(3)
+    //                            })
+    //                        Text("Bold:")
+    //                            .bold()
+    //                        Picker(
+    //                            selection: .constant(1),
+    //                            label:
+    //                                Text("Font"),
+    //                            content: {
+    //                                Text("true").tag(1)
+    //                                Text("false").tag(2)
+    //                            })
+    //                        Text("FontWeight:")
+    //                            .bold()
+    //                        Picker(
+    //                            selection: .constant(1),
+    //                            label:
+    //                                Text("regular"),
+    //                            content: {
+    //                                Text("heavy").tag(1)
+    //                                Text("light").tag(2)
+    //                            })
                         }
                     case 3:
                         HStack{
@@ -354,7 +428,9 @@ struct BuildTools: View {
             default:
                 Text("Select Object")
             }
-            Button(action: {}, label: {
+            Button(action: {
+                toolbarStatus = 1
+            }, label: {
                 Text("submit")
                     .frame(width: 100, height: 50)
                     .foregroundColor(.blue)
@@ -569,12 +645,73 @@ struct BuildTools: View {
     }
 }
 
-//"cimlVersion": "1.0.1",
-//"appVersion": "0.0.1",
-//"contractLanguage": "solidity ^0.8.10",
-//"name": "LedgerContract",
-//"symbol": "LC",
-//"logo": "https\\:ipfs.address.url.jpeg",
-//"thumbnail": "https\\:ipfs.address.url.jpeg",
-//"description": "This is the description of the Dapp provided",
-//"contractOrigin": "xdcerG45fCgvgh&%vhvctcr678BB",
+
+struct PassingObject: View{
+    @Binding var type:String
+    @Binding var objectForeGroundColor: Color
+    @Binding var objectFont: Font
+    @Binding var objectSize:[CGFloat]
+    @Binding var objectAlignment:Alignment
+    
+    @Binding var objectBackgroundColor:Color
+    @Binding var objectCornerRadius:CGFloat
+    @Binding var objectBold:Bool
+    @Binding var objectFontWeightt:Font.Weight
+    @Binding var objectShadow:CGFloat
+    @Binding var objectPadding:CGFloat
+    @Binding var objectTextFieldAlignment:Edge.Set
+    
+    @State private var bgColor = Color.red
+    @State var sliderValue:Double = 3
+    @State var objectTypeSelected=0
+    
+    var body: some View{
+        VStack{
+            switch objectTypeSelected {
+            case 1:
+                Text("Text")
+                    .foregroundColor(objectForeGroundColor)
+                    .font(objectFont)
+                    .frame(width: objectSize[0], height: objectSize[1], alignment: objectAlignment)
+                    .background(objectTypeSelected == 1 ? .clear:objectBackgroundColor)
+                    .cornerRadius(objectCornerRadius)
+                    .bold(objectBold)
+                    .fontWeight(objectFontWeightt)
+                    .shadow(radius: objectShadow)
+                    .padding(objectPadding)
+            case 2:
+                Text("Button")
+                    .foregroundColor(objectForeGroundColor)
+                    .font(objectFont)
+                    .frame(width: objectSize[0], height: objectSize[1], alignment: objectAlignment)
+                    .background(objectBackgroundColor)
+                    .cornerRadius(objectTypeSelected == 2 ? 20.0:objectCornerRadius)
+                    .bold(objectBold)
+                    .fontWeight(objectFontWeightt)
+                    .shadow(radius: objectShadow)
+                    .padding(objectPadding)
+            case 3:
+                Text("TextField")
+                    .padding()
+                    .frame(width: objectTypeSelected == 3 ? 200:objectSize[0])
+                    .frame(height: objectSize[1])
+                    .foregroundColor(objectForeGroundColor)
+                    .background(objectTypeSelected == 3 ? .gray:objectBackgroundColor)
+                    .cornerRadius(objectTypeSelected == 3 ? 10:objectCornerRadius)
+                    .padding(objectTextFieldAlignment,objectPadding)
+                    .shadow(radius: objectShadow)
+            case 4:
+                Image(systemName: "gear")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(objectForeGroundColor)
+                    .frame(width: objectTypeSelected == 4 ? 40.0:objectSize[0])
+                    .padding(objectPadding)
+            default:
+                Text("Select Object")
+            }
+        }
+        .padding(.top,30)
+    }
+}
+
