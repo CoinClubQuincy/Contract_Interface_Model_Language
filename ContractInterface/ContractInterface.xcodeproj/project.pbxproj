@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		660CF9E32954067D00D730AE /* Web3Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660CF9E22954067D00D730AE /* Web3Module.swift */; };
+		661035C6295CC7CD0065A3D1 /* CIML_Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661035C5295CC7CD0065A3D1 /* CIML_Model.swift */; };
 		661F807F294CE17600192F15 /* Designer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661F807E294CE17600192F15 /* Designer.swift */; };
 		6634A9B5294CCD4400650A0E /* DApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6634A9B4294CCD4300650A0E /* DApps.swift */; };
 		665A55DD2950C66B003D85FC /* BuildTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A55DC2950C66B003D85FC /* BuildTools.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		660CF9E22954067D00D730AE /* Web3Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3Module.swift; sourceTree = "<group>"; };
+		661035C5295CC7CD0065A3D1 /* CIML_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIML_Model.swift; sourceTree = "<group>"; };
 		661F807E294CE17600192F15 /* Designer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designer.swift; sourceTree = "<group>"; };
 		6634A9B4294CCD4300650A0E /* DApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DApps.swift; sourceTree = "<group>"; };
 		665A55DC2950C66B003D85FC /* BuildTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildTools.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				66D8A5592935A42A00D27FA8 /* ContentView.swift */,
 				661F807E294CE17600192F15 /* Designer.swift */,
 				660CF9E22954067D00D730AE /* Web3Module.swift */,
+				661035C5295CC7CD0065A3D1 /* CIML_Model.swift */,
 				665A55DC2950C66B003D85FC /* BuildTools.swift */,
 				6634A9B4294CCD4300650A0E /* DApps.swift */,
 				66D8A55B2935A42B00D27FA8 /* Assets.xcassets */,
@@ -283,6 +286,7 @@
 				661F807F294CE17600192F15 /* Designer.swift in Sources */,
 				6634A9B5294CCD4400650A0E /* DApps.swift in Sources */,
 				66D8A55A2935A42A00D27FA8 /* ContentView.swift in Sources */,
+				661035C6295CC7CD0065A3D1 /* CIML_Model.swift in Sources */,
 				66D8A5552935A42A00D27FA8 /* Persistence.swift in Sources */,
 				665A55DD2950C66B003D85FC /* BuildTools.swift in Sources */,
 			);

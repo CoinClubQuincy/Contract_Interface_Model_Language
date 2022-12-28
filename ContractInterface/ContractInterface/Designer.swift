@@ -18,7 +18,31 @@ import Foundation
 class Grid: ObservableObject{
     @Published var showGrid:Bool = false
     @Published var testnet:Bool = false
+    @Published var DevEnv:Bool = false
     
+    @State var TextList:[CIMLText] = []
+    @State var TextFieldList:[CIMLTextField] = []
+    @State var ButtonList:[CIMLButton] = []
+    @State var SysImageList:[CIMLSYSImage] = []
+    
+    func addBuildText(text:String,foreGroundColor:Color,
+                      font:Font,frame:[CGFloat],alignment:Alignment,
+                      backgroundColor:Color,cornerRadius:CGFloat,
+                      bold:Bool,fontWeight:Font.Weight,shadow:CGFloat,
+                      padding:CGFloat,location:Int){
+        if(DevEnv){
+            TextList.append(CIMLText(text: text, foreGroundColor: foreGroundColor, font: font,frame: frame, alignment: alignment, backgroundColor: backgroundColor, cornerRadius: cornerRadius, bold: bold, fontWeight: fontWeight, shadow: shadow, padding: padding,location: location))
+        } else { return }
+    }
+    func addBuildTextField(token:CIMLTextField){
+        if(DevEnv){ TextFieldList.append(token) } else { return }
+    }
+    func addBuildSYSImage(token:CIMLSYSImage){
+        if(DevEnv){ SysImageList.append(token) } else { return }
+    }
+    func addBuildButton(token:CIMLButton){
+        if(DevEnv){ ButtonList.append(token) } else { return }
+    }
 }
 
 //MARK: Final View
@@ -87,13 +111,15 @@ struct CIMLFinalView: View {
         .frame(width: 360*deviceSize, height: 640*deviceSize)
         
         
-    }    
+    }
+
 }
 
 //MARK: OverLay View
 struct Overlay: View{
     @StateObject var vmCIML = DownloadCIMLDocument()
     var test:Double = 1.0
+    @StateObject var grid = Grid()
     
     @State var finalTextList:[CIMLText] = []
     @State var finalTextFieldList:[CIMLTextField] = []
@@ -148,12 +174,7 @@ struct Overlay: View{
             print("total CIML Data from internet: \(vmCIML.ciml.count)")
         }
     }
-        func appendObject(){}
-    
-        mutating func buildText(text:String,foreGroundColor:Color,font:Font,frame:[CGFloat],alignment:Alignment,backgroundColor:Color,cornerRadius:CGFloat,bold:Bool,fontWeight:Font.Weight,shadow:CGFloat,padding:CGFloat,location:Int){
-        
-        finalTextList.append( CIMLText(text: text, foreGroundColor: foreGroundColor, font: font, frame: frame, alignment: alignment, backgroundColor: backgroundColor, cornerRadius: cornerRadius, bold: bold, fontWeight: fontWeight, shadow: shadow, padding: padding,location: location))
-    }
+
 }
 //MARK: TEXT View
 struct TEXT: View {
