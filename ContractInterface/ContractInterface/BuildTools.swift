@@ -10,7 +10,7 @@ import SwiftUI
 
 //MARK: BuildView
 struct BuildView: View {
-    
+
     @State var showObjects:Bool = false
     @State var showSettings:Bool = false
     @Binding var backgroundColor:LinearGradient
@@ -28,7 +28,7 @@ struct BuildView: View {
     @State var objectBold:Bool = false
     @State var objectFontWeight:Font.Weight = .regular
     @State var objectShadow:CGFloat = 0
-    @State var objectPadding:CGFloat = 20
+    @State var objectPadding:CGFloat = 5
     @State var objectTextFieldAlignment:Edge.Set = .all
     
 //
@@ -69,6 +69,10 @@ struct BuildView: View {
                     .fontWeight(objectFontWeight)
                     .shadow(radius: objectShadow)
                     .padding(objectPadding)
+                    .onDrag{
+                        NSItemProvider(object: "Text" as NSString)
+                    }
+                back
             case 2: // Button
                 Text("Button")
                     .foregroundColor(objectForeGroundColor)
@@ -80,6 +84,7 @@ struct BuildView: View {
                     .fontWeight(objectFontWeight)
                     .shadow(radius: objectShadow)
                     .padding(objectPadding)
+                back
             case 3: // TextField
                 Text("TextField")
                     .padding()
@@ -90,6 +95,7 @@ struct BuildView: View {
                     .cornerRadius(objectTypeSelected == 3 ? 10:objectCornerRadius)
                     .padding(objectTextFieldAlignment,objectPadding)
                     .shadow(radius: objectShadow)
+                back
             case 4: // sysImage
                 Image(systemName: "gear")
                     .resizable()
@@ -97,6 +103,7 @@ struct BuildView: View {
                     .foregroundColor(objectForeGroundColor)
                     .frame(width: objectTypeSelected == 4 ? 40.0:objectSize[0])
                     .padding(objectPadding)
+                back
             default:
                 BuildTools(
                     showObjects: $showObjects,
@@ -118,7 +125,19 @@ struct BuildView: View {
                 .padding(.top)
             }
             }
+        .padding()
         }
+    }
+    var back: some View {
+            Button(action: {
+                ObjectTypes = 0
+            }, label: {
+                Image(systemName: "arrow.clockwise")
+                    .foregroundColor(.black)
+                    .frame(width: 30)
+                    .scaledToFit()
+                    .padding()
+            })
     }
 }
 
@@ -150,6 +169,7 @@ struct BuildTools: View {
     @State var sliderValue:Double = 3
     
     
+    
     var body: some View {
         
 //        if(showObjects){
@@ -169,7 +189,7 @@ struct BuildTools: View {
             Spacer()
             
             Button(action: {
-                
+                test()
             }, label: {
                 Image(systemName: "folder.fill.badge.plus")
                     .resizable()
@@ -693,6 +713,21 @@ struct BuildTools: View {
             }
         }
     }
+    
+    func test(){
+        grid.TextList.append(CIMLText(text: "Exit",font: .title, frame: [100,50], location: 119))
+        grid.TextList.append(CIMLText(text: String("This is a header"),font: .largeTitle,frame: [300,50], location: 5))
+        grid.TextFieldList.append(CIMLTextField(text: "enter text",textField: "",foreGroundColor: .black, location: 32))
+        grid.SysImageList.append(CIMLSYSImage(name: "clipboard",padding: 0, location: 90))
+        grid.ButtonList.append(CIMLButton(text: "gear",isIcon: true,font: .title, location: 1))
+        
+        
+        print("total CLASS TextList: ",grid.TextList.count)
+        print("total CLASS TextField: ",grid.TextFieldList.count)
+        print("total CLASS  SysImageList: ",grid.SysImageList.count)
+        print("total CLASS ButtonList: ",grid.ButtonList.count)
+    }
+    
 }
 
 

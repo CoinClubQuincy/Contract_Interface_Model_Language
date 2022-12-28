@@ -15,15 +15,15 @@
 import SwiftUI
 import Foundation
 
-class Grid: ObservableObject{
+class Grid: ObservableObject{ //Build Settings
     @Published var showGrid:Bool = false
-    @Published var testnet:Bool = false
+    @Published var testnet:Bool = false // may not need
     @Published var DevEnv:Bool = false
     
-    @State var TextList:[CIMLText] = []
-    @State var TextFieldList:[CIMLTextField] = []
-    @State var ButtonList:[CIMLButton] = []
-    @State var SysImageList:[CIMLSYSImage] = []
+    @Published var TextList:[CIMLText] = []
+    @Published var TextFieldList:[CIMLTextField] = []
+    @Published var ButtonList:[CIMLButton] = []
+    @Published var SysImageList:[CIMLSYSImage] = []
     
     func addBuildText(text:String,foreGroundColor:Color,
                       font:Font,frame:[CGFloat],alignment:Alignment,
@@ -45,7 +45,7 @@ class Grid: ObservableObject{
     }
 }
 
-//MARK: Final View
+//MARK: Final View // View Comiler
 struct CIMLFinalView: View {
     //@State var gridStatus:Bool = true
     @State var gridPlotView:Color = .black
@@ -116,7 +116,7 @@ struct CIMLFinalView: View {
 }
 
 //MARK: OverLay View
-struct Overlay: View{
+struct Overlay: View{// Compiler
     @StateObject var vmCIML = DownloadCIMLDocument()
     var test:Double = 1.0
     @StateObject var grid = Grid()
