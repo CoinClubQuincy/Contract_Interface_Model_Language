@@ -14,7 +14,7 @@ struct BuildView: View {
     @State var showObjects:Bool = false
     @State var showSettings:Bool = false
     @Binding var backgroundColor:LinearGradient
-    @StateObject var grid:Grid
+    @StateObject var contractInterface:ContractModel
     
     @State var ObjectTypes:Int = 0 // toolbarstatus and object types
     @State var objectTitle:String = "Text"
@@ -32,14 +32,14 @@ struct BuildView: View {
     @State var objectShadow:CGFloat = 0
     @State var objectPadding:CGFloat = 5
     @State var objectTextFieldAlignment:Edge.Set = .all
-    
-//
+
     var body: some View {
         ZStack{
             backgroundColor
                 .ignoresSafeArea(.all)
         VStack{
-            CIMLFinalView(grid: grid)
+            CIMLFinalView(contractInterface: contractInterface)
+            //MARK: BuildTools Bar & Object placeholder
             switch ObjectTypes {
             case 0:
                 BuildTools(
@@ -47,7 +47,7 @@ struct BuildView: View {
                     showSettings: $showSettings,
                     toolbarStatus: $ObjectTypes,
                     objectTitle: $objectTitle,
-                    grid: grid,
+                    contractInterface: contractInterface,
                     objectForeGroundColor: $objectForeGroundColor,
                     objectFont: $objectFont,
                     objectSize: $objectSize,
@@ -113,7 +113,7 @@ struct BuildView: View {
                     showSettings: $showSettings,
                     toolbarStatus: $ObjectTypes,
                     objectTitle: $objectTitle,
-                    grid: grid,
+                    contractInterface: contractInterface,
                     objectForeGroundColor: $objectForeGroundColor,
                     objectFont: $objectFont,
                     objectSize: $objectSize,
@@ -156,7 +156,7 @@ struct BuildTools: View {
     @Binding var showSettings:Bool
     @Binding var toolbarStatus:Int
     @Binding var objectTitle:String
-    @StateObject var grid:Grid
+    @StateObject var contractInterface:ContractModel
     @State private var showObjectView = 0
     @State var objectTypeSelected=0
     @State var objectSelected:Int = 0
@@ -188,7 +188,7 @@ struct BuildTools: View {
 //        }
         HStack{
             Button(action: {
-                grid.clearCompiler()
+                contractInterface.clearCompiler()
             }, label: {
                 Image(systemName: "trash")
                     .resizable()
@@ -766,17 +766,17 @@ struct BuildTools: View {
     }
     
     func test(){
-        grid.TextList.append(CIMLText(text: "Exit",font: .title, frame: [100,50], location: 119))
-        grid.TextList.append(CIMLText(text: String("This is a header"),font: .largeTitle,frame: [300,50], location: 5))
-        grid.TextFieldList.append(CIMLTextField(text: "enter text",textField: "",foreGroundColor: .black, location: 32))
-        grid.SysImageList.append(CIMLSYSImage(name: "clipboard",padding: 0, location: 90))
-        grid.ButtonList.append(CIMLButton(text: "gear",isIcon: true,font: .title, location: 1))
+        contractInterface.TextList.append(CIMLText(text: "Exit",font: .title, frame: [100,50], location: 119))
+        contractInterface.TextList.append(CIMLText(text: String("This is a header"),font: .largeTitle,frame: [300,50], location: 5))
+        contractInterface.TextFieldList.append(CIMLTextField(text: "enter text",textField: "",foreGroundColor: .black, location: 32))
+        contractInterface.SysImageList.append(CIMLSYSImage(name: "clipboard",padding: 0, location: 90))
+        contractInterface.ButtonList.append(CIMLButton(text: "gear",isIcon: true,font: .title, location: 1))
         
         
-        print("total CLASS TextList: ",grid.TextList.count)
-        print("total CLASS TextField: ",grid.TextFieldList.count)
-        print("total CLASS  SysImageList: ",grid.SysImageList.count)
-        print("total CLASS ButtonList: ",grid.ButtonList.count)
+        print("total CLASS TextList: ",contractInterface.TextList.count)
+        print("total CLASS TextField: ",contractInterface.TextFieldList.count)
+        print("total CLASS  SysImageList: ",contractInterface.SysImageList.count)
+        print("total CLASS ButtonList: ",contractInterface.ButtonList.count)
     }
     
 }

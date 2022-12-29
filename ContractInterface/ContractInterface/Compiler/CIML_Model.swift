@@ -73,7 +73,7 @@ struct CIML: Codable,Identifiable {
         var screenShots, variables, functions, objects: [String]?
         var views, metadata: [String]?
 }
-
+//MARK: DownloadCIMLDocument
 class DownloadCIMLDocument: ObservableObject {
     @Published var ciml: [CIML] = []
     
@@ -107,6 +107,7 @@ class DownloadCIMLDocument: ObservableObject {
     }
 }
 
+//MARK: Object ViewModels
 struct Variable_Model {
     let id: String = UUID().uuidString
     let varName:String

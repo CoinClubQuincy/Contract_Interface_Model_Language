@@ -6,21 +6,12 @@
 //
 
 import SwiftUI
-
-//
-//  DAppStore.swift
-//  CoinClubCrypto
-//
-//  Created by Quincy Jones on 10/28/22.
-//
-
-import SwiftUI
-
-struct DApps: View {
+//MARK: DApps
+struct ContractInterface: View {
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
     @StateObject var vm = DownloadCIMLDocument.init()
-    @StateObject var grid:Grid
+    @StateObject var contractInterface:ContractModel
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
     @State var showDapplet:Bool = false
@@ -37,7 +28,6 @@ struct DApps: View {
     ]
     
     var body: some View {
-        
         NavigationView {
             ZStack {
                 backgroundColor
@@ -71,9 +61,9 @@ struct DApps: View {
                             )
                     )
                 VStack {
+                    //MARK: DApplet Grid
                     if(showDapplet){
-                        
-                        CIMLFinalView(grid: grid)
+                        CIMLFinalView(contractInterface: contractInterface)
                             .gesture(DragGesture(minimumDistance: 100, coordinateSpace: .local)
                                                 .onEnded({ value in
                                                     if value.translation.height < 0 {
@@ -175,7 +165,7 @@ struct DApps: View {
             }
         }
     }
-    
+    //MARK: SettingsPallet
     var SettingsPallet: some View{
         VStack{
             List{
@@ -287,6 +277,8 @@ struct DApps: View {
 
         }
     }
+    
+    //MARK: DApp Functions
     func getAlert() -> Alert{
         return Alert(title: Text(alertTitle),
                      message: Text(alertMessage),
@@ -303,12 +295,5 @@ struct DApps: View {
     }
     
 }
-
-//
-//  CIMIL_Objects.swift
-//  CoinClubCrypto
-//
-//  Created by Quincy Jones on 11/11/22.
-//
 
 

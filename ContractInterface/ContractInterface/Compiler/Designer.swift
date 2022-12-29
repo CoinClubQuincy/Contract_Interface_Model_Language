@@ -14,8 +14,9 @@
 
 import SwiftUI
 import Foundation
-
-class Grid: ObservableObject{ //Build Settings
+//MARK: Grid
+//rename this!!! -> this is the main class that handels the CIML Models
+class ContractModel: ObservableObject{ //Build Settings
     @Published var showGrid:Bool = false
     @Published var testnet:Bool = false // may not need
     @Published var DevEnv:Bool = false
@@ -58,7 +59,7 @@ struct CIMLFinalView: View {
     @State var gridPlotView:Color = .black
     @State var gridNumberView:Color = .white
     var deviceSize:Double = 1.0
-    @StateObject var grid:Grid
+    @StateObject var contractInterface:ContractModel
     
     
     let data = Array(1...146).map { "\($0)" }
@@ -83,10 +84,10 @@ struct CIMLFinalView: View {
                         ForEach(data, id: \.self){item in
                             ZStack {
                                 Circle()
-                                    .foregroundColor(grid.showGrid ? .black : .clear)
+                                    .foregroundColor(contractInterface.showGrid ? .black : .clear)
                                     .overlay{
                                         Text("\(item)")
-                                            .foregroundColor(grid.showGrid ? .white : .clear)
+                                            .foregroundColor(contractInterface.showGrid ? .white : .clear)
                                     }
                             }
                             .foregroundColor(gridPlotView)
@@ -126,7 +127,7 @@ struct CIMLFinalView: View {
 struct Overlay: View{// Compiler
     @StateObject var vmCIML = DownloadCIMLDocument()
     var test:Double = 1.0
-    @StateObject var grid = Grid()
+    @StateObject var contractInterface = ContractModel()
     
     @State var finalTextList:[CIMLText] = []
     @State var finalTextFieldList:[CIMLTextField] = []

@@ -10,6 +10,7 @@ import SwiftUI
 //import Core
 
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
+//MARK: Web3 class
 class Web3: ObservableObject {
     var clientUrl:String = ""
     private init(){
@@ -29,16 +30,18 @@ class Web3: ObservableObject {
     private func executeDApp(){}
 }
 
+//MARK: All_Wallets
 struct All_Wallets:Identifiable{
     let id: String = UUID().uuidString
     let address:String
     var total:Int
+    let network:String
     let keyNumber:Int
     let encryptedKey:String
 }
 
+//MARK: Wallets
 struct Wallets: View {
-    
     @State var isComplete:Bool = false
     @State var isPassed:Bool = false
     @State var sendto:String = ""
@@ -46,6 +49,7 @@ struct Wallets: View {
     @State var SendComplete:Bool = false
     @State var fiatConvert:Int = 0
     @State var developerMode:Bool = false
+    @State var faceID:Bool = false
     
    
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
@@ -65,13 +69,14 @@ struct Wallets: View {
 
     @State private var selectedNetwork: network = .xdc
   
+    //MARK: body
     var body: some View {
         ZStack{
             userWallet
             }
     }
     
-    
+    //MARK: userWallet
     var userWallet: some View{
         VStack {
             Circle()
@@ -138,6 +143,7 @@ struct Wallets: View {
 
     }
     
+    //MARK: list
     var list:some View{
         List{
             Section("Wallet"){
@@ -158,10 +164,10 @@ struct Wallets: View {
                         Circle()
                             .frame(width: 30)
                         
-                        Spacer()
+  
                         Text("PLI")
                         Text("150,340")
-                        Text(" - ")
+                        Spacer()
                         Text("$243.43")
                     }
                 }
@@ -178,6 +184,7 @@ struct Wallets: View {
                     Spacer()
                     Text("https://XinFin.Network/")
                 }
+                Toggle("Face ID", isOn: $faceID)
                 Toggle("Developer Mode", isOn: $developerMode)
                 if(developerMode){
                     
@@ -188,6 +195,7 @@ struct Wallets: View {
         }.listStyle(.grouped)
     
     }
+    //MARK: transactionHistory
     var transactionHistory: some View {
         ZStack{
             VStack{
@@ -228,7 +236,7 @@ struct Wallets: View {
             
         }
     }
-    
+    //MARK: walletQR
     var wallletQR:some View{
         VStack{
             
@@ -242,6 +250,7 @@ struct Wallets: View {
             }
         }
     }
+    //MARK: sendCrypto
     var sendCrypto:some View{
         VStack{
             switch SendComplete {
@@ -249,30 +258,11 @@ struct Wallets: View {
                 List{
                     Section("Transaction"){
                         //Refactor into struct!!!!!!!!!
-                        HStack{
-                            Text("Network:")
-                                .bold()
-                            Spacer()
-                            Text("XDC")
-                        }
-                        HStack{
-                            Text("Txn Hash:")
-                                .bold()
-                            Spacer()
-                            Text("0x1a964fb5309e9e14599948480c122b5912349e602a835120d870de69b3be15fe")
-                        }
-                        HStack{
-                            Text("To:")
-                                .bold()
-                            Spacer()
-                            Text("xdc973c93dcb8c5eaad405e52a3e9fd100ad2f7d933")
-                        }
-                        HStack{
-                            Text("From:")
-                                .bold()
-                            Spacer()
-                            Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
-                        }
+                        ListItem(leftItem: "Network:", rightItem: "XDC")
+                        ListItem(leftItem: "Txn Hash::", rightItem: "0x1a964fb5309e9e14599948480c122b5912349e602a835120d870de69b3be15fe")
+                        ListItem(leftItem: "To:", rightItem: "xdc973c93dcb8c5eaad405e52a3e9fd100ad2f7d933")
+                        ListItem(leftItem: "From:", rightItem: "xdce64996f74579ed41674a26216f8ecf980494dc38")
+                        
                         HStack{
                             Text("Transaction Complete")
                             Spacer()
@@ -290,8 +280,6 @@ struct Wallets: View {
                 .listStyle(.grouped)
                 .font(.footnote)
             case false:
-
-                
                 HStack {
                     Button(action: {}, label: {
                         Image(systemName: "qrcode")
@@ -387,28 +375,13 @@ struct Wallets: View {
             }
         }
     }
+    
+    //MARK: sendCompleteScreen
     var sendCompleteScreen:some View{
         HStack{
-            Button(action: {
-                selectWalletView = 0
-                SendComplete = false
-                isComplete = false
-                isPassed = false
-
-            }, label: {
-                Image(systemName: "info")
-                    .padding()
-                    .background(Color.yellow)
-                    .cornerRadius(50)
-                   .foregroundColor(.white)
-            })
             Spacer()
             Button(action: {
-                selectWalletView = 0
-                SendComplete = false
-                isComplete = false
-                isPassed = false
-
+                backToWallet()
             }, label: {
                 Image(systemName: "arrow.counterclockwise")
                     .padding()
@@ -419,6 +392,8 @@ struct Wallets: View {
         }
         .padding(.horizontal)
     }
+    
+    //MARK: Functions
     func getQRCodeDate(text: String) -> Data? {
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
         let data = text.data(using: .ascii, allowLossyConversion: false)
@@ -428,6 +403,32 @@ struct Wallets: View {
         let scaledCIImage = ciimage.transformed(by: transform)
         let uiimage = UIImage(ciImage: scaledCIImage)
         return uiimage.pngData()!
+    }
+    
+    func backToWallet(){
+        selectWalletView = 0
+        SendComplete = false
+        isComplete = false
+        isPassed = false
+    }
+    
+}
+
+//MARK: sendCrypto - ListItem
+struct ListItem: View{
+    var leftItem:String
+    var rightItem:String
+    
+    var body: some View{
+        VStack{
+            HStack{
+                Text(leftItem)
+                    .bold()
+                Spacer()
+                Text(rightItem)
+            }
+
+        }
     }
 }
 
