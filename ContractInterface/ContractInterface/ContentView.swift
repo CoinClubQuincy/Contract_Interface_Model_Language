@@ -23,7 +23,7 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectTab){
-            DApps(backgroundColor: $backgroundColor)
+            DApps(backgroundColor: $backgroundColor, grid: grid)
                 .tabItem{
                 Image(systemName: "app.badge.checkmark.fill")
                 Text("DApps")}

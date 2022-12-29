@@ -20,13 +20,16 @@ struct DApps: View {
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
     @StateObject var vm = DownloadCIMLDocument.init()
+    @StateObject var grid:Grid
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
+    @State var showDapplet:Bool = false
     
     
     @State var presented: Bool = false
     @State var alertTitle:String = ""
     @State var alertMessage:String = ""
+    
     
     let data = Array(0...0).map { "DApp \($0)" }
     let layout = [
@@ -68,6 +71,19 @@ struct DApps: View {
                             )
                     )
                 VStack {
+                    if(showDapplet){
+                        
+                        CIMLFinalView(grid: grid)
+                            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                                                .onEnded({ value in
+                                                    if value.translation.height < 0 {
+                                                        // up
+                                                        withAnimation {
+                                                            showDapplet = false
+                                                        }
+                                                    }
+                                                }))
+                    } else {
                     HStack {
 //                        ForEach(vm.ciml){ciml in
 //                            Text(ciml.name ?? "Error")
@@ -94,59 +110,63 @@ struct DApps: View {
                                 .padding(.trailing,10)
                         })
                     }
-                    ScrollView {
-                        LazyVGrid(columns: layout, spacing: 20){
-                            ForEach(data, id: \.self){item in
+                        ScrollView {
+                            LazyVGrid(columns: layout, spacing: 20){
+                                ForEach(data, id: \.self){item in
                                     HStack {
                                         
-                                        Button(action: {}, label: {
+                                        Button(action: {
+                                            withAnimation {
+                                                showDapplet.toggle()
+                                            }
+                                        }, label: {
                                             VStack{
-                                            Image("echo")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 60, height: 60)
-                                                .cornerRadius(10)
-                                                .shadow(radius: 10)
-                                                .padding(5)
-                                            Text(item)
-                                                .font(.footnote)
-                                                .foregroundColor(.black)
-                                        }
+                                                Image("echo")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 60, height: 60)
+                                                    .cornerRadius(10)
+                                                    .shadow(radius: 10)
+                                                    .padding(5)
+                                                Text(item)
+                                                    .font(.footnote)
+                                                    .foregroundColor(.black)
+                                            }
                                         })
                                         
                                     }
-//                                ZStack{
-//                                    Circle()
-//                                        .fill(Color.red)
-//                                        .frame(width: 20,height: 20)
-//
-//                                    Text("2")
-//                                        .font(.footnote)
-//                                        .foregroundColor(.white)
-//                                }
-   
-                                            .overlay(
-                                                
-                                                Button(action: {
-                                                    showDAppSettings.toggle()
-                                                }, label: {
-                                                    Image(systemName: "info.circle")
-                                                        .foregroundColor(.blue)
-                                                        .background(Color.white)
-                                                        .cornerRadius(50)
-                                                })
-                                                .sheet(isPresented: $showDAppSettings) {
-                                                    SettingsPallet
-                                                }
-                                                , alignment: .topLeading
-                                            )
-                                        
+                                    //                                ZStack{
+                                    //                                    Circle()
+                                    //                                        .fill(Color.red)
+                                    //                                        .frame(width: 20,height: 20)
+                                    //
+                                    //                                    Text("2")
+                                    //                                        .font(.footnote)
+                                    //                                        .foregroundColor(.white)
+                                    //                                }
                                     
+                                    .overlay(
+                                        
+                                        Button(action: {
+                                            showDAppSettings.toggle()
+                                        }, label: {
+                                            Image(systemName: "info.circle")
+                                                .foregroundColor(.blue)
+                                                .background(Color.white)
+                                                .cornerRadius(50)
+                                        })
+                                        .sheet(isPresented: $showDAppSettings) {
+                                            SettingsPallet
+                                        }
+                                        , alignment: .topLeading
+                                    )
+                                    
+                                    
+                                }
                             }
+                            .padding(.top)
                         }
-                        .padding(.top)
                     }
-                    
 
                     Spacer()
                 }
