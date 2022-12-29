@@ -115,12 +115,16 @@ struct DApps: View {
                                         })
                                         
                                     }
-                                
-                                    .overlay(
-                                        Circle()
-                                            .fill(Color.red)
-                                            .frame(width: 20,height: 20)
-                                        
+//                                ZStack{
+//                                    Circle()
+//                                        .fill(Color.red)
+//                                        .frame(width: 20,height: 20)
+//
+//                                    Text("2")
+//                                        .font(.footnote)
+//                                        .foregroundColor(.white)
+//                                }
+   
                                             .overlay(
                                                 
                                                 Button(action: {
@@ -134,13 +138,10 @@ struct DApps: View {
                                                 .sheet(isPresented: $showDAppSettings) {
                                                     SettingsPallet
                                                 }
-//                                                Text("2")
-//                                                    .font(.footnote)
-//                                                    .foregroundColor(.white)
+                                                , alignment: .topLeading
                                             )
                                         
-                                        , alignment: .topLeading
-                                    )
+                                    
                             }
                         }
                         .padding(.top)
@@ -170,6 +171,13 @@ struct DApps: View {
                         Text("-")
                         Text("SYMBOL")
                     }
+//                    HStack{ // Event Listener
+//                        Text("Notifications: ")
+//                        Spacer()
+//                        Text("X")
+//                            .font(.title3)
+//                            .bold()
+//                    }
                     HStack{
                         Text("{App} Version: ")
                         Spacer()

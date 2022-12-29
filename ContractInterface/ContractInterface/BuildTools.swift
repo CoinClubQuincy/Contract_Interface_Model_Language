@@ -17,7 +17,7 @@ struct BuildView: View {
     @StateObject var grid:Grid
     
     @State var ObjectTypes:Int = 0 // toolbarstatus and object types
-    @State var objectTitle:String = ""
+    @State var objectTitle:String = "Text"
     
     @State var objectTypeSelected=0
     @State var objectForeGroundColor: Color = .black
@@ -688,7 +688,7 @@ struct BuildTools: View {
     
     //MARK: Settings Pallet
     var SettingsPallet: some View{
-        ZStack{
+        VStack{
             List{
                 Section("DApplet"){
                     Image("XTB")
@@ -752,6 +752,14 @@ struct BuildTools: View {
                 }
             }
             .listStyle(.grouped)
+            Button(action: {}, label: {
+                Text("Edit")
+                    .cornerRadius(20)
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.black)
+                    .padding()
+            })
+            .background(Color.green)
         }
     }
     func deleteVariable(indexSet: IndexSet){

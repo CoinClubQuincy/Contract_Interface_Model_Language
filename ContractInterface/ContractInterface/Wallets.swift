@@ -37,6 +37,7 @@ struct Wallets: View {
     @State var sendto:String = ""
     @State var sendAmount:String = ""
     @State var SendComplete:Bool = false
+    @State var fiatConvert:Int = 0
     
    
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
@@ -305,6 +306,14 @@ struct Wallets: View {
                     .background(Color.gray)
                     .cornerRadius(10)
                     .padding(.horizontal)
+                HStack{
+                    Text("$\(fiatConvert)")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                }
                 
                 
                 Rectangle()
@@ -368,6 +377,19 @@ struct Wallets: View {
     }
     var sendCompleteScreen:some View{
         HStack{
+            Button(action: {
+                selectWalletView = 0
+                SendComplete = false
+                isComplete = false
+                isPassed = false
+
+            }, label: {
+                Image(systemName: "info")
+                    .padding()
+                    .background(Color.yellow)
+                    .cornerRadius(50)
+                   .foregroundColor(.white)
+            })
             Spacer()
             Button(action: {
                 selectWalletView = 0
@@ -377,13 +399,13 @@ struct Wallets: View {
 
             }, label: {
                 Image(systemName: "arrow.counterclockwise")
-                    .padding(20)
+                    .padding()
                     .background(Color.green)
                     .cornerRadius(50)
                    .foregroundColor(.white)
             })
         }
-        .frame(height: 100)
+        .padding(.horizontal)
     }
     func getQRCodeDate(text: String) -> Data? {
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
