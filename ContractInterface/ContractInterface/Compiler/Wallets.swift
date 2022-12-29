@@ -51,7 +51,6 @@ struct Wallets: View {
     @State var developerMode:Bool = false
     @State var faceID:Bool = false
     
-   
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
     @State var selectWalletView:Int = 0
     enum wallet: String, CaseIterable, Identifiable {
@@ -60,7 +59,6 @@ struct Wallets: View {
     }
 
     @State private var selectedWallet: wallet = .wallet1
-    
     
     enum network: String, CaseIterable, Identifiable {
         case xdc, eth
@@ -91,7 +89,6 @@ struct Wallets: View {
                 .font(.caption)
                 .bold()
             
-            
             HStack{
                 Button(action: {
                     selectWalletView = 1
@@ -100,7 +97,6 @@ struct Wallets: View {
                         .padding(20)
                         .background(Color.blue)
                         .cornerRadius(50)
-                    
                 })
                 Spacer()
                 Button(action: {
@@ -125,7 +121,6 @@ struct Wallets: View {
                 .cornerRadius(10)
                 .padding(.horizontal)
             
-            
             Spacer()
             
             switch selectWalletView {
@@ -140,9 +135,7 @@ struct Wallets: View {
                 list
             }
     }
-
-    }
-    
+}
     //MARK: list
     var list:some View{
         List{
@@ -164,7 +157,6 @@ struct Wallets: View {
                         Circle()
                             .frame(width: 30)
                         
-  
                         Text("PLI")
                         Text("150,340")
                         Spacer()
@@ -190,10 +182,7 @@ struct Wallets: View {
                     
                 }
             }
-            
-            
         }.listStyle(.grouped)
-    
     }
     //MARK: transactionHistory
     var transactionHistory: some View {
@@ -226,20 +215,17 @@ struct Wallets: View {
                                     Text("11/22/22-15:29")
                                         .font(.caption)
                                 }
-                                
                             }
                         }
                     }
                 }
                 .listStyle(.grouped)
             }
-            
         }
     }
     //MARK: walletQR
     var wallletQR:some View{
         VStack{
-            
             Button(action: {
                 selectWalletView = 0
             }) {
@@ -274,7 +260,6 @@ struct Wallets: View {
                                 .foregroundColor(.blue)
                         }
                         sendCompleteScreen
-
                     }
                 }
                 .listStyle(.grouped)
@@ -286,8 +271,6 @@ struct Wallets: View {
                             .padding()
                             .background(Color.blue)
                             .cornerRadius(10)
-                        
-                        
                     })
                     
                     TextField("Send To", text: $sendAmount)
@@ -313,7 +296,6 @@ struct Wallets: View {
                         .padding(.horizontal)
                 }
                 
-                
                 Rectangle()
                     .fill(isPassed ? Color.green:Color.blue)
                     .frame(maxWidth: isComplete ?  .infinity:0)
@@ -324,7 +306,7 @@ struct Wallets: View {
                     .padding(.horizontal)
                 
                 Spacer()
-                
+            
                 HStack {
                     Button(action: {
                         selectWalletView = 0
@@ -411,7 +393,6 @@ struct Wallets: View {
         isComplete = false
         isPassed = false
     }
-    
 }
 
 //MARK: sendCrypto - ListItem

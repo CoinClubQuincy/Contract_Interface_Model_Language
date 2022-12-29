@@ -17,10 +17,11 @@ struct ContractInterface: View {
     @State var showDapplet:Bool = false
     
     
+    //remove
     @State var presented: Bool = false
     @State var alertTitle:String = ""
     @State var alertMessage:String = ""
-    
+    //
     
     let data = Array(0...0).map { "DApp \($0)" }
     let layout = [
@@ -125,15 +126,15 @@ struct ContractInterface: View {
                                         })
                                         
                                     }
-                                    //                                ZStack{
-                                    //                                    Circle()
-                                    //                                        .fill(Color.red)
-                                    //                                        .frame(width: 20,height: 20)
-                                    //
-                                    //                                    Text("2")
-                                    //                                        .font(.footnote)
-                                    //                                        .foregroundColor(.white)
-                                    //                                }
+//                                ZStack{
+//                                    Circle()
+//                                        .fill(Color.red)
+//                                        .frame(width: 20,height: 20)
+//
+//                                    Text("2")
+//                                        .font(.footnote)
+//                                        .foregroundColor(.white)
+//                                }
                                     
                                     .overlay(
                                         
@@ -146,7 +147,8 @@ struct ContractInterface: View {
                                                 .cornerRadius(50)
                                         })
                                         .sheet(isPresented: $showDAppSettings) {
-                                            SettingsPallet
+                                            //MARK: SettingsPallet
+                                            DAppletSettings(DevEnv: contractInterface.DevEnv)
                                         }
                                         , alignment: .topLeading
                                     )
@@ -163,118 +165,6 @@ struct ContractInterface: View {
                 .padding(.top)
                 .padding(.horizontal)
             }
-        }
-    }
-    //MARK: SettingsPallet
-    var SettingsPallet: some View{
-        VStack{
-            List{
-                Section("DApplet"){
-                    Image("XTB")
-                        .resizable()
-                        .scaledToFit()
-                    HStack{
-                        Circle()
-                            .frame(width: 30)
-                        
-                        Text("Name")
-                        Text("-")
-                        Text("SYMBOL")
-                    }
-//                    HStack{ // Event Listener
-//                        Text("Notifications: ")
-//                        Spacer()
-//                        Text("X")
-//                            .font(.title3)
-//                            .bold()
-//                    }
-                    HStack{
-                        Text("{App} Version: ")
-                        Spacer()
-                        Text("0.0.0")
-                            .font(.title3)
-                            .bold()
-                    }
-                    
-                    Text("This is the description of the Dapp provided")
-                    
-                    HStack(){
-                        Text("Website:")
-                        Text(" https\\:DAppletSite.com")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                    }
-                    
-                    HStack{
-                        Text("Network:")
-                        Spacer()
-                        Text("XDC")
-                            .font(.title3)
-                            .bold()
-                    }
-                    HStack{
-                        VStack{
-                            Text("Contract:")
-                        }
-                        Spacer()
-                        Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
-                            .font(.body)
-                            .bold()
-                    }
-                    HStack{
-                        VStack{
-                            Image(systemName: "network")
-                            Text("Explorer")
-                                .font(.footnote)
-                                .foregroundColor(.blue)
-                        }
-                        
-                        Spacer()
-                        
-                        VStack{
-                            Image(systemName: "qrcode")
-                            Text("CI Schema")
-                                .font(.footnote)
-                                .foregroundColor(.blue)
-                        }
-                    }
-                }
-                Section("Contract Interface"){
-                    HStack {
-                        Text("Version")
-                        Spacer()
-                        Text("v1.0.0")
-                            .bold()
-                    }
-                }
-                Section("3rd Party Verification "){
-                    HStack {
-                        Text("CoinClubLabs")
-                        Spacer()
-                        HStack {
-                            Image(systemName: "checkmark.seal.fill")
-                                .foregroundColor(.green)
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                }
-            }
-            .listStyle(.grouped)
-            Button(action: {
-                buttonAlert(title: "Delete DApplet", msg: "Are you sure you want to Delete this Dapplet?")
-            }, label: {
-                Text("Delete")
-                    .cornerRadius(20)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.black)
-                    .padding()
-            })
-            .background(Color.red)
-            .alert(isPresented: $presented, content: {
-                getAlert()
-            })
-
         }
     }
     
