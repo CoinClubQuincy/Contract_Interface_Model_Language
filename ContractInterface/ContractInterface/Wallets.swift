@@ -158,7 +158,7 @@ struct Wallets: View {
                     Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
                         .font(.caption)
                 }
-                NavigationLink(destination: Text("X")) {
+                NavigationLink(destination: transactionHistory) {
                     Text("Transaction History")
                 }
             }
@@ -166,6 +166,45 @@ struct Wallets: View {
             
         }.listStyle(.grouped)
     
+    }
+    var transactionHistory: some View {
+        ZStack{
+            VStack{
+                List{
+                    Section("Transaction History"){
+                        NavigationLink(destination: Text("About Txn History")) {
+                            HStack{
+                                VStack{
+                                    Circle()
+                                        .frame(width: 30)
+                                    Text("XDC")
+                                }
+                                Spacer()
+                                
+                                VStack(alignment: .leading){
+                                    Text("Complete")
+                                        .foregroundColor(.green)
+                                    Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
+                                        .font(.caption)
+                                }
+                                Spacer()
+                                VStack{
+                                    HStack{
+                                        Text("-")
+                                        Text("10,243")
+                                        Text("XDC")
+                                    }
+                                    Text("11/22/22-15:29")
+                                        .font(.caption)
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+                .listStyle(.grouped)
+            }
+        }
     }
     
     var wallletQR:some View{
@@ -226,6 +265,7 @@ struct Wallets: View {
                                 .scaledToFit()
                                 .foregroundColor(.blue)
                         }
+                        sendCompleteScreen
 
                     }
                 }
@@ -275,64 +315,60 @@ struct Wallets: View {
                     .background(Color.gray)
                     .cornerRadius(50)
                     .padding(.horizontal)
-            }
-            
-            VStack{
+                
                 Spacer()
-                switch SendComplete {
-                case true:
-                    sendCompleteScreen
-                case false:
-                    HStack {
-                        Button(action: {}, label: {
-                            Image(systemName: "arrow.counterclockwise")
-                                .padding(20)
-                                .background(Color.blue)
-                                .cornerRadius(50)
-                               .foregroundColor(.white)
-                        })
+                
+                HStack {
+                    Button(action: {}, label: {
+                        Image(systemName: "arrow.counterclockwise")
+                            .padding(20)
+                            .background(Color.blue)
+                            .cornerRadius(50)
+                           .foregroundColor(.white)
+                    })
 
+                    
+                    Button(action: {}, label: {
+                        Image(systemName: "paperplane.fill")
+                             .padding(20)
+                             .background(Color.blue)
+                             .cornerRadius(50)
                         
-                        Button(action: {}, label: {
-                            Image(systemName: "paperplane.fill")
-                                 .padding(20)
-                                 .background(Color.blue)
-                                 .cornerRadius(50)
-                            
-                                .foregroundColor(.white)
-                                .onLongPressGesture(
-                                    minimumDuration: 1,
-                                    maximumDistance: 50) { (isPressing) in
-                                    // start of press to min duration
-                                        if isPressing {
-                                            withAnimation(.easeInOut(duration: 1.0)){
-                                                isComplete = true
-                                            }
-                                        }else {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                                if !isPassed {
-                                                    withAnimation(.easeInOut){
-                                                        isComplete = false
-                                                    }
+                            .foregroundColor(.white)
+                            .onLongPressGesture(
+                                minimumDuration: 1,
+                                maximumDistance: 50) { (isPressing) in
+                                // start of press to min duration
+                                    if isPressing {
+                                        withAnimation(.easeInOut(duration: 1.0)){
+                                            isComplete = true
+                                        }
+                                    }else {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                            if !isPassed {
+                                                withAnimation(.easeInOut){
+                                                    isComplete = false
                                                 }
                                             }
                                         }
-                                    } perform: {
-                                        // at min duration
-                                        withAnimation(.easeInOut){
-                                            isPassed = true
-                                            SendComplete = true
-                                        }
                                     }
-                        })
-                    }
+                                } perform: {
+                                    // at min duration
+                                    withAnimation(.easeInOut){
+                                        isPassed = true
+                                        SendComplete = true
+                                    }
+                                }
+                    })
                 }
+                .padding(.bottom)
+                
             }
         }
     }
     var sendCompleteScreen:some View{
-        VStack{
-            Text("Transaction Complete")
+        HStack{
+            Spacer()
             Button(action: {
                 selectWalletView = 0
                 SendComplete = false

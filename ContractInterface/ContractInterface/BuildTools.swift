@@ -17,6 +17,7 @@ struct BuildView: View {
     @StateObject var grid:Grid
     
     @State var ObjectTypes:Int = 0 // toolbarstatus and object types
+    @State var objectTitle:String = ""
     
     @State var objectTypeSelected=0
     @State var objectForeGroundColor: Color = .black
@@ -45,6 +46,7 @@ struct BuildView: View {
                     showObjects: $showObjects,
                     showSettings: $showSettings,
                     toolbarStatus: $ObjectTypes,
+                    objectTitle: $objectTitle,
                     grid: grid,
                     objectForeGroundColor: $objectForeGroundColor,
                     objectFont: $objectFont,
@@ -60,7 +62,7 @@ struct BuildView: View {
                 .padding(.bottom)
                 .padding(.top)
             case 1: // Text
-                Text("Text")
+                Text(objectTitle)
                     .foregroundColor(objectForeGroundColor)
                     .font(objectFont)
                     .frame(width: objectSize[0], height: objectSize[1], alignment: objectAlignment)
@@ -75,7 +77,7 @@ struct BuildView: View {
                     }
                 back
             case 2: // Button
-                Text("Button")
+                Text(objectTitle)
                     .foregroundColor(objectForeGroundColor)
                     .font(objectFont)
                     .frame(width: objectSize[0], height: objectSize[1], alignment: objectAlignment)
@@ -87,7 +89,7 @@ struct BuildView: View {
                     .padding(objectPadding)
                 back
             case 3: // TextField
-                Text("TextField")
+                Text(objectTitle)
                     .padding()
                     .frame(width: objectTypeSelected == 3 ? 200:objectSize[0])
                     .frame(height: objectSize[1])
@@ -98,7 +100,7 @@ struct BuildView: View {
                     .shadow(radius: objectShadow)
                 back
             case 4: // sysImage
-                Image(systemName: "gear")
+                Image(systemName: objectTitle)
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(objectForeGroundColor)
@@ -110,6 +112,7 @@ struct BuildView: View {
                     showObjects: $showObjects,
                     showSettings: $showSettings,
                     toolbarStatus: $ObjectTypes,
+                    objectTitle: $objectTitle,
                     grid: grid,
                     objectForeGroundColor: $objectForeGroundColor,
                     objectFont: $objectFont,
@@ -152,11 +155,11 @@ struct BuildTools: View {
     @Binding var showObjects:Bool
     @Binding var showSettings:Bool
     @Binding var toolbarStatus:Int
+    @Binding var objectTitle:String
     @StateObject var grid:Grid
     @State private var showObjectView = 0
     @State var objectTypeSelected=0
     @State var objectSelected:Int = 0
-    @State var objectTitle:String = ""
     
     @State var dataTypeVaraiable:String = ""
     
