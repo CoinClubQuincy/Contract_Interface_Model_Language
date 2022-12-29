@@ -11,15 +11,22 @@ import SwiftUI
 
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
 class Web3: ObservableObject {
-    init(){
+    var clientUrl:String = ""
+    private init(){
+        
+    }
+    private func establishRPC(RPC:String){
         //connect to RPC
-//        guard let clientUrl = URL(string: "https://an-infura-or-similar-url.com/123") else { return }
+//        guard var clientUrl = URL(string: RPC) else { return }
 //        let client = EthereumClient(url: clientUrl)
     }
-//    func createWallet(){
+    private func createWallet(){
 //        let keyStorage = EthereumKeyLocalStorage()
 //        let account = try? EthereumAccount.create(replacing: keyStorage, keystorePassword: "MY_PASSWORD")
-//    }
+    }
+    private func SendCrypto(amount:Int,address:String){}
+    
+    private func executeDApp(){}
 }
 
 struct All_Wallets:Identifiable{
@@ -38,6 +45,7 @@ struct Wallets: View {
     @State var sendAmount:String = ""
     @State var SendComplete:Bool = false
     @State var fiatConvert:Int = 0
+    @State var developerMode:Bool = false
     
    
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
@@ -78,6 +86,7 @@ struct Wallets: View {
                 .font(.caption)
                 .bold()
             
+            
             HStack{
                 Button(action: {
                     selectWalletView = 1
@@ -101,6 +110,17 @@ struct Wallets: View {
             .padding(.horizontal,100)
             .padding()
             
+            
+            Text(qrdata)
+                .font(.footnote)
+                .bold(selectWalletView == 2 ? true:false)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(selectWalletView == 2 ? Color.gray:Color.clear)
+                .cornerRadius(10)
+                .padding(.horizontal)
+            
+            
             Spacer()
             
             switch selectWalletView {
@@ -121,10 +141,15 @@ struct Wallets: View {
     var list:some View{
         List{
             Section("Wallet"){
-                Picker("Wallet", selection: $selectedWallet) {
-                    Text("Wallet A").tag(wallet.wallet1)
-                    Text("Wallet B").tag(wallet.wallet2)
-                    Text("Wallet C").tag(wallet.wallet3)
+                HStack{
+                    Picker("Wallet", selection: $selectedWallet) {
+                        Text("Wallet A").tag(wallet.wallet1)
+                        Text("Wallet B").tag(wallet.wallet2)
+                        Text("Wallet C").tag(wallet.wallet3)
+                    }
+                }
+                NavigationLink(destination: transactionHistory) {
+                    Text("Transaction History")
                 }
             }
             Section("Tokens"){
@@ -153,14 +178,9 @@ struct Wallets: View {
                     Spacer()
                     Text("https://XinFin.Network/")
                 }
-                HStack{
-                    Image(systemName: "link")
-                    Spacer()
-                    Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
-                        .font(.caption)
-                }
-                NavigationLink(destination: transactionHistory) {
-                    Text("Transaction History")
+                Toggle("Developer Mode", isOn: $developerMode)
+                if(developerMode){
+                    
                 }
             }
             
@@ -205,6 +225,7 @@ struct Wallets: View {
                 }
                 .listStyle(.grouped)
             }
+            
         }
     }
     
@@ -219,10 +240,6 @@ struct Wallets: View {
                     .resizable()
                     .frame(width: 300, height: 300)
             }
-            Text(qrdata)
-                .font(.footnote)
-                .bold()
-                .padding()
         }
     }
     var sendCrypto:some View{
@@ -273,14 +290,7 @@ struct Wallets: View {
                 .listStyle(.grouped)
                 .font(.footnote)
             case false:
-                Text(qrdata)
-                    .font(.footnote)
-                    .bold()
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.gray)
-                    .cornerRadius(10)
-                    .padding(.horizontal)
+
                 
                 HStack {
                     Button(action: {}, label: {
@@ -328,7 +338,9 @@ struct Wallets: View {
                 Spacer()
                 
                 HStack {
-                    Button(action: {}, label: {
+                    Button(action: {
+                        selectWalletView = 0
+                    }, label: {
                         Image(systemName: "arrow.counterclockwise")
                             .padding(20)
                             .background(Color.blue)

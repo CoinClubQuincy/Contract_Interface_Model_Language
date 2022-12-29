@@ -177,6 +177,7 @@ struct BuildTools: View {
     @Binding var objectTextFieldAlignment:Edge.Set
     
     @State var sliderValue:Double = 3
+    @State var DAppletBackgroundColor:[Color] = [.white]
     
     
     
@@ -738,9 +739,7 @@ struct BuildTools: View {
                             .font(.body)
                             .bold()
                     }
-                    HStack{
-                        Text("BackgroundColor:")
-                    }
+                    ColorPicker("Background Color", selection: $DAppletBackgroundColor[0])
                 }
                 Section("Contract Interface"){
                     HStack {

@@ -74,7 +74,7 @@ struct DApps: View {
                     if(showDapplet){
                         
                         CIMLFinalView(grid: grid)
-                            .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                            .gesture(DragGesture(minimumDistance: 100, coordinateSpace: .local)
                                                 .onEnded({ value in
                                                     if value.translation.height < 0 {
                                                         // up
@@ -225,9 +225,6 @@ struct DApps: View {
                     HStack{
                         VStack{
                             Text("Contract:")
-                            Text("Explorer")
-                                .font(.footnote)
-                                .foregroundColor(.blue)
                         }
                         Spacer()
                         Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
@@ -235,7 +232,21 @@ struct DApps: View {
                             .bold()
                     }
                     HStack{
-                        Text("BackgroundColor:")
+                        VStack{
+                            Image(systemName: "network")
+                            Text("Explorer")
+                                .font(.footnote)
+                                .foregroundColor(.blue)
+                        }
+                        
+                        Spacer()
+                        
+                        VStack{
+                            Image(systemName: "qrcode")
+                            Text("CI Schema")
+                                .font(.footnote)
+                                .foregroundColor(.blue)
+                        }
                     }
                 }
                 Section("Contract Interface"){
