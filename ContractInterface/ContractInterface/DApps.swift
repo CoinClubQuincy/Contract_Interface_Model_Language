@@ -23,6 +23,11 @@ struct DApps: View {
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
     
+    
+    @State var presented: Bool = false
+    @State var alertTitle:String = ""
+    @State var alertMessage:String = ""
+    
     let data = Array(0...0).map { "DApp \($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 80))
@@ -51,7 +56,7 @@ struct DApps: View {
                         ,
                         trailing:
                             NavigationLink(
-                                destination: Text("Favorites")
+                                destination: Wallets()
                                 .navigationTitle("Wallet")
                                 ,label: {
                                     Image(systemName: "wallet.pass.fill")
@@ -151,12 +156,18 @@ struct DApps: View {
     }
     
     var SettingsPallet: some View{
-        ZStack{
+        VStack{
             List{
                 Section("DApplet"){
+                    Image("XTB")
+                        .resizable()
+                        .scaledToFit()
                     HStack{
                         Circle()
                             .frame(width: 30)
+                        
+                        Text("Name")
+                        Text("-")
                         Text("SYMBOL")
                     }
                     HStack{
@@ -206,7 +217,7 @@ struct DApps: View {
                         Text("v1.0.0")
                             .bold()
                     }
-                    }
+                }
                 Section("3rd Party Verification "){
                     HStack {
                         Text("CoinClubLabs")
@@ -220,8 +231,38 @@ struct DApps: View {
                     }
                 }
             }
+            .listStyle(.grouped)
+            Button(action: {
+                buttonAlert(title: "Delete DApplet", msg: "Are you sure you want to Delete this Dapplet?")
+            }, label: {
+                Text("Delete")
+                    .cornerRadius(20)
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(.black)
+                    .padding()
+            })
+            .background(Color.red)
+            .alert(isPresented: $presented, content: {
+                getAlert()
+            })
+
         }
     }
+    func getAlert() -> Alert{
+        return Alert(title: Text(alertTitle),
+                     message: Text(alertMessage),
+                     primaryButton: .destructive(Text("Delete")) {
+                         print("Deleting...")
+                     },
+                     secondaryButton: .cancel())
+    }
+    
+    func buttonAlert(title:String, msg:String){
+        alertTitle = title
+        alertMessage = msg
+        presented.toggle()
+    }
+    
 }
 
 //

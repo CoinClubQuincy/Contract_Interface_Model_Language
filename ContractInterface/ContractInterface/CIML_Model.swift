@@ -111,8 +111,7 @@ struct Variable_Model:Identifiable {
     let id: String = UUID().uuidString
     let varName:String
     let type:String
-    var inputvalue:[String]
-    var outputvalue:[String]
+    var value:String
 }
 struct Function_Model:Identifiable {
     let id: String = UUID().uuidString
@@ -177,55 +176,7 @@ struct CIMLButton: Identifiable {
 
 struct CIML_Parser: Identifiable {
     let id: String = UUID().uuidString
-    var Object1: any Identifiable
-    var Object2: any Identifiable
-    var Object3: any Identifiable
-    var Object4: any Identifiable
-    var Object5: any Identifiable
-    var Object6: any Identifiable
-    var Object7: any Identifiable
-    var Object8: any Identifiable
-    var Object9: any Identifiable
-    var Object10: any Identifiable
-    var Object11: any Identifiable
-    var Object12: any Identifiable
-    var Object13: any Identifiable
-    var Object14: any Identifiable
-    var Object15: any Identifiable
-    var Object16: any Identifiable
-    var Object17: any Identifiable
-    var Object18: any Identifiable
-    var Object19: any Identifiable
-    var Object20: any Identifiable
-    var Object21: any Identifiable
-    var Object22: any Identifiable
-    var Object23: any Identifiable
-    var Object24: any Identifiable
-    var Object25: any Identifiable
-    var Object26: any Identifiable
-    var Object27: any Identifiable
-    var Object28: any Identifiable
-    var Object29: any Identifiable
-    var Object30: any Identifiable
-    var Object31: any Identifiable
-    var Object32: any Identifiable
-    var Object33: any Identifiable
-    var Object34: any Identifiable
-    var Object35: any Identifiable
-    var Object36: any Identifiable
-    var Object37: any Identifiable
-    var Object38: any Identifiable
-    var Object39: any Identifiable
-    var Object40: any Identifiable
-    var Object41: any Identifiable
-    var Object42: any Identifiable
-    var Object43: any Identifiable
-    var Object44: any Identifiable
-    var Object45: any Identifiable
-    var Object46: any Identifiable
-    var Object47: any Identifiable
-    var Object48: any Identifiable
-    var Object49: any Identifiable
-    var Object50: any Identifiable
+    var backgroundColor:Color
+    var Object: any Identifiable
 }
 

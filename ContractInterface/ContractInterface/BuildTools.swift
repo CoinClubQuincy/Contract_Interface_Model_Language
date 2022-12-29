@@ -15,6 +15,7 @@ struct BuildView: View {
     @State var showSettings:Bool = false
     @Binding var backgroundColor:LinearGradient
     @StateObject var grid:Grid
+    
     @State var ObjectTypes:Int = 0 // toolbarstatus and object types
     
     @State var objectTypeSelected=0
@@ -177,7 +178,7 @@ struct BuildTools: View {
 //        }
         HStack{
             Button(action: {
-                
+                grid.clearCompiler()
             }, label: {
                 Image(systemName: "trash")
                     .resizable()
@@ -199,20 +200,9 @@ struct BuildTools: View {
             Spacer()
             
             Button(action: {
-                
-            }, label: {
-                Image(systemName: "plus")
-                    .resizable()
-                    .scaledToFit()
-            })
-            
-            
-            Spacer()
-            
-            Button(action: {
                 showSettings.toggle()
             }, label: {
-                Image(systemName: "gear")
+                Image(systemName: "info.circle")
                     .resizable()
                     .scaledToFit()
             })
@@ -643,9 +633,15 @@ struct BuildTools: View {
         ZStack{
             List{
                 Section("DApplet"){
+                    Image("XTB")
+                        .resizable()
+                        .scaledToFit()
                     HStack{
                         Circle()
                             .frame(width: 30)
+                        
+                        Text("Name")
+                        Text("-")
                         Text("SYMBOL")
                     }
                     HStack{
@@ -694,20 +690,6 @@ struct BuildTools: View {
                         Spacer()
                         Text("v1.0.0")
                             .bold()
-                    }
-                    Toggle("Show Grid", isOn: $grid.showGrid)
-                    Toggle("Testnet", isOn: $grid.testnet)
-                    }
-                Section("3rd Party Verification "){
-                    HStack {
-                        Text("CoinClubLabs")
-                        Spacer()
-                        HStack {
-                            Image(systemName: "checkmark.seal.fill")
-                                .foregroundColor(.green)
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.blue)
-                        }
                     }
                 }
             }

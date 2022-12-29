@@ -43,6 +43,13 @@ class Grid: ObservableObject{ //Build Settings
     func addBuildButton(token:CIMLButton){
         if(DevEnv){ ButtonList.append(token) } else { return }
     }
+    
+    func clearCompiler(){
+        TextList.removeAll()
+        TextFieldList.removeAll()
+        SysImageList.removeAll()
+        ButtonList.removeAll()
+    }
 }
 
 //MARK: Final View // View Comiler
@@ -174,7 +181,6 @@ struct Overlay: View{// Compiler
             print("total CIML Data from internet: \(vmCIML.ciml.count)")
         }
     }
-
 }
 //MARK: TEXT View
 struct TEXT: View {
