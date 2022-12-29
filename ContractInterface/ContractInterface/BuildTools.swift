@@ -144,6 +144,11 @@ struct BuildView: View {
 
 //MARK: BuildTools
 struct BuildTools: View {
+    @State var CIMLvariables: [Variable_Model] = [
+        Variable_Model(varName: "var_name", type: "String", value: "This is data"),
+        Variable_Model(varName: "var_int", type: "Int", value: "27")
+    ]
+    
     @Binding var showObjects:Bool
     @Binding var showSettings:Bool
     @Binding var toolbarStatus:Int
@@ -151,6 +156,7 @@ struct BuildTools: View {
     @State private var showObjectView = 0
     @State var objectTypeSelected=0
     @State var objectSelected:Int = 0
+    @State var objectTitle:String = ""
     
     @State var dataTypeVaraiable:String = ""
     
@@ -306,6 +312,12 @@ struct BuildTools: View {
     //MARK: Objects Editor
     var ObjectsEditor: some View{
             VStack {
+                ZStack(alignment: .center){
+                    TextField("\(objectTitle)", text: $objectTitle)
+                        .padding()
+                        .background(Color.gray)
+                        .cornerRadius(50)
+                }
                 ColorPicker("Foreground Color", selection: $objectBackgroundColor)
                 ColorPicker("Background Color", selection: $objectBackgroundColor)
                 HStack{
@@ -438,7 +450,7 @@ struct BuildTools: View {
             case 1:
                 ObjectsEditor
                 Spacer()
-                Text("Text")
+                Text(objectTitle)
                     .foregroundColor(objectForeGroundColor)
                     .font(objectFont)
                     .frame(width: objectSize[0], height: objectSize[1], alignment: objectAlignment)
@@ -451,7 +463,7 @@ struct BuildTools: View {
             case 2:
                 ObjectsEditor
                 Spacer()
-                Text("Button")
+                Text(objectTitle)
                     .foregroundColor(objectForeGroundColor)
                     .font(objectFont)
                     .frame(width: objectSize[0], height: objectSize[1], alignment: objectAlignment)
@@ -464,7 +476,7 @@ struct BuildTools: View {
             case 3:
                 ObjectsEditor
                 Spacer()
-                Text("TextField")
+                Text(objectTitle)
                     .padding()
                     .frame(width: objectTypeSelected == 3 ? 200:objectSize[0])
                     .frame(height: objectSize[1])
@@ -476,7 +488,7 @@ struct BuildTools: View {
             case 4:
                 ObjectsEditor
                 Spacer()
-                Image(systemName: "gear")
+                Image(systemName: objectTitle)
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(objectForeGroundColor)
@@ -502,6 +514,7 @@ struct BuildTools: View {
                 Button(action: {
                     objectTypeSelected = 1
                     objectSelected = objectTypeSelected
+                    objectTitle = "Text"
                 }, label: {
                     Text("Text")
                         .bold()
@@ -513,6 +526,7 @@ struct BuildTools: View {
                 Button(action: {
                     objectTypeSelected = 2
                     objectSelected = objectTypeSelected
+                    objectTitle = "Button"
                 }, label: {
                     Text("Button")
                         .bold()
@@ -527,6 +541,7 @@ struct BuildTools: View {
             Button(action: {
                 objectTypeSelected = 3
                 objectSelected = objectTypeSelected
+                objectTitle = "TextField"
                 
             }, label: {
                 Text("TextField...")
@@ -542,6 +557,7 @@ struct BuildTools: View {
                 Button(action: {
                     objectTypeSelected = 4
                     objectSelected = objectTypeSelected
+                    objectTitle = "questionmark.diamond.fill"
                 }, label: {
                     Image(systemName: "questionmark.diamond.fill")
                         .resizable()
@@ -565,46 +581,83 @@ struct BuildTools: View {
     
     //MARK: VariablesSection
     var VariablesSection: some View{
-        HStack{
-            Picker(
-                selection: .constant(1),
-                label:
-                    Text("dataType"),
-                content: {
-                    Text("string").tag(1)
-                    Text("int").tag(2)
-                    Text("bool").tag(3)
-                    Text("address").tag(4)
-                    Text("bytes").tag(5)
-                    Text("[]").tag(6)
-                    
-                })
-            Spacer()
-            Text("var_\(dataTypeVaraiable)")
-                .padding()
-                .background(Color.blue)
-                .cornerRadius(20)
+        VStack{
+            List{
+                Section("Variables"){
+                    ForEach(CIMLvariables, id: \.id){ variables in
+                        HStack{
+                            Text(variables.type)
+                                .font(.subheadline)
+                                .bold()
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(.white)
+                                .background(Color.black)
+                                .cornerRadius(20)
+                            Text(variables.varName)
+                                .font(.subheadline)
+                                .bold()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.blue)
+                                .cornerRadius(20)
+                            Text(variables.value)
+                                .bold()
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.green)
+                                .cornerRadius(20)
+                        }
+                    }
+                        .onDelete(perform: {IndexSet in
+                            deleteVariable(indexSet: IndexSet)
+                        })
+                }
+            }
+            HStack{
+                Picker(
+                    selection: .constant(1),
+                    label:
+                        Text("dataType"),
+                    content: {
+                        Text("string").tag(1)
+                        Text("int").tag(2)
+                        Text("bool").tag(3)
+                        Text("address").tag(4)
+                        Text("bytes").tag(5)
+                        Text("[]").tag(6)
+                        
+                    }).pickerStyle(.menu)
+                Spacer()
+                Text("var_\(dataTypeVaraiable)")
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(20)
                 
-            TextField("var", text: $dataTypeVaraiable)
-                .padding()
-                .background(Color.gray)
-                .cornerRadius(20)
-                .padding(.horizontal,5)
-            Image(systemName: "plus")
-                .scaledToFit()
-                .padding(.trailing,20)
+                TextField("var", text: $dataTypeVaraiable)
+                    .padding()
+                    .background(Color.gray)
+                    .cornerRadius(20)
+                    .padding(.horizontal,5)
+                Image(systemName: "plus")
+                    .scaledToFit()
+                    .padding(.trailing,20)
+            }
+            .padding()
         }
+        .background(Color.green)
+        .cornerRadius(20)
+        .padding(.horizontal)
     }
     
     //MARK: FunctionsSection
     var FunctionsSection: some View{
         VStack {
+            
             HStack{
                 TextField("function()", text: $dataTypeVaraiable)
                     .padding()
                     .background(Color.gray)
                     .cornerRadius(20)
-                    .padding(.horizontal,20)
+                    .padding(20)
                 Image(systemName: "plus")
                     .padding(20)
                     .scaledToFit()
@@ -615,11 +668,13 @@ struct BuildTools: View {
                     .foregroundColor(.white)
                     .background(Color.black)
                     .cornerRadius(20)
+                    .padding(.bottom)
                 Text("Input Var")
                     .padding()
                     .foregroundColor(.white)
                     .background(Color.black)
                     .cornerRadius(20)
+                    .padding(.bottom)
             }
             
         }
@@ -693,7 +748,11 @@ struct BuildTools: View {
                     }
                 }
             }
+            .listStyle(.grouped)
         }
+    }
+    func deleteVariable(indexSet: IndexSet){
+        CIMLvariables.remove(atOffsets: indexSet)
     }
     
     func test(){

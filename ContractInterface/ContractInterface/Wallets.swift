@@ -36,6 +36,7 @@ struct Wallets: View {
     @State var isPassed:Bool = false
     @State var sendto:String = ""
     @State var sendAmount:String = ""
+    @State var SendComplete:Bool = false
     
    
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
@@ -186,100 +187,167 @@ struct Wallets: View {
     }
     var sendCrypto:some View{
         VStack{
-            
-            Text(qrdata)
+            switch SendComplete {
+            case true:
+                List{
+                    Section("Transaction"){
+                        //Refactor into struct!!!!!!!!!
+                        HStack{
+                            Text("Network:")
+                                .bold()
+                            Spacer()
+                            Text("XDC")
+                        }
+                        HStack{
+                            Text("Txn Hash:")
+                                .bold()
+                            Spacer()
+                            Text("0x1a964fb5309e9e14599948480c122b5912349e602a835120d870de69b3be15fe")
+                        }
+                        HStack{
+                            Text("To:")
+                                .bold()
+                            Spacer()
+                            Text("xdc973c93dcb8c5eaad405e52a3e9fd100ad2f7d933")
+                        }
+                        HStack{
+                            Text("From:")
+                                .bold()
+                            Spacer()
+                            Text("xdce64996f74579ed41674a26216f8ecf980494dc38")
+                        }
+                        HStack{
+                            Text("Transaction Complete")
+                            Spacer()
+                            Image(systemName: "checkmark.seal.fill")
+                                .scaledToFit()
+                                .foregroundColor(.green)
+                            Image(systemName: "info.circle")
+                                .scaledToFit()
+                                .foregroundColor(.blue)
+                        }
+
+                    }
+                }
+                .listStyle(.grouped)
                 .font(.footnote)
-                .bold()
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.gray)
-                .cornerRadius(10)
-                .padding(.horizontal)
-            
-            HStack {
-                Button(action: {}, label: {
-                    Image(systemName: "qrcode")
-                         .padding()
-                         .background(Color.blue)
-                         .cornerRadius(10)
-                         
-                    
-                })
-                
-                TextField("Send To", text: $sendAmount)
+            case false:
+                Text(qrdata)
+                    .font(.footnote)
+                    .bold()
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.gray)
-                .cornerRadius(10)
-            }
-            .padding(.horizontal)
-    
-            TextField("amount", text: $sendto)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.gray)
-                .cornerRadius(10)
-                .padding(.horizontal)
-            
-            
-            Rectangle()
-                .fill(isPassed ? Color.green:Color.blue)
-                .frame(maxWidth: isComplete ?  .infinity:0)
-                .frame(height: 10)
-                .frame(maxWidth: .infinity,alignment: .leading)
-                .background(Color.gray)
-                .cornerRadius(50)
-                .padding(.horizontal)
-  
-            Spacer()
-            
-            VStack{
+                    .cornerRadius(10)
+                    .padding(.horizontal)
                 
                 HStack {
-                    Image(systemName: "paperplane.fill")
-                         .padding(20)
-                         .background(Color.blue)
-                         .cornerRadius(50)
+                    Button(action: {}, label: {
+                        Image(systemName: "qrcode")
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                        
+                        
+                    })
                     
-                        .foregroundColor(.white)
-                        .onLongPressGesture(
-                            minimumDuration: 1,
-                            maximumDistance: 50) { (isPressing) in
-                            // start of press to min duration
-                                if isPressing {
-                                    withAnimation(.easeInOut(duration: 1.0)){
-                                        isComplete = true
-                                    }
-                                }else {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
-                                        if !isPassed {
-                                            withAnimation(.easeInOut){
-                                                isComplete = false
+                    TextField("Send To", text: $sendAmount)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+                
+                TextField("amount", text: $sendto)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.gray)
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+                
+                
+                Rectangle()
+                    .fill(isPassed ? Color.green:Color.blue)
+                    .frame(maxWidth: isComplete ?  .infinity:0)
+                    .frame(height: 10)
+                    .frame(maxWidth: .infinity,alignment: .leading)
+                    .background(Color.gray)
+                    .cornerRadius(50)
+                    .padding(.horizontal)
+            }
+            
+            VStack{
+                Spacer()
+                switch SendComplete {
+                case true:
+                    sendCompleteScreen
+                case false:
+                    HStack {
+                        Button(action: {}, label: {
+                            Image(systemName: "arrow.counterclockwise")
+                                .padding(20)
+                                .background(Color.blue)
+                                .cornerRadius(50)
+                               .foregroundColor(.white)
+                        })
+
+                        
+                        Button(action: {}, label: {
+                            Image(systemName: "paperplane.fill")
+                                 .padding(20)
+                                 .background(Color.blue)
+                                 .cornerRadius(50)
+                            
+                                .foregroundColor(.white)
+                                .onLongPressGesture(
+                                    minimumDuration: 1,
+                                    maximumDistance: 50) { (isPressing) in
+                                    // start of press to min duration
+                                        if isPressing {
+                                            withAnimation(.easeInOut(duration: 1.0)){
+                                                isComplete = true
+                                            }
+                                        }else {
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1){
+                                                if !isPassed {
+                                                    withAnimation(.easeInOut){
+                                                        isComplete = false
+                                                    }
+                                                }
                                             }
                                         }
+                                    } perform: {
+                                        // at min duration
+                                        withAnimation(.easeInOut){
+                                            isPassed = true
+                                            SendComplete = true
+                                        }
                                     }
-                                }
-                            } perform: {
-                                // at min duration
-                                withAnimation(.easeInOut){
-                                    isPassed = true
-                                }
-                            }
-                    
-//                    Text("Reset")
-//                        .foregroundColor(.white)
-//                        .padding()
-//                        .background(Color.black)
-//                        .cornerRadius(10)
-//                        .onLongPressGesture{
-//                            isComplete = false
-//                            isPassed = false
-//                        }
-                    
-                    
+                        })
+                    }
                 }
             }
         }
+    }
+    var sendCompleteScreen:some View{
+        VStack{
+            Text("Transaction Complete")
+            Button(action: {
+                selectWalletView = 0
+                SendComplete = false
+                isComplete = false
+                isPassed = false
+
+            }, label: {
+                Image(systemName: "arrow.counterclockwise")
+                    .padding(20)
+                    .background(Color.green)
+                    .cornerRadius(50)
+                   .foregroundColor(.white)
+            })
+        }
+        .frame(height: 100)
     }
     func getQRCodeDate(text: String) -> Data? {
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }

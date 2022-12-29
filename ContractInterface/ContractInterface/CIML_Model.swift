@@ -107,7 +107,7 @@ class DownloadCIMLDocument: ObservableObject {
     }
 }
 
-struct Variable_Model:Identifiable {
+struct Variable_Model {
     let id: String = UUID().uuidString
     let varName:String
     let type:String
