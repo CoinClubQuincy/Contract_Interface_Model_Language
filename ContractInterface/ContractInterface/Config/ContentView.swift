@@ -10,8 +10,8 @@ import CoreData
 
 struct ContentView: View {
     @State var selectTab:Int = 1
-    @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.blue, Color("Prime1")]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    @StateObject var networkManager = DownloadCIMLDocument()
+    @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.white, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
+    @StateObject var networkManager = ManageCIMLDocument()
     @StateObject var contractInterface = ContractModel()
     
     var body: some View {
@@ -19,16 +19,13 @@ struct ContentView: View {
             ContractInterface(backgroundColor: $backgroundColor, contractInterface: contractInterface)
                 .tabItem{
                 Image(systemName: "app.badge.checkmark.fill")
-                Text("DApps")}
+                Text("DApplets")}
                 .tag(0)
             BuildView(backgroundColor: $backgroundColor, contractInterface: contractInterface)
                 .tabItem{
                 Image(systemName: "plus.app.fill")
                 Text("Designer")}
                 .tag(1)
-        }
-        .onAppear {
-            networkManager.getCIML()
         }
     }
 }

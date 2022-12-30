@@ -51,10 +51,17 @@ class ContractModel: ObservableObject{ //Build Settings
         SysImageList.removeAll()
         ButtonList.removeAll()
     }
+    func segueAction(page:Int){}
+    
+    func Web3Action(){}
+    
+    private func editCIML(address:String){
+        print("you edited: \(address) DApplet")
+    }
 }
 
 //MARK: Final View // View Comiler
-struct CIMLFinalView: View {
+struct DAppletView: View {
     //@State var gridStatus:Bool = true
     @State var gridPlotView:Color = .black
     @State var gridNumberView:Color = .white
@@ -122,10 +129,9 @@ struct CIMLFinalView: View {
     }
 
 }
-
 //MARK: OverLay View
 struct Overlay: View{// Compiler
-    @StateObject var vmCIML = DownloadCIMLDocument()
+    @StateObject var vmCIML = ManageCIMLDocument()
     var test:Double = 1.0
     @StateObject var contractInterface = ContractModel()
     

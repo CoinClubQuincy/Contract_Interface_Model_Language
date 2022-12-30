@@ -74,15 +74,13 @@ struct CIML: Codable,Identifiable {
         var views, metadata: [String]?
 }
 //MARK: DownloadCIMLDocument
-class DownloadCIMLDocument: ObservableObject {
+class ManageCIMLDocument: ObservableObject {
     @Published var ciml: [CIML] = []
     
     var cancellables = Set<AnyCancellable>()
-    init(){
-        getCIML()
-    }
-    func getCIML(){
-        guard let url = URL(string: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example.json") else { return }
+    init(){}
+    func getCIML(url:String){
+        guard let url = URL(string: url) else { return }
 
         URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
@@ -104,6 +102,13 @@ class DownloadCIMLDocument: ObservableObject {
                 self?.ciml = returnedCIML
             }
             .store(in: &cancellables)
+    }
+    
+    func openCIML(address:String){
+        print("you opend: \(address) DApplet")
+    }
+    func deleteCIML(address:String){
+        print("you deleted: \(address) DApplet")
     }
 }
 

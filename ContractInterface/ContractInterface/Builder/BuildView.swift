@@ -37,7 +37,7 @@ struct BuildView: View {
             backgroundColor
                 .ignoresSafeArea(.all)
         VStack{
-            CIMLFinalView(contractInterface: contractInterface)
+            DAppletView(contractInterface: contractInterface)
             //MARK: BuildTools Bar & Object placeholder
             switch ObjectTypes {
             case 0:

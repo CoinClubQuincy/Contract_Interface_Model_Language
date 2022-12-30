@@ -10,12 +10,11 @@ import SwiftUI
 struct ContractInterface: View {
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
-    @StateObject var vm = DownloadCIMLDocument.init()
+    @StateObject var ciml = ManageCIMLDocument.init()
     @StateObject var contractInterface:ContractModel
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
-    @State var showDapplet:Bool = false
-    
+    @State var showDapplet:[Bool] = [false]
     
     //remove
     @State var presented: Bool = false
@@ -23,7 +22,7 @@ struct ContractInterface: View {
     @State var alertMessage:String = ""
     //
     
-    let data = Array(0...0).map { "DApp \($0)" }
+    let data = Array(0...5).map { "DApp \($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 80))
     ]
@@ -33,7 +32,7 @@ struct ContractInterface: View {
             ZStack {
                 backgroundColor
                     .ignoresSafeArea(.all)
-                    .navigationTitle("DApps")
+                    .navigationTitle("DApplets")
                     .navigationBarItems(
                         leading:
                             NavigationLink(
@@ -61,16 +60,17 @@ struct ContractInterface: View {
                                 }
                             )
                     )
+                //call CoreData to show Dapplet icon and buton press on screen
                 VStack {
                     //MARK: DApplet Grid
-                    if(showDapplet){
-                        CIMLFinalView(contractInterface: contractInterface)
+                    if(showDapplet[0]){
+                        DAppletView(contractInterface: contractInterface)
                             .gesture(DragGesture(minimumDistance: 100, coordinateSpace: .local)
                                                 .onEnded({ value in
                                                     if value.translation.height < 0 {
                                                         // up
                                                         withAnimation {
-                                                            showDapplet = false
+                                                            showDapplet[0] = false
                                                         }
                                                     }
                                                 }))
@@ -87,10 +87,9 @@ struct ContractInterface: View {
                             .cornerRadius(10)
                             .padding(.leading,5)
                             .shadow(radius: 6)
-                        
-                        
+                          
                         Button(action: {
-                            
+                            ciml.getCIML(url: searchBar)
                         }, label: {
                             Image(systemName: "magnifyingglass.circle.fill")
                                 .resizable()
@@ -108,7 +107,8 @@ struct ContractInterface: View {
                                         
                                         Button(action: {
                                             withAnimation {
-                                                showDapplet.toggle()
+                                                showDapplet[0].toggle()
+                                                ciml.openCIML(address: item)
                                             }
                                         }, label: {
                                             VStack{
@@ -124,7 +124,6 @@ struct ContractInterface: View {
                                                     .foregroundColor(.black)
                                             }
                                         })
-                                        
                                     }
 //                                ZStack{
 //                                    Circle()
@@ -135,9 +134,7 @@ struct ContractInterface: View {
 //                                        .font(.footnote)
 //                                        .foregroundColor(.white)
 //                                }
-                                    
                                     .overlay(
-                                        
                                         Button(action: {
                                             showDAppSettings.toggle()
                                         }, label: {
@@ -152,14 +149,11 @@ struct ContractInterface: View {
                                         }
                                         , alignment: .topLeading
                                     )
-                                    
-                                    
                                 }
                             }
                             .padding(.top)
                         }
                     }
-
                     Spacer()
                 }
                 .padding(.top)
