@@ -185,7 +185,7 @@ struct Overlay: View{// Compiler
             print("total TextField: ",finalTextFieldList.count)
             print("total finalsysImageList: ",finalsysImageList.count)
             print("total finalButtonList: ",finalButtonList.count)
-            print("total CIML Data from internet: \(vmCIML.ciml.count)")
+            //print("total CIML Data from internet: \(vmCIML.ciml.count)")
         }
     }
 }

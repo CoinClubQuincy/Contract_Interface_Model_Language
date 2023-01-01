@@ -63,22 +63,49 @@ import Combine
 //  ]
 //}
 
+//{
+//  "cimlVersion": "1.0.1",
+//  "appVersion": "0.0.1",
+//  "contractLanguage": "solidity ^0.8.10",
+//  "name": "LedgerContract",
+//  "symbol": "LC",
+//  "logo": "https\\:ipfs.address.url.jpeg",
+//  "thumbnail": "https\\:ipfs.address.url.jpeg",
+//  "websitelink":"https\\:DAppletSite.com",
+//  "ciml_url":"https\\:DAppletSite.com/ciml",
+//  "description": "This is the description of the Dapp provided",
+//  "networks":["XDC"],
+//  "contractMainnet": ["xdcerG45fCgvgh&%vhvctcr678BB"],
+//  "screenShots":[""],
+//  "abi": "func1(uint _count)",
+//  "byteCode": "--bytes--",
+//  "variables": [""],
+//  "functions": [""],
+//  "objects": [""],
+//  "views": [""],
+//  "metadata": [""]
+//}
+
 
 // MARK: - CIML
-struct CIML: Codable,Identifiable {
-        var id: String = UUID().uuidString
-        var cimlVersion, appVersion, contractLanguage, name: String?
-        var symbol, logo, thumbnail, description: String?
-        var contractOrigin: String?
-        var screenShots, variables, functions, objects: [String]?
-        var views, metadata: [String]?
+struct CIML: Codable {
+    //var id: String = UUID().uuidString
+    var contractLanguage: String?
+    var description: String?
+    var appVersion: String?
+    var websitelink: String?
+    var symbol: String?
+    var name: String?
+    
 }
 //MARK: DownloadCIMLDocument
 class ManageCIMLDocument: ObservableObject {
     @Published var ciml: [CIML] = []
     
     var cancellables = Set<AnyCancellable>()
-    init(){}
+    init(){
+        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
+    }
     func getCIML(url:String){
         guard let url = URL(string: url) else { return }
 
@@ -104,6 +131,7 @@ class ManageCIMLDocument: ObservableObject {
             .store(in: &cancellables)
     }
     
+    func parseCIML(ciml:[CIML]){}
     func openCIML(address:String){
         print("you opend: \(address) DApplet")
     }
@@ -185,4 +213,5 @@ struct CIML_Parser: Identifiable {
     var backgroundColor:Color
     var Object: any Identifiable
 }
+
 
