@@ -87,17 +87,47 @@ import Combine
 //}
 
 
-// MARK: - CIML
+// MARK: - CIMLModel
 struct CIML: Codable {
-    //var id: String = UUID().uuidString
-    var contractLanguage: String?
-    var description: String?
-    var appVersion: String?
-    var websitelink: String?
-    var symbol: String?
-    var name: String?
-    
+    let cimlVersion, appVersion, contractLanguage, name: String
+    let symbol, logo, thumbnail, websitelink: String
+    let cimlURL, welcomeDescription: String
+    let networks, contractMainnet, screenShots: [String]
+    let abi, byteCode: String
+    let variables: [Object]
+    let functions: [String]
+    let objects: [Object]
+    let views: [Views]
+    let metadata: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case cimlVersion, appVersion, contractLanguage, name, symbol, logo, thumbnail, websitelink, cimlURL
+        case welcomeDescription = "description"
+        case networks, contractMainnet, screenShots, abi, byteCode, variables, functions, objects, views, metadata
+    }
 }
+
+// MARK: - Object
+struct Object: Codable {
+    let name, type, value: String
+    let view: Int?
+}
+
+// MARK: - View
+struct Views: Codable {
+    let view: Int
+    let object: String
+    let location: Int
+
+    enum CodingKeys: String, CodingKey {
+        case view = "View"
+        case object = "Object"
+        case location
+    }
+}
+
+
+
 //MARK: DownloadCIMLDocument
 class ManageCIMLDocument: ObservableObject {
     @Published var ciml: [CIML] = []
