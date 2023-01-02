@@ -11,7 +11,7 @@ import CoreData
 struct ContentView: View {
     @State var selectTab:Int = 1
     @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.white, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
-    @StateObject var networkManager = ManageCIMLDocument()
+    //@StateObject var networkManager = ManageCIMLDocument()
     @StateObject var contractInterface = ContractModel()
     
     var body: some View {

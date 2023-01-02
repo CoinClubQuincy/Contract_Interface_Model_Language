@@ -14,21 +14,156 @@
 
 import SwiftUI
 import Foundation
-//MARK: Grid
+import Combine
+//MARK: ContractModel class
+//Hold all code compiling the CIML UI data
 //rename this!!! -> this is the main class that handels the CIML Models
 class ContractModel: ObservableObject{ //Build Settings
     @Published var showGrid:Bool = false
     @Published var testnet:Bool = false // may not need
     @Published var DevEnv:Bool = false
-    
+    //CIML Cache all data from DAppletUI is stored here
     @Published var TextList:[CIMLText] = []
     @Published var TextFieldList:[CIMLTextField] = []
     @Published var ButtonList:[CIMLButton] = []
     @Published var SysImageList:[CIMLSYSImage] = []
+    @Published var VariableList:[Variable_Model] = []
+    //All CIML variables
+    var cimlVersion:String = ""
+    var appVersion:String = ""
+    var contractLanguage:String = ""
+    var name:String = ""
+    var symbol:String = ""
+    var logo:String = ""
+    var thumbnail:String = ""
+    var websitelink:String = ""
+    var cimlURL:String = ""
+    var description:String = ""
+    var networks:Any = []
+    var contractMainnet:Any = []
+    var screenShots: [String] = []
+    var abi:String = ""
+    var byteCode:String = ""
+    var variables: [Object] = []
+    var functions: [String] = []
+    var objects: [Object] = []
+    var views: [Views] = []
+    var metadata: [String] = []
+    //Download data from internet
+    @Published var ciml: [CIML] = []
     
-    
-    func ParseObjects(){}
-    
+    var cancellables = Set<AnyCancellable>()
+    init(){
+        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
+    }
+    func getCIML(url:String){
+        guard let url = URL(string: url) else { return }
+
+        URLSession.shared.dataTaskPublisher(for: url)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .tryMap{ (data,response) -> JSONDecoder.Input in
+
+                guard let response = response as? HTTPURLResponse,response.statusCode >= 200 && response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
+                }
+                return data
+            }
+            .decode(type: [CIML].self, decoder: JSONDecoder())
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error.localizedDescription)
+                }
+            } receiveValue: { [weak self] returnedCIML in
+                print("Completion: \(returnedCIML)")
+                self?.ciml = returnedCIML
+            }
+            .store(in: &cancellables)
+        
+        //parseCIML(ciml: ciml[0])
+    }
+    func parseCIML(ciml:[CIML]){
+        //Parse CIML Header and Metadata
+        cimlVersion = ciml[0].cimlVersion ?? ""
+        appVersion = ciml[0].appVersion ?? ""
+        contractLanguage = ciml[0].contractLanguage ?? ""
+        name = ciml[0].name ?? ""
+        symbol = ciml[0].symbol ?? ""
+        logo = ciml[0].logo ?? ""
+        thumbnail = ciml[0].thumbnail ?? ""
+        websitelink = ciml[0].websitelink ?? ""
+        cimlURL = ciml[0].cimlURL ?? ""
+        description = ciml[0].description ?? ""
+        networks = ciml[0].networks[0] ?? ""
+        contractMainnet = ciml[0].contractMainnet[0] ?? ""
+        screenShots = ciml[0].screenShots ?? ""
+        abi = ciml[0].abi ?? ""
+        byteCode = ciml[0].byteCode ?? ""
+        //Parse CIML Objects
+        ForEach(ciml[0].objects){obj in
+            if (obj.type == "text"){
+                //add default data optionals
+                TextList.append(CIMLText(text: obj.value,
+                                         foreGroundColor: obj.foreGroundColor,
+                                         font: obj.font,
+                                         frame: [obj.frame[0],obj.frame[0]],
+                                         alignment: obj.alignment,
+                                         backgroundColor: obj.backgroundColor,
+                                         cornerRadius: obj.cornerRadius,
+                                         bold: obj.bold,
+                                         fontWeight:obj.fontWeight,
+                                         shadow: obj.shadow,
+                                         padding: obj.padding,
+                                         location: obj.location))
+            }else if (obj.type == "textField"){
+                TextFieldList.append(CIMLTextField(text: <#T##String#>,
+                                                   textField: <#T##String#>,
+                                                   foreGroundColor: <#T##Color#>,
+                                                   frame: <#T##[CGFloat]#>,
+                                                   alignment: <#T##Edge.Set#>,
+                                                   backgroundColor: <#T##Color#>,
+                                                   cornerRadius: <#T##CGFloat#>,
+                                                   shadow: <#T##CGFloat#>,
+                                                   padding: <#T##CGFloat#>,
+                                                   location: <#T##Int#>))
+            }else if (obj.type == "button"){
+                ButtonList.append(CIMLButton(text: <#T##String#>,
+                                             isIcon: <#T##Bool#>,
+                                             foreGroundColor: <#T##Color#>,
+                                             font: <#T##Font#>,
+                                             frame: <#T##[CGFloat]#>,
+                                             alignment: <#T##Alignment#>,
+                                             backgroundColor: <#T##Color#>,
+                                             cornerRadius: <#T##CGFloat#>,
+                                             bold: <#T##Bool#>,
+                                             fontWeight: <#T##Font.Weight#>,
+                                             shadow: <#T##CGFloat#>,
+                                             padding: <#T##CGFloat#>,
+                                             location: <#T##Int#>))
+            }else if (obj.type == "sysimage"){
+                SysImageList.append(CIMLSYSImage(name: <#T##String#>,
+                                                 frame: <#T##[CGFloat]#>,
+                                                 padding: <#T##CGFloat#>,
+                                                 color: <#T##Color#>,
+                                                 location: <#T##Int#>))
+            } else if (obj.type == "var"){
+                VariableList.append(Variable_Model(varName: <#T##String#>,
+                                                   type: <#T##String#>,
+                                                   value: <#T##String#>))
+            }
+        }
+        //variables: [Object] = []
+        //functions: [String] = []
+        //objects: [Object] = []
+        //views: [Views] = []
+        //metadata: [String] = []
+    }
+    func openCIML(address:String){
+        print("you opend: \(address) DApplet")
+    }
+    func deleteCIML(address:String){
+        print("you deleted: \(address) DApplet")
+    }
     //add Objects to MoodelViews
     func addBuildText(token:CIMLText){
         if(DevEnv){ TextList.append(token)} else { return }
@@ -49,6 +184,7 @@ class ContractModel: ObservableObject{ //Build Settings
         SysImageList.removeAll()
         ButtonList.removeAll()
     }
+    //Button Actions
     func segueAction(page:Int){}
     
     func Web3Action(){}
@@ -129,7 +265,7 @@ struct DAppletView: View {
 }
 //MARK: OverLay View
 struct Overlay: View{// Compiler
-    @StateObject var vmCIML = ManageCIMLDocument()
+    //@StateObject var vmCIML = ManageCIMLDocument()
     var test:Double = 1.0
     @StateObject var contractInterface = ContractModel()
     
@@ -259,7 +395,7 @@ struct SYSIMAGE:View{
             .padding(padding)
         }
 }
-//MARK: BUTTUNS View
+//MARK: BUTTONS View
 struct BUTTONS:View{
     var text:String
     var isIcon:Bool

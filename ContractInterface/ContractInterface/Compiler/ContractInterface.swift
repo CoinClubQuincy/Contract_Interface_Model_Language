@@ -10,7 +10,7 @@ import SwiftUI
 struct ContractInterface: View {
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
-    @StateObject var ciml = ManageCIMLDocument.init()
+    //@StateObject var ciml = ManageCIMLDocument.init()
     @StateObject var contractInterface:ContractModel
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
@@ -89,7 +89,7 @@ struct ContractInterface: View {
                             .shadow(radius: 6)
                           
                         Button(action: {
-                            ciml.getCIML(url: searchBar)
+                            contractInterface.getCIML(url: searchBar)
                             print("CIML Button Pressed")
                         }, label: {
                             Image(systemName: "magnifyingglass.circle.fill")
@@ -109,7 +109,7 @@ struct ContractInterface: View {
                                         Button(action: {
                                             withAnimation {
                                                 showDapplet[0].toggle()
-                                                ciml.openCIML(address: item)
+                                                contractInterface.openCIML(address: item)
                                             }
                                         }, label: {
                                             VStack{

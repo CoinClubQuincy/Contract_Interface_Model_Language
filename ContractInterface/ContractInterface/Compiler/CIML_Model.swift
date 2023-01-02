@@ -5,63 +5,8 @@
 //  Created by Quincy Jones on 12/28/22.
 //
 
-import Foundation
 import SwiftUI
 import Foundation
-import Combine
-// This file was generated from JSON Schema using quicktype, do not modify it directly.To parse the JSON, add this file to your project and do:   let welcome = try? newJSONDecoder().decode(Welcome.self, from: jsonData)
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let welcome = try? newJSONDecoder().decode(Welcome.self, from: jsonData)
-
-//{
-//  "cimlVersion": "1.0.1",
-//  "appVersion": "0.0.1",
-//  "contractLanguage": "solidity ^0.8.10",
-//  "name": "LedgerContract",
-//  "symbol": "LC",
-//  "logo": "https\\:ipfs.address.url.jpeg",
-//  "thumbnail": "https\\:ipfs.address.url.jpeg",
-//  "websitelink":"https\\:DAppletSite.com",
-//  "ciml_url":"https\\:DAppletSite.com/ciml",
-//  "description": "This is the description of the Dapp provided",
-//  "networks":["XDC"],
-//  "contractMainnet": ["xdcerG45fCgvgh&%vhvctcr678BB"],
-//  "screenShots":[""],
-//  "abi": "func1(uint _count)",
-//  "byteCode": "--bytes--",
-//  "variables": [
-//    {
-//      "name": "var1",
-//      "type": "String",
-//      "value": "this is an object"
-//    }
-//  ],
-//  "functions": ["func1( _count)"],
-//  "objects": [
-//    {
-//      "name": "text1",
-//      "type": "Text",
-//      "value": "var1"
-//    }
-//  ],
-//  "views": [
-//    {
-//      "View": 0,
-//      "type": "0",
-//      "value": "Background(blue)",
-//      "obj": "text1",
-//      "location": 55
-//    }
-//  ],
-//  "metadata": [
-//    "Top Descriptor",
-//    "xdc",
-//    "document",
-//    "test"
-//  ]
-//}
 
 //{
 //  "cimlVersion": "1.0.1",
@@ -91,7 +36,7 @@ import Combine
 struct CIML: Codable {
     let cimlVersion, appVersion, contractLanguage, name: String
     let symbol, logo, thumbnail, websitelink: String
-    let cimlURL, welcomeDescription: String
+    let cimlURL, description: String
     let networks, contractMainnet, screenShots: [String]
     let abi, byteCode: String
     let variables: [Object]
@@ -102,15 +47,16 @@ struct CIML: Codable {
 
     enum CodingKeys: String, CodingKey {
         case cimlVersion, appVersion, contractLanguage, name, symbol, logo, thumbnail, websitelink, cimlURL
-        case welcomeDescription = "description"
+        case description = "description"
         case networks, contractMainnet, screenShots, abi, byteCode, variables, functions, objects, views, metadata
     }
 }
 
 // MARK: - Object
-struct Object: Codable {
+struct Object: Codable,Identifiable {
     //let name, type, value: String
     //let view: Int?
+    let id: String = UUID().uuidString
     var backgroundColor: String?
     var type: String?
     var frame: [Int]?
@@ -158,48 +104,6 @@ struct Views: Codable {
         case view = "View"
         case object = "Object"
         case location
-    }
-}
-
-//MARK: DownloadCIMLDocument
-class ManageCIMLDocument: ObservableObject {
-    @Published var ciml: [CIML] = []
-    
-    var cancellables = Set<AnyCancellable>()
-    init(){
-        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
-    }
-    func getCIML(url:String){
-        guard let url = URL(string: url) else { return }
-
-        URLSession.shared.dataTaskPublisher(for: url)
-            .subscribe(on: DispatchQueue.global(qos: .background))
-            .receive(on: DispatchQueue.main)
-            .tryMap{ (data,response) -> JSONDecoder.Input in
-
-                guard let response = response as? HTTPURLResponse,response.statusCode >= 200 && response.statusCode < 300 else {
-                    throw URLError(.badServerResponse)
-                }
-                return data
-            }
-            .decode(type: [CIML].self, decoder: JSONDecoder())
-            .sink { completion in
-                if case .failure(let error) = completion {
-                    print(error.localizedDescription)
-                }
-            } receiveValue: { [weak self] returnedCIML in
-                print("Completion: \(returnedCIML)")
-                self?.ciml = returnedCIML
-            }
-            .store(in: &cancellables)
-    }
-    
-    func parseCIML(ciml:[CIML]){}
-    func openCIML(address:String){
-        print("you opend: \(address) DApplet")
-    }
-    func deleteCIML(address:String){
-        print("you deleted: \(address) DApplet")
     }
 }
 

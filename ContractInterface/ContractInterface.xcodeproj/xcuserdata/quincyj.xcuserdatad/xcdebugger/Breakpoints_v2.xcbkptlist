@@ -62,8 +62,8 @@
             filePath = "ContractInterface/Compiler/CIML_Model.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
