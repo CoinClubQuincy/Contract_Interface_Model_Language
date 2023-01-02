@@ -28,6 +28,7 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var ButtonList:[CIMLButton] = []
     @Published var SysImageList:[CIMLSYSImage] = []
     @Published var VariableList:[Variable_Model] = []
+    @Published var ViewList:[Views] = []
     //All CIML variables
     var cimlVersion:String = ""
     var appVersion:String = ""
@@ -49,6 +50,7 @@ class ContractModel: ObservableObject{ //Build Settings
     var objects: [Object] = []
     var views: [Views] = []
     var metadata: [String] = []
+    var textField: String = ""
     //Download data from internet
     @Published var ciml: [CIML] = []
     
@@ -83,81 +85,97 @@ class ContractModel: ObservableObject{ //Build Settings
         //parseCIML(ciml: ciml[0])
     }
     func parseCIML(ciml:[CIML]){
-        //Parse CIML Header and Metadata
-        cimlVersion = ciml[0].cimlVersion ?? ""
-        appVersion = ciml[0].appVersion ?? ""
-        contractLanguage = ciml[0].contractLanguage ?? ""
-        name = ciml[0].name ?? ""
-        symbol = ciml[0].symbol ?? ""
-        logo = ciml[0].logo ?? ""
-        thumbnail = ciml[0].thumbnail ?? ""
-        websitelink = ciml[0].websitelink ?? ""
-        cimlURL = ciml[0].cimlURL ?? ""
-        description = ciml[0].description ?? ""
-        networks = ciml[0].networks[0] ?? ""
-        contractMainnet = ciml[0].contractMainnet[0] ?? ""
-        screenShots = ciml[0].screenShots ?? ""
-        abi = ciml[0].abi ?? ""
-        byteCode = ciml[0].byteCode ?? ""
         //Parse CIML Objects
-        ForEach(ciml[0].objects){obj in
+        for obj in ciml[0].objects {
+            //initaillize any atributes that have unique data types
+            if(obj.alignment == "center" || obj.alignment == "leading" || obj.alignment == "trailing" ){
+                objectAttributes_alignment(objectAttribute: obj.alignment ?? "center")
+            } else if (obj.fontWeight == "regular" || obj.fontWeight == "heavy" || obj.fontWeight == "light" ){
+                objectAttributes_fontWeight(objectAttribute: obj.fontWeight ?? "regular")
+            } else if (obj.backgroundColor == "black" /*all major colors */){
+                objectAttributes_backgroundColor(objectAttribute: obj.backgroundColor ?? "clear")
+            }
+                
             if (obj.type == "text"){
                 //add default data optionals
-                TextList.append(CIMLText(text: obj.value,
-                                         foreGroundColor: obj.foreGroundColor,
-                                         font: obj.font,
-                                         frame: [obj.frame[0],obj.frame[0]],
-                                         alignment: obj.alignment,
-                                         backgroundColor: obj.backgroundColor,
-                                         cornerRadius: obj.cornerRadius,
-                                         bold: obj.bold,
-                                         fontWeight:obj.fontWeight,
-                                         shadow: obj.shadow,
-                                         padding: obj.padding,
-                                         location: obj.location))
+                TextList.append(CIMLText(text: obj.value ?? "",
+                                         foreGroundColor: Color(obj.foreGroundColor ?? ".black"),
+                                         font: Font(obj.font as! CTFont),
+                                         frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[0] ?? 50)],
+                                         alignment: .center,
+                                         backgroundColor: Color(.clear),
+                                         cornerRadius: CGFloat(obj.cornerRadius ?? 0),
+                                         bold: Bool(obj.bold ?? false),
+                                         fontWeight: .regular,
+                                         shadow: CGFloat(obj.shadow ?? 0),
+                                         padding: CGFloat(obj.padding ?? 0),
+                                         location: Int(obj.location ?? 0)))
             }else if (obj.type == "textField"){
-                TextFieldList.append(CIMLTextField(text: <#T##String#>,
-                                                   textField: <#T##String#>,
-                                                   foreGroundColor: <#T##Color#>,
-                                                   frame: <#T##[CGFloat]#>,
-                                                   alignment: <#T##Edge.Set#>,
-                                                   backgroundColor: <#T##Color#>,
-                                                   cornerRadius: <#T##CGFloat#>,
-                                                   shadow: <#T##CGFloat#>,
-                                                   padding: <#T##CGFloat#>,
-                                                   location: <#T##Int#>))
+//                TextFieldList.append(CIMLTextField(text: obj.value,
+//                                                   textField: obj.textField,
+//                                                   foreGroundColor: obj.foreGroundColor,
+//                                                   frame: [Int(obj.frame[0]),Int(obj.frame[1])],
+//                                                   alignment: <#T##Edge.Set#>,
+//                                                   backgroundColor: <#T##Color#>,
+//                                                   cornerRadius: <#T##CGFloat#>,
+//                                                   shadow: <#T##CGFloat#>,
+//                                                   padding: <#T##CGFloat#>,
+//                                                   location: <#T##Int#>))
             }else if (obj.type == "button"){
-                ButtonList.append(CIMLButton(text: <#T##String#>,
-                                             isIcon: <#T##Bool#>,
-                                             foreGroundColor: <#T##Color#>,
-                                             font: <#T##Font#>,
-                                             frame: <#T##[CGFloat]#>,
-                                             alignment: <#T##Alignment#>,
-                                             backgroundColor: <#T##Color#>,
-                                             cornerRadius: <#T##CGFloat#>,
-                                             bold: <#T##Bool#>,
-                                             fontWeight: <#T##Font.Weight#>,
-                                             shadow: <#T##CGFloat#>,
-                                             padding: <#T##CGFloat#>,
-                                             location: <#T##Int#>))
+//                ButtonList.append(CIMLButton(text: <#T##String#>,
+//                                             isIcon: <#T##Bool#>,
+//                                             foreGroundColor: <#T##Color#>,
+//                                             font: <#T##Font#>,
+//                                             frame: <#T##[CGFloat]#>,
+//                                             alignment: <#T##Alignment#>,
+//                                             backgroundColor: <#T##Color#>,
+//                                             cornerRadius: <#T##CGFloat#>,
+//                                             bold: <#T##Bool#>,
+//                                             fontWeight: <#T##Font.Weight#>,
+//                                             shadow: <#T##CGFloat#>,
+//                                             padding: <#T##CGFloat#>,
+//                                             location: <#T##Int#>))
             }else if (obj.type == "sysimage"){
-                SysImageList.append(CIMLSYSImage(name: <#T##String#>,
-                                                 frame: <#T##[CGFloat]#>,
-                                                 padding: <#T##CGFloat#>,
-                                                 color: <#T##Color#>,
-                                                 location: <#T##Int#>))
+//                SysImageList.append(CIMLSYSImage(name: <#T##String#>,
+//                                                 frame: <#T##[CGFloat]#>,
+//                                                 padding: <#T##CGFloat#>,
+//                                                 color: <#T##Color#>,
+//                                                 location: <#T##Int#>))
             } else if (obj.type == "var"){
-                VariableList.append(Variable_Model(varName: <#T##String#>,
-                                                   type: <#T##String#>,
-                                                   value: <#T##String#>))
+                VariableList.append(Variable_Model(varName: obj.name ?? "varName Error",
+                                                   type: obj.type ?? "varType Error",
+                                                   value: obj.value ?? "varValue Error"))
+            } else if (obj.type == "view"){
+                ViewList.append(Views(view: Int(obj.location ?? 0),
+                                      object: obj.type ?? "viewType Error",
+                                      location: Int(obj.location ?? 0)))
+            } else {
+                print("Error incorrect object type: \(String(describing: obj.type))")
             }
         }
-        //variables: [Object] = []
-        //functions: [String] = []
-        //objects: [Object] = []
-        //views: [Views] = []
-        //metadata: [String] = []
     }
+    func objectAttributes_alignment(objectAttribute:String){
+        if(objectAttribute == ""){
+            
+        } else if (objectAttribute == ""){
+            
+        }
+    }
+    func objectAttributes_fontWeight(objectAttribute:String){
+        if(objectAttribute == ""){
+            
+        } else if (objectAttribute == ""){
+            
+        }
+    }
+    func objectAttributes_backgroundColor(objectAttribute:String){
+        if(objectAttribute == ""){
+            
+        } else if (objectAttribute == ""){
+            
+        }
+    }
+    
     func openCIML(address:String){
         print("you opend: \(address) DApplet")
     }
