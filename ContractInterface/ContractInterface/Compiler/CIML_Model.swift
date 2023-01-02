@@ -109,8 +109,43 @@ struct CIML: Codable {
 
 // MARK: - Object
 struct Object: Codable {
-    let name, type, value: String
-    let view: Int?
+    //let name, type, value: String
+    //let view: Int?
+    var backgroundColor: String?
+    var type: String?
+    var frame: [Int]?
+    var fontWeight: String?
+    var cornerRadius: CGFloat?
+    var font: String?
+    var padding: Int?
+    var name: String?
+    var foreGroundColor: String?
+    var bold: Bool?
+    var location: Int?
+    var value: String?
+    var alignment: String?
+    var shadow: CGFloat?
+    //textfield
+    var textField: String?
+    //Icon has generic properties
+    
+    enum CodingKeys: String, CodingKey {
+      case backgroundColor
+      case type
+      case frame
+      case fontWeight
+      case cornerRadius
+      case font
+      case padding
+      case name
+      case foreGroundColor
+      case bold
+      case location
+      case value
+      case alignment
+      case shadow
+      case textField
+    }
 }
 
 // MARK: - View
@@ -125,8 +160,6 @@ struct Views: Codable {
         case location
     }
 }
-
-
 
 //MARK: DownloadCIMLDocument
 class ManageCIMLDocument: ObservableObject {
@@ -171,7 +204,7 @@ class ManageCIMLDocument: ObservableObject {
 }
 
 //MARK: Object ViewModels
-struct Variable_Model {
+struct Variable_Model: Codable{
     let id: String = UUID().uuidString
     let varName:String
     let type:String

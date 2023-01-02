@@ -26,14 +26,12 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var ButtonList:[CIMLButton] = []
     @Published var SysImageList:[CIMLSYSImage] = []
     
-    func addBuildText(text:String,foreGroundColor:Color,
-                      font:Font,frame:[CGFloat],alignment:Alignment,
-                      backgroundColor:Color,cornerRadius:CGFloat,
-                      bold:Bool,fontWeight:Font.Weight,shadow:CGFloat,
-                      padding:CGFloat,location:Int){
-        if(DevEnv){
-            TextList.append(CIMLText(text: text, foreGroundColor: foreGroundColor, font: font,frame: frame, alignment: alignment, backgroundColor: backgroundColor, cornerRadius: cornerRadius, bold: bold, fontWeight: fontWeight, shadow: shadow, padding: padding,location: location))
-        } else { return }
+    
+    func ParseObjects(){}
+    
+    //add Objects to MoodelViews
+    func addBuildText(token:CIMLText){
+        if(DevEnv){ TextList.append(token)} else { return }
     }
     func addBuildTextField(token:CIMLTextField){
         if(DevEnv){ TextFieldList.append(token) } else { return }

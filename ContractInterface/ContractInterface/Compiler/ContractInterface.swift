@@ -83,19 +83,20 @@ struct ContractInterface: View {
                             .frame(height: 50)
                             .padding(.leading)
                             .background(Color(.white))
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .cornerRadius(10)
                             .padding(.leading,5)
                             .shadow(radius: 6)
                           
                         Button(action: {
                             ciml.getCIML(url: searchBar)
+                            print("CIML Button Pressed")
                         }, label: {
                             Image(systemName: "magnifyingglass.circle.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundColor(.black)
-                                .frame(width: 55,height: 55, alignment: .center)
+                                .frame(width: 45, alignment: .center)
                                 .cornerRadius(10)
                                 .padding(.trailing,10)
                         })
