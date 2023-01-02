@@ -5,13 +5,6 @@
 //  Created by Quincy Jones on 12/16/22.
 //
 
-//
-//  CIML_Compiler.swift
-//  CoinClubCrypto
-//
-//  Created by Quincy Jones on 11/5/22.
-//
-
 import SwiftUI
 import Foundation
 import Combine
@@ -53,13 +46,16 @@ class ContractModel: ObservableObject{ //Build Settings
     var textField: String = ""
     //Download data from internet
     @Published var ciml: [CIML] = []
+    let totalViewCount:Int = 50
     
     var cancellables = Set<AnyCancellable>()
     init(){
-        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
+        //getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
+        parseCIML(ciml: getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json"))
     }
-    func getCIML(url:String){
-        guard let url = URL(string: url) else { return }
+    //MARK: get ciml func
+    func getCIML(url:String) -> [CIML]{
+        guard let url = URL(string: url)else { return [] }
 
         URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .background))
@@ -81,12 +77,12 @@ class ContractModel: ObservableObject{ //Build Settings
                 self?.ciml = returnedCIML
             }
             .store(in: &cancellables)
-        
-        //parseCIML(ciml: ciml[0])
+        return self.ciml
     }
+    //MARK: Parse Function
     func parseCIML(ciml:[CIML]){
         //Parse CIML Objects
-        for obj in ciml[0].objects {
+        for obj in objects {
             //initaillize any atributes that have unique data types
             if(obj.alignment == "center" || obj.alignment == "leading" || obj.alignment == "trailing" ){
                 objectAttributes_alignment(objectAttribute: obj.alignment ?? "center")
@@ -95,7 +91,7 @@ class ContractModel: ObservableObject{ //Build Settings
             } else if (obj.backgroundColor == "black" /*all major colors */){
                 objectAttributes_backgroundColor(objectAttribute: obj.backgroundColor ?? "clear")
             }
-                
+            //MARK: Parse Text
             if (obj.type == "text"){
                 //add default data optionals
                 TextList.append(CIMLText(text: obj.value ?? "",
@@ -109,7 +105,8 @@ class ContractModel: ObservableObject{ //Build Settings
                                          fontWeight: .regular,
                                          shadow: CGFloat(obj.shadow ?? 0),
                                          padding: CGFloat(obj.padding ?? 0),
-                                         location: Int(obj.location ?? 0)))
+                                         location: 0))
+            //MARK: Parse TextField
             }else if (obj.type == "textField"){
 //                TextFieldList.append(CIMLTextField(text: obj.value,
 //                                                   textField: obj.textField,
@@ -121,6 +118,7 @@ class ContractModel: ObservableObject{ //Build Settings
 //                                                   shadow: <#T##CGFloat#>,
 //                                                   padding: <#T##CGFloat#>,
 //                                                   location: <#T##Int#>))
+            //MARK: Parse Button
             }else if (obj.type == "button"){
 //                ButtonList.append(CIMLButton(text: <#T##String#>,
 //                                             isIcon: <#T##Bool#>,
@@ -135,25 +133,47 @@ class ContractModel: ObservableObject{ //Build Settings
 //                                             shadow: <#T##CGFloat#>,
 //                                             padding: <#T##CGFloat#>,
 //                                             location: <#T##Int#>))
+            //MARK: Parse SysImage
             }else if (obj.type == "sysimage"){
 //                SysImageList.append(CIMLSYSImage(name: <#T##String#>,
 //                                                 frame: <#T##[CGFloat]#>,
 //                                                 padding: <#T##CGFloat#>,
 //                                                 color: <#T##Color#>,
 //                                                 location: <#T##Int#>))
-            } else if (obj.type == "var"){
-                VariableList.append(Variable_Model(varName: obj.name ?? "varName Error",
-                                                   type: obj.type ?? "varType Error",
-                                                   value: obj.value ?? "varValue Error"))
-            } else if (obj.type == "view"){
-                ViewList.append(Views(view: Int(obj.location ?? 0),
-                                      object: obj.type ?? "viewType Error",
-                                      location: Int(obj.location ?? 0)))
             } else {
                 print("Error incorrect object type: \(String(describing: obj.type))")
             }
         }
+        
+        //MARK: Parse Vars
+        for vars in variables{
+            if (vars.type == "var"){
+                VariableList.append(Variable_Model(varName: vars.name ?? "varName Error",
+                                                   type: vars.type ?? "varType Error",
+                                                   value: vars.value ?? "varValue Error"))
+            } else {
+                print("Error incorrect variable type: \(String(describing: vars.type))")
+            }
+        }
+        //MARK: Parse Views
+        for viewCount in 0...totalViewCount{
+            for view in views{
+                if (view.view == viewCount){
+                    ViewList.append(Views(view: view.view ,
+                                          object: view.object ,
+                                          location: view.location))
+                } else {
+                    print("Error incorrect view object: \(String(describing: view.object))")
+                }
+            }
+        }
+        print("total TextList: ",TextList.count)
+        print("total TextField: ",TextFieldList.count)
+        print("total SysImageList: ",SysImageList.count)
+        print("total ButtonList: ",ButtonList.count)
+        
     }
+    //MARK: Object attributes functions
     func objectAttributes_alignment(objectAttribute:String){
         if(objectAttribute == ""){
             
@@ -176,6 +196,7 @@ class ContractModel: ObservableObject{ //Build Settings
         }
     }
     
+    //MARK: Manage CIML Document
     func openCIML(address:String){
         print("you opend: \(address) DApplet")
     }
@@ -292,9 +313,8 @@ struct Overlay: View{// Compiler
     @State var finalButtonList:[CIMLButton] = []
     @State var finalsysImageList:[CIMLSYSImage] = []
     var cordinates:Int
-    
+    //MARK: DApplet Projector
     var body: some View{
-        
         ZStack {
             ForEach(finalTextList) { list in
                 if cordinates == list.location {
@@ -334,7 +354,7 @@ struct Overlay: View{// Compiler
                 finalButtonList.append(CIMLButton(text: "gear",isIcon: true,font: .title, location: 1))
             
             print("total finalTextList: ",finalTextList.count)
-            print("total TextField: ",finalTextFieldList.count)
+            print("total finalTextField: ",finalTextFieldList.count)
             print("total finalsysImageList: ",finalsysImageList.count)
             print("total finalButtonList: ",finalButtonList.count)
             //print("total CIML Data from internet: \(vmCIML.ciml.count)")

@@ -114,6 +114,7 @@ struct Variable_Model: Codable{
     let type:String
     var value:String
 }
+//MARK: Function Model
 struct Function_Model:Identifiable {
     let id: String = UUID().uuidString
     let funcName:String
@@ -121,6 +122,7 @@ struct Function_Model:Identifiable {
     var inputValue:[String]
     var outputValue:[String]
 }
+//MARK: CIMLText
 struct CIMLText: Identifiable {
     let id: String = UUID().uuidString
     var text:String
@@ -136,6 +138,7 @@ struct CIMLText: Identifiable {
     var padding:CGFloat = 20
     var location:Int
 }
+//MARK: CIMLTextField
 struct CIMLTextField: Identifiable {
     let id: String = UUID().uuidString
     var text:String
@@ -149,6 +152,7 @@ struct CIMLTextField: Identifiable {
     var padding:CGFloat = 20
     var location:Int
 }
+//MARK: CIMLSYSImage
 struct CIMLSYSImage: Identifiable {
     let id: String = UUID().uuidString
     var name:String
@@ -156,8 +160,8 @@ struct CIMLSYSImage: Identifiable {
     var padding:CGFloat = 20
     var color:Color = .black
     var location:Int
-  
 }
+//MARK: CIMLButton
 struct CIMLButton: Identifiable {
     let id: String = UUID().uuidString
     var text:String
@@ -173,12 +177,6 @@ struct CIMLButton: Identifiable {
     var shadow:CGFloat = 10.0
     var padding:CGFloat = 20
     var location:Int
-}
-
-struct CIML_Parser: Identifiable {
-    let id: String = UUID().uuidString
-    var backgroundColor:Color
-    var Object: any Identifiable
 }
 
 
