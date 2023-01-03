@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ContractDoc" representedClassName="ContractDoc" syncable="YES" codeGenerationType="class">
+        <attribute name="abi" optional="YES" attributeType="String"/>
+        <attribute name="appVersion" optional="YES" attributeType="String"/>
+        <attribute name="byteCode" optional="YES" attributeType="String"/>
+        <attribute name="cimlDescription" optional="YES" attributeType="String"/>
+        <attribute name="cimlURL" optional="YES" attributeType="String"/>
+        <attribute name="cimlVersion" optional="YES" attributeType="String"/>
+        <attribute name="contractLanguage" optional="YES" attributeType="String"/>
+        <attribute name="contractMainnet" optional="YES" attributeType="Transformable"/>
+        <attribute name="logo" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="networks" optional="YES" attributeType="Transformable"/>
+        <attribute name="screenShots" optional="YES" attributeType="Transformable"/>
+        <attribute name="symbol" optional="YES" attributeType="String"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
+        <attribute name="websiteLink" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="FunctionDoc" representedClassName="FunctionDoc" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ObjectDoc" representedClassName="ObjectDoc" syncable="YES" codeGenerationType="class">
+        <attribute name="bold" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="cornerRadius" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fontWeight" optional="YES" attributeType="String"/>
+        <attribute name="foregroundColor" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="padding" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="shadow" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="VariableDoc" representedClassName="VariableDoc" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ViewDoc" representedClassName="ViewDoc" syncable="YES" codeGenerationType="class">
+        <attribute name="location" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="object" optional="YES" attributeType="String"/>
+        <attribute name="view" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+</model>

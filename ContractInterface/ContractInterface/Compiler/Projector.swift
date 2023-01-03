@@ -8,9 +8,9 @@
 import SwiftUI
 import Foundation
 import Combine
-//MARK: ContractModel class
 //Hold all code compiling the CIML UI data
 //rename this!!! -> this is the main class that handels the CIML Models
+//MARK: ContractModel class
 class ContractModel: ObservableObject{ //Build Settings
     @Published var showGrid:Bool = false
     @Published var testnet:Bool = false // may not need
@@ -52,6 +52,11 @@ class ContractModel: ObservableObject{ //Build Settings
     init(){
         //getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
         parseCIML(ciml: getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json"))
+        print("total TextList: ",TextList.count)
+        print("total TextField: ",TextFieldList.count)
+        print("total SysImageList: ",SysImageList.count)
+        print("total ButtonList: ",ButtonList.count)
+        
     }
     //MARK: get ciml func
     func getCIML(url:String) -> [CIML]{
@@ -167,11 +172,6 @@ class ContractModel: ObservableObject{ //Build Settings
                 }
             }
         }
-        print("total TextList: ",TextList.count)
-        print("total TextField: ",TextFieldList.count)
-        print("total SysImageList: ",SysImageList.count)
-        print("total ButtonList: ",ButtonList.count)
-        
     }
     //MARK: Object attributes functions
     func objectAttributes_alignment(objectAttribute:String){

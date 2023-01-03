@@ -14,6 +14,7 @@
 		6672CE27295D3BC400A1EAE4 /* Wallets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CE26295D3BC400A1EAE4 /* Wallets.swift */; };
 		6672CE2C295E2A1100A1EAE4 /* BuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CE2B295E2A1100A1EAE4 /* BuildView.swift */; };
 		6672CE2E295E2B3800A1EAE4 /* DAppletSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CE2D295E2B3800A1EAE4 /* DAppletSettings.swift */; };
+		66A6CE652964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66A6CE632964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld */; };
 		66D8A5532935A42A00D27FA8 /* ContractInterfaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5522935A42A00D27FA8 /* ContractInterfaceApp.swift */; };
 		66D8A5552935A42A00D27FA8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5542935A42A00D27FA8 /* Persistence.swift */; };
 		66D8A5582935A42A00D27FA8 /* ContractInterface.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5562935A42A00D27FA8 /* ContractInterface.xcdatamodeld */; };
@@ -50,6 +51,7 @@
 		6672CE26295D3BC400A1EAE4 /* Wallets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallets.swift; sourceTree = "<group>"; };
 		6672CE2B295E2A1100A1EAE4 /* BuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildView.swift; sourceTree = "<group>"; };
 		6672CE2D295E2B3800A1EAE4 /* DAppletSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppletSettings.swift; sourceTree = "<group>"; };
+		66A6CE642964A5A5004FD7E2 /* CIMLDocuments.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CIMLDocuments.xcdatamodel; sourceTree = "<group>"; };
 		66D8A54F2935A42A00D27FA8 /* ContractInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContractInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D8A5522935A42A00D27FA8 /* ContractInterfaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInterfaceApp.swift; sourceTree = "<group>"; };
 		66D8A5542935A42A00D27FA8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		6672CE2A295E273200A1EAE4 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				66A6CE632964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld */,
 				66D8A5592935A42A00D27FA8 /* ContentView.swift */,
 				66D8A5522935A42A00D27FA8 /* ContractInterfaceApp.swift */,
 				66D8A5542935A42A00D27FA8 /* Persistence.swift */,
@@ -319,6 +322,7 @@
 				661035C6295CC7CD0065A3D1 /* CIML_Model.swift in Sources */,
 				66D8A5552935A42A00D27FA8 /* Persistence.swift in Sources */,
 				6672CE27295D3BC400A1EAE4 /* Wallets.swift in Sources */,
+				66A6CE652964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld in Sources */,
 				665A55DD2950C66B003D85FC /* BuildTools.swift in Sources */,
 				6672CE2E295E2B3800A1EAE4 /* DAppletSettings.swift in Sources */,
 			);
@@ -683,6 +687,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		66A6CE632964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				66A6CE642964A5A5004FD7E2 /* CIMLDocuments.xcdatamodel */,
+			);
+			currentVersion = 66A6CE642964A5A5004FD7E2 /* CIMLDocuments.xcdatamodel */;
+			path = CIMLDocuments.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		66D8A5562935A42A00D27FA8 /* ContractInterface.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
