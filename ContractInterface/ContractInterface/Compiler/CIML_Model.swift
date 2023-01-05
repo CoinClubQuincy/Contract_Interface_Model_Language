@@ -67,7 +67,7 @@ struct Object: Codable,Identifiable {
     var name: String?
     var foreGroundColor: String?
     var bold: Bool?
-    var location: Int?
+    var location: Int? // remove
     var value: String?
     var alignment: String?
     var shadow: CGFloat?

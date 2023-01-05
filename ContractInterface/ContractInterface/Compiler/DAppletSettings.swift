@@ -11,7 +11,16 @@ struct DAppletSettings: View {
     @State var alertTitle:String = ""
     @State var alertMessage:String = ""
     @State var presented: Bool = false
-    let DevEnv:Bool
+    @State var totalNotifications:Int = 0
+    
+    var DevEnv:Bool
+    var newDapplet:Bool
+    @State var testnets:Bool = false
+    @StateObject var grid:ContractModel
+    enum settingStatus {
+        case edit, delete, open
+    }
+    
     
     var body: some View{
         VStack{
@@ -28,13 +37,20 @@ struct DAppletSettings: View {
                         Text("-")
                         Text("SYMBOL")
                     }
-//                    HStack{ // Event Listener
-//                        Text("Notifications: ")
-//                        Spacer()
-//                        Text("X")
-//                            .font(.title3)
-//                            .bold()
-//                    }
+                    if(!DevEnv){
+                        HStack{ // Event Listener
+                            Text("Notifications: ")
+                            Spacer()
+                            Circle()
+                                .frame(width: 30)
+                                .foregroundColor(.red)
+                                .overlay{
+                                    Text("\(totalNotifications)")
+                                        .font(.title3)
+                                        .bold()
+                                }
+                        }
+                    }
                     HStack{
                         Text("{App} Version: ")
                         Spacer()
@@ -93,6 +109,11 @@ struct DAppletSettings: View {
                         Text("v1.0.0")
                             .bold()
                     }
+                    if(DevEnv){
+                        Toggle("Grid", isOn: $grid.showGrid)
+                        Toggle("Dev Enviroment", isOn: $testnets)
+                    }
+                    
                 }
                 Section("3rd Party Verification "){
                     HStack {
@@ -117,16 +138,17 @@ struct DAppletSettings: View {
             if(DevEnv){
                 buttonAlert(title: "Edit DApplet", msg: "Are you sure you want to Edit this Dapplet?")
             } else{
-                buttonAlert(title: "Delete DApplet", msg: "Are you sure you want to Delete this Dapplet?")
+                buttonAlert(title:newDapplet ?  "Delete DApplet":"Open DApplet", msg: "Are you sure you want to Delete this Dapplet?")
             }
         }, label: {
-            Text(DevEnv ? "Edit":"Delete")
+            Text(newDapplet ? "Open":"Edit")
                 .cornerRadius(20)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.black)
                 .padding()
         })
-        .background(DevEnv ? Color.green:Color.red)
+        .background(newDapplet ? Color.blue:Color.red)
+        //.background(newDapplet ? Color.red:Color.blue)
         .alert(isPresented: $presented, content: {
             getAlert()
         })
@@ -147,10 +169,15 @@ struct DAppletSettings: View {
         alertMessage = msg
         presented.toggle()
     }
-}
-
-struct DAppletSettings_Previews: PreviewProvider {
-    static var previews: some View {
-        DAppletSettings(DevEnv: true)
+    func DAppletSettingStatus(status: settingStatus) -> String? {
+        switch status {
+        case .delete:
+            return "Delete"
+        case .edit:
+            return "Edit"
+        case .open:
+            return "Open"
+        }
     }
 }
+

@@ -48,7 +48,7 @@ struct BuildTools: View {
 //        }
         HStack{
             Button(action: {
-                contractInterface.clearCompiler()
+                contractInterface.clearCompiler(compiler: false)
             }, label: {
                 Image(systemName: "trash")
                     .resizable()
@@ -58,7 +58,7 @@ struct BuildTools: View {
             Spacer()
             
             Button(action: {
-                test()
+            
             }, label: {
                 Image(systemName: "folder.fill.badge.plus")
                     .resizable()
@@ -76,7 +76,7 @@ struct BuildTools: View {
             })
             .sheet(isPresented: $showSettings, content: {
                 //MARK: Settings Pallet
-                DAppletSettings(DevEnv: true)
+                DAppletSettings(DevEnv: true, newDapplet: false, grid: contractInterface)
                     .presentationDetents([.fraction(0.90)])
             })
 
@@ -513,7 +513,6 @@ struct BuildTools: View {
     //MARK: FunctionsSection
     var FunctionsSection: some View{
         VStack {
-            
             HStack{
                 TextField("function()", text: $dataTypeVaraiable)
                     .padding()
@@ -547,21 +546,6 @@ struct BuildTools: View {
     func deleteVariable(indexSet: IndexSet){
         CIMLvariables.remove(atOffsets: indexSet)
     }
-    
-    func test(){
-        contractInterface.TextList.append(CIMLText(text: "Exit",font: .title, frame: [100,50], location: 119))
-        contractInterface.TextList.append(CIMLText(text: String("This is a header"),font: .largeTitle,frame: [300,50], location: 5))
-        contractInterface.TextFieldList.append(CIMLTextField(text: "enter text",textField: "",foreGroundColor: .black, location: 32))
-        contractInterface.SysImageList.append(CIMLSYSImage(name: "clipboard",padding: 0, location: 90))
-        contractInterface.ButtonList.append(CIMLButton(text: "gear",isIcon: true,font: .title, location: 1))
-        
-        
-        print("total CLASS TextList: ",contractInterface.TextList.count)
-        print("total CLASS TextField: ",contractInterface.TextFieldList.count)
-        print("total CLASS  SysImageList: ",contractInterface.SysImageList.count)
-        print("total CLASS ButtonList: ",contractInterface.ButtonList.count)
-    }
-    
 }
 
 

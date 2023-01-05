@@ -90,6 +90,7 @@ struct ContractInterface: View {
                           
                         Button(action: {
                             contractInterface.getCIML(url: searchBar)
+                            showDapplet[0].toggle()
                             print("CIML Button Pressed")
                         }, label: {
                             Image(systemName: "magnifyingglass.circle.fill")
@@ -109,7 +110,7 @@ struct ContractInterface: View {
                                         Button(action: {
                                             withAnimation {
                                                 showDapplet[0].toggle()
-                                                contractInterface.openCIML(address: item)
+                                                contractInterface.openCIML(address: searchBar)
                                             }
                                         }, label: {
                                             VStack{
@@ -146,7 +147,7 @@ struct ContractInterface: View {
                                         })
                                         .sheet(isPresented: $showDAppSettings) {
                                             //MARK: SettingsPallet
-                                            DAppletSettings(DevEnv: contractInterface.DevEnv)
+                                            DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,grid: contractInterface)
                                         }
                                         , alignment: .topLeading
                                     )

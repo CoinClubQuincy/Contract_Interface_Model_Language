@@ -16,12 +16,19 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var testnet:Bool = false // may not need
     @Published var DevEnv:Bool = false
     //CIML Cache all data from DAppletUI is stored here
+    //State vars??
     @Published var TextList:[CIMLText] = []
     @Published var TextFieldList:[CIMLTextField] = []
     @Published var ButtonList:[CIMLButton] = []
     @Published var SysImageList:[CIMLSYSImage] = []
     @Published var VariableList:[Variable_Model] = []
     @Published var ViewList:[Views] = []
+    
+    @Published var finalTextList:[CIMLText] = []
+    @Published var finalTextFieldList:[CIMLTextField] = []
+    @Published var finalButtonList:[CIMLButton] = []
+    @Published var finalsysImageList:[CIMLSYSImage] = []
+    
     //All CIML variables
     var cimlVersion:String = ""
     var appVersion:String = ""
@@ -43,6 +50,7 @@ class ContractModel: ObservableObject{ //Build Settings
     var objects: [Object] = []
     var views: [Views] = []
     var metadata: [String] = []
+    //object attributes
     var textField: String = ""
     //Download data from internet
     @Published var ciml: [CIML] = []
@@ -50,16 +58,12 @@ class ContractModel: ObservableObject{ //Build Settings
     
     var cancellables = Set<AnyCancellable>()
     init(){
-        //getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json")
-        parseCIML(ciml: getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-1.json"))
-        print("total TextList: ",TextList.count)
-        print("total TextField: ",TextFieldList.count)
-        print("total SysImageList: ",SysImageList.count)
-        print("total ButtonList: ",ButtonList.count)
-        
+        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-2.json")
     }
     //MARK: get ciml func
     func getCIML(url:String) -> [CIML]{
+        print("buton clicked")
+        //clearCompiler(compiler: false)
         guard let url = URL(string: url)else { return [] }
 
         URLSession.shared.dataTaskPublisher(for: url)
@@ -80,99 +84,157 @@ class ContractModel: ObservableObject{ //Build Settings
             } receiveValue: { [weak self] returnedCIML in
                 print("Completion: \(returnedCIML)")
                 self?.ciml = returnedCIML
+                self?.parseCIML(ciml: self?.ciml ?? [])
             }
             .store(in: &cancellables)
+        
         return self.ciml
     }
     //MARK: Parse Function
     func parseCIML(ciml:[CIML]){
         //Parse CIML Objects
-        for obj in objects {
-            //initaillize any atributes that have unique data types
-            if(obj.alignment == "center" || obj.alignment == "leading" || obj.alignment == "trailing" ){
-                objectAttributes_alignment(objectAttribute: obj.alignment ?? "center")
-            } else if (obj.fontWeight == "regular" || obj.fontWeight == "heavy" || obj.fontWeight == "light" ){
-                objectAttributes_fontWeight(objectAttribute: obj.fontWeight ?? "regular")
-            } else if (obj.backgroundColor == "black" /*all major colors */){
-                objectAttributes_backgroundColor(objectAttribute: obj.backgroundColor ?? "clear")
-            }
-            //MARK: Parse Text
-            if (obj.type == "text"){
-                //add default data optionals
-                TextList.append(CIMLText(text: obj.value ?? "",
-                                         foreGroundColor: Color(obj.foreGroundColor ?? ".black"),
-                                         font: Font(obj.font as! CTFont),
-                                         frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[0] ?? 50)],
-                                         alignment: .center,
-                                         backgroundColor: Color(.clear),
-                                         cornerRadius: CGFloat(obj.cornerRadius ?? 0),
-                                         bold: Bool(obj.bold ?? false),
-                                         fontWeight: .regular,
-                                         shadow: CGFloat(obj.shadow ?? 0),
-                                         padding: CGFloat(obj.padding ?? 0),
-                                         location: 0))
-            //MARK: Parse TextField
-            }else if (obj.type == "textField"){
-//                TextFieldList.append(CIMLTextField(text: obj.value,
-//                                                   textField: obj.textField,
-//                                                   foreGroundColor: obj.foreGroundColor,
-//                                                   frame: [Int(obj.frame[0]),Int(obj.frame[1])],
-//                                                   alignment: <#T##Edge.Set#>,
-//                                                   backgroundColor: <#T##Color#>,
-//                                                   cornerRadius: <#T##CGFloat#>,
-//                                                   shadow: <#T##CGFloat#>,
-//                                                   padding: <#T##CGFloat#>,
-//                                                   location: <#T##Int#>))
-            //MARK: Parse Button
-            }else if (obj.type == "button"){
-//                ButtonList.append(CIMLButton(text: <#T##String#>,
-//                                             isIcon: <#T##Bool#>,
-//                                             foreGroundColor: <#T##Color#>,
-//                                             font: <#T##Font#>,
-//                                             frame: <#T##[CGFloat]#>,
-//                                             alignment: <#T##Alignment#>,
-//                                             backgroundColor: <#T##Color#>,
-//                                             cornerRadius: <#T##CGFloat#>,
-//                                             bold: <#T##Bool#>,
-//                                             fontWeight: <#T##Font.Weight#>,
-//                                             shadow: <#T##CGFloat#>,
-//                                             padding: <#T##CGFloat#>,
-//                                             location: <#T##Int#>))
-            //MARK: Parse SysImage
-            }else if (obj.type == "sysimage"){
-//                SysImageList.append(CIMLSYSImage(name: <#T##String#>,
-//                                                 frame: <#T##[CGFloat]#>,
-//                                                 padding: <#T##CGFloat#>,
-//                                                 color: <#T##Color#>,
-//                                                 location: <#T##Int#>))
-            } else {
-                print("Error incorrect object type: \(String(describing: obj.type))")
-            }
-        }
-        
-        //MARK: Parse Vars
-        for vars in variables{
-            if (vars.type == "var"){
-                VariableList.append(Variable_Model(varName: vars.name ?? "varName Error",
-                                                   type: vars.type ?? "varType Error",
-                                                   value: vars.value ?? "varValue Error"))
-            } else {
-                print("Error incorrect variable type: \(String(describing: vars.type))")
-            }
-        }
-        //MARK: Parse Views
-        for viewCount in 0...totalViewCount{
-            for view in views{
-                if (view.view == viewCount){
-                    ViewList.append(Views(view: view.view ,
-                                          object: view.object ,
-                                          location: view.location))
-                } else {
-                    print("Error incorrect view object: \(String(describing: view.object))")
+        print("-------------------------------------- CIML DOC --------------------------------------")
+        for typ in ciml{
+            //MARK: Parse Views
+            for viewCount in 0...totalViewCount{
+                for view in typ.views{
+                    if (view.view == viewCount){
+                        ViewList.append(Views(view: view.view ,
+                                              object: view.object ,
+                                              location: view.location))
+                    } else {
+                        print("Error incorrect view object: \(String(describing: view.object))")
+                    }
                 }
             }
+            
+            for obj in typ.objects {
+                //initaillize any atributes that have unique data types
+                if(obj.alignment == "center" || obj.alignment == "leading" || obj.alignment == "trailing" ){
+                    objectAttributes_alignment(objectAttribute: obj.alignment ?? "center")
+                } else if (obj.fontWeight == "regular" || obj.fontWeight == "heavy" || obj.fontWeight == "light" ){
+                    objectAttributes_fontWeight(objectAttribute: obj.fontWeight ?? "regular")
+                } else if (obj.backgroundColor == "black" /*all major colors */){
+                    objectAttributes_backgroundColor(objectAttribute: obj.backgroundColor ?? "clear")
+                } else if (obj.font == "headline" /* All Font types */){
+                    objectAttributes_Font(objectAttribute: obj.font ?? "headline")
+                    //change colors
+                } else if (obj.font == "Colors"){
+                    objectAttributes_Color(objectAttribute:"Colors")
+                }
+                //MARK: Parse Text
+                if (obj.type == "text"){
+                    //add default data optionals
+                    print(obj.type)
+                    print("---------------------------------------- append textLst")
+                    TextList.append(CIMLText(text: obj.value ?? "X",
+                                             foreGroundColor: Color(.black),
+                                             font: .headline, // add func
+                                             frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
+                                             alignment: .center, // add func
+                                             backgroundColor: Color(.clear),
+                                             cornerRadius: obj.cornerRadius ?? 0,
+                                             bold: obj.bold ?? false,
+                                             fontWeight: .regular, // add func
+                                             shadow: obj.shadow ?? 0,
+                                             padding: CGFloat(obj.padding ?? 0),
+                                             location: Placement(object: obj.name ?? "nil") ?? 0))
+                    print(obj.name)
+                    print("check placement")
+                    print(TextList.count)
+                    //MARK: Parse TextField
+                }else if (obj.type == "textField"){
+                    TextFieldList.append(CIMLTextField(text: obj.value ?? "error",
+                                                       textField: obj.textField ?? "",
+                                                       foreGroundColor: .gray,
+                                                       frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
+                                                       alignment: .all,
+                                                       backgroundColor: .white,
+                                                       cornerRadius: obj.cornerRadius ?? 0,
+                                                       shadow: 0,
+                                                       padding: 0,
+                                                       location: Placement(object: obj.name ?? "nil") ?? 0))
+                    print("text field count")
+                    print(obj.type)
+                    print(TextFieldList.count)
+                    //MARK: Parse Button
+                }else if (obj.type == "button"){
+                    ButtonList.append(CIMLButton(text: obj.value ?? "Button",
+                                                 isIcon: false,
+                                                 foreGroundColor: .black,
+                                                 font: .headline,
+                                                 frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
+                                                 alignment: .center,
+                                                 backgroundColor: .blue,
+                                                 cornerRadius: obj.cornerRadius ?? 0,
+                                                 bold: obj.bold  ?? false,
+                                                 fontWeight: .regular, // add func
+                                                 shadow: obj.shadow ?? 0,
+                                                 padding: CGFloat(obj.padding ?? 0),
+                                                 location: Placement(object: obj.name ?? "nil") ?? 0))
+                    print(obj.type)
+                    print(ButtonList.count)
+                } else if (obj.type == "iconButton"){
+                    ButtonList.append(CIMLButton(text: obj.value ?? "exclamationmark.triangle.fill",
+                                                 isIcon: true,
+                                                 foreGroundColor: Color(obj.foreGroundColor ?? ".black"),
+                                                 font: .headline,
+                                                 frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
+                                                 alignment: .center,
+                                                 backgroundColor: .black,
+                                                 cornerRadius: obj.cornerRadius ?? 0,
+                                                 bold: obj.bold  ?? false,
+                                                 fontWeight: .regular,
+                                                 shadow: obj.shadow ?? 0,
+                                                 padding: CGFloat(obj.padding ?? 0),
+                                                 location: Placement(object: obj.name ?? "nil") ?? 0))
+                    print(obj.type)
+                    print(ButtonList.count)
+                    //MARK: Parse SysImage
+                }else if (obj.type == "sysimage"){
+                    SysImageList.append(CIMLSYSImage(name: obj.value ?? "exclamationmark.triangle.fill",
+                                                     frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
+                                                     padding: 0,
+                                                     color: .black,
+                                                     location: Placement(object: obj.name ?? "nil") ?? 0))
+                    print(obj.type)
+                    print(SysImageList.count)
+                } else {
+                    print("Error incorrect object type: \(String(describing: obj.type))")
+                }
+            }
+            
+            //MARK: Parse Vars
+            for vars in typ.variables{
+                if (vars.type == "var"){
+                    VariableList.append(Variable_Model(varName: vars.name ?? "varName Error",
+                                                       type: vars.type ?? "varType Error",
+                                                       value: vars.value ?? "varValue Error"))
+                } else {
+                    print("Error incorrect variable type: \(String(describing: vars.type))")
+                }
+            }
+
+            
+            print("total TextList: ",TextList.count)
+            print("total TextField: ",TextFieldList.count)
+            print("total SysImageList: ",SysImageList.count)
+            print("total ButtonList: ",ButtonList.count)
+            print("total ViewList: ",ViewList.count)
         }
     }
+    
+    func Placement(object:String) -> (Int){
+        for objectLocation in ViewList{
+            print(objectLocation.object)
+            if(objectLocation.object == object){
+                print(objectLocation.location)
+                return objectLocation.location
+            }
+        }
+        return (0)
+    }
+    
     //MARK: Object attributes functions
     func objectAttributes_alignment(objectAttribute:String){
         if(objectAttribute == ""){
@@ -189,6 +251,20 @@ class ContractModel: ObservableObject{ //Build Settings
         }
     }
     func objectAttributes_backgroundColor(objectAttribute:String){
+        if(objectAttribute == ""){
+            
+        } else if (objectAttribute == ""){
+            
+        }
+    }
+    func objectAttributes_Font(objectAttribute:String){
+        if(objectAttribute == ""){
+            
+        } else if (objectAttribute == ""){
+            
+        }
+    }
+    func objectAttributes_Color(objectAttribute:String){
         if(objectAttribute == ""){
             
         } else if (objectAttribute == ""){
@@ -217,11 +293,22 @@ class ContractModel: ObservableObject{ //Build Settings
         if(DevEnv){ ButtonList.append(token) } else { return }
     }
     
-    func clearCompiler(){
-        TextList.removeAll()
-        TextFieldList.removeAll()
-        SysImageList.removeAll()
-        ButtonList.removeAll()
+    //true clears final view
+    //false clears entire Dapplet
+    func clearCompiler(compiler:Bool){
+        if(compiler){
+            finalTextList.removeAll()
+            finalTextFieldList.removeAll()
+            finalsysImageList.removeAll()
+            finalButtonList.removeAll()
+        } else {
+            TextList.removeAll()
+            TextFieldList.removeAll()
+            SysImageList.removeAll()
+            ButtonList.removeAll()
+        }
+        
+        
     }
     //Button Actions
     func segueAction(page:Int){}
@@ -231,6 +318,10 @@ class ContractModel: ObservableObject{ //Build Settings
     private func editCIML(address:String){
         print("you edited: \(address) DApplet")
     }
+    
+    
+    
+    
 }
 
 //MARK: Final View // View Comiler
@@ -307,7 +398,7 @@ struct Overlay: View{// Compiler
     //@StateObject var vmCIML = ManageCIMLDocument()
     var test:Double = 1.0
     @StateObject var contractInterface = ContractModel()
-    
+
     @State var finalTextList:[CIMLText] = []
     @State var finalTextFieldList:[CIMLTextField] = []
     @State var finalButtonList:[CIMLButton] = []
@@ -316,7 +407,7 @@ struct Overlay: View{// Compiler
     //MARK: DApplet Projector
     var body: some View{
         ZStack {
-            ForEach(finalTextList) { list in
+            ForEach(contractInterface.TextList) { list in
                 if cordinates == list.location {
                     TEXT(text: list.text, foreGroundColor: list.foreGroundColor, font: list.font,
                          frame: list.frame, alignment: list.alignment, backgroundColor: list.backgroundColor,
@@ -325,19 +416,19 @@ struct Overlay: View{// Compiler
                 }
             }
             
-            ForEach(finalTextFieldList){ list in
+            ForEach(contractInterface.TextFieldList){ list in
                 if cordinates == list.location {
                     TEXT_FIELD(text: list.text, textField: list.textField, foreGroundColor: list.foreGroundColor, frame: list.frame,
                             alignment: list.alignment, backgroundColor: list.backgroundColor,
                                cornerRadius: list.cornerRadius, shadow: list.shadow,padding: list.padding ,location: list.location)
                 }
             }
-            ForEach(finalsysImageList){ list in
+            ForEach(contractInterface.SysImageList){ list in
                 if cordinates == list.location {
                     SYSIMAGE(sysname: list.name, frame: list.frame, padding: list.padding, color: .black, location: list.location)
                 }
             }
-            ForEach(finalButtonList){ list in
+            ForEach(contractInterface.ButtonList){ list in
                 if cordinates == list.location {
                     BUTTONS(text: list.text, isIcon: list.isIcon, foreGroundColor: list.foreGroundColor, font: list.font,
                             frame: list.frame, alignment: list.alignment, backgroundColor: list.backgroundColor,
@@ -347,17 +438,7 @@ struct Overlay: View{// Compiler
             }
         }
         .onAppear {
-            finalTextList.append(CIMLText(text: "Exit",font: .title, frame: [100,50], location: 119))
-                finalTextList.append(CIMLText(text: String("This is a header"),font: .largeTitle,frame: [300,50], location: 5))
-                finalTextFieldList.append(CIMLTextField(text: "enter text",textField: "",foreGroundColor: .black, location: 32))
-                finalsysImageList.append(CIMLSYSImage(name: "clipboard",padding: 0, location: 90))
-                finalButtonList.append(CIMLButton(text: "gear",isIcon: true,font: .title, location: 1))
-            
-            print("total finalTextList: ",finalTextList.count)
-            print("total finalTextField: ",finalTextFieldList.count)
-            print("total finalsysImageList: ",finalsysImageList.count)
-            print("total finalButtonList: ",finalButtonList.count)
-            //print("total CIML Data from internet: \(vmCIML.ciml.count)")
+
         }
     }
 }
