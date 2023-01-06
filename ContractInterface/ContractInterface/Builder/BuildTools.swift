@@ -48,7 +48,7 @@ struct BuildTools: View {
 //        }
         HStack{
             Button(action: {
-                contractInterface.clearCompiler(compiler: false)
+                contractInterface.clearCompiler()
             }, label: {
                 Image(systemName: "trash")
                     .resizable()

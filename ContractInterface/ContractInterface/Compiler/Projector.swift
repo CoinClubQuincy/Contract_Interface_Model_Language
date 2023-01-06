@@ -24,37 +24,38 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var VariableList:[Variable_Model] = []
     @Published var ViewList:[Views] = []
     
-    @Published var finalTextList:[CIMLText] = []
-    @Published var finalTextFieldList:[CIMLTextField] = []
-    @Published var finalButtonList:[CIMLButton] = []
-    @Published var finalsysImageList:[CIMLSYSImage] = []
+//    @Published var finalTextList:[CIMLText] = []
+//    @Published var finalTextFieldList:[CIMLTextField] = []
+//    @Published var finalButtonList:[CIMLButton] = []
+//    @Published var finalsysImageList:[CIMLSYSImage] = []
     
     //All CIML variables
-    var cimlVersion:String = ""
-    var appVersion:String = ""
-    var contractLanguage:String = ""
-    var name:String = ""
-    var symbol:String = ""
-    var logo:String = ""
-    var thumbnail:String = ""
-    var websitelink:String = ""
-    var cimlURL:String = ""
-    var description:String = ""
-    var networks:Any = []
-    var contractMainnet:Any = []
-    var screenShots: [String] = []
-    var abi:String = ""
-    var byteCode:String = ""
-    var variables: [Object] = []
-    var functions: [String] = []
-    var objects: [Object] = []
-    var views: [Views] = []
-    var metadata: [String] = []
+    @Published var cimlVersion:String = ""
+    @Published var appVersion:String = ""
+    @Published var contractLanguage:String = ""
+    @Published var name:String = ""
+    @Published var symbol:String = ""
+    @Published var logo:String = ""
+    @Published var thumbnail:String = ""
+    @Published var websitelink:String = ""
+    @Published var cimlURL:String = ""
+    @Published var description:String = ""
+    @Published var networks:Any = []
+    @Published var contractMainnet:Any = []
+    @Published var screenShots: [String] = []
+    @Published var abi:String = ""
+    @Published var byteCode:String = ""
+//    var variables: [Object] = []
+//    var functions: [String] = []
+//    var objects: [Object] = []
+//    var views: [Views] = []
+    @Published var metadata: [String] = []
     //object attributes
-    var textField: String = ""
+    @Published var textField: String = ""
     //Download data from internet
     @Published var ciml: [CIML] = []
     let totalViewCount:Int = 50
+    @Published var dappletPage:Int = 0
     
     var cancellables = Set<AnyCancellable>()
     init(){
@@ -63,7 +64,7 @@ class ContractModel: ObservableObject{ //Build Settings
     //MARK: get ciml func
     func getCIML(url:String) -> [CIML]{
         print("buton clicked")
-        //clearCompiler(compiler: false)
+        clearCompiler()
         guard let url = URL(string: url)else { return [] }
 
         URLSession.shared.dataTaskPublisher(for: url)
@@ -151,7 +152,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(TextList.count)
                     //MARK: Parse TextField
                 }else if (obj.type == "textField"){
-                    TextFieldList.append(CIMLTextField(text: obj.value ?? "error",
+                    TextFieldList.append(CIMLTextField(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
                                                        textField: obj.textField ?? "",
                                                        foreGroundColor: .gray,
                                                        frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -166,7 +167,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(TextFieldList.count)
                     //MARK: Parse Button
                 }else if (obj.type == "button"){
-                    ButtonList.append(CIMLButton(text: obj.value ?? "Button",
+                    ButtonList.append(CIMLButton(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
                                                  isIcon: false,
                                                  foreGroundColor: .black,
                                                  font: .headline,
@@ -178,11 +179,13 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  fontWeight: .regular, // add func
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
-                                                 location: Placement(object: obj.name ?? "nil") ?? 0))
+                                                 location: Placement(object: obj.name ?? "nil") ?? 0,
+                                                 type: "segue", value: "1"))
                     print(obj.type)
                     print(ButtonList.count)
                 } else if (obj.type == "iconButton"){
-                    ButtonList.append(CIMLButton(text: obj.value ?? "exclamationmark.triangle.fill",
+                    
+                                    ButtonList.append(CIMLButton(text: obj.value ?? "exclamationmark.triangle.fill",
                                                  isIcon: true,
                                                  foreGroundColor: Color(obj.foreGroundColor ?? ".black"),
                                                  font: .headline,
@@ -194,7 +197,8 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  fontWeight: .regular,
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
-                                                 location: Placement(object: obj.name ?? "nil") ?? 0))
+                                                 location: Placement(object: obj.name ?? "nil") ?? 0,
+                                                 type: "segue", value: "1"))
                     print(obj.type)
                     print(ButtonList.count)
                     //MARK: Parse SysImage
@@ -294,6 +298,11 @@ class ContractModel: ObservableObject{ //Build Settings
     func deleteCIML(address:String){
         print("you deleted: \(address) DApplet")
     }
+    //MARK: Manage CIML Document
+    func changePageSegue(page:Int){
+        dappletPage = page
+    }
+    func toggleButton(status:Bool){}
     //add Objects to MoodelViews
     func addBuildText(token:CIMLText){
         if(DevEnv){ TextList.append(token)} else { return }
@@ -310,21 +319,15 @@ class ContractModel: ObservableObject{ //Build Settings
     
     //true clears final view
     //false clears entire Dapplet
-    func clearCompiler(compiler:Bool){
-        if(compiler){
-            finalTextList.removeAll()
-            finalTextFieldList.removeAll()
-            finalsysImageList.removeAll()
-            finalButtonList.removeAll()
-        } else {
+    func clearCompiler(){
             TextList.removeAll()
             TextFieldList.removeAll()
             SysImageList.removeAll()
             ButtonList.removeAll()
-        }
-        
-        
+            VariableList.removeAll()
+            ViewList.removeAll()
     }
+        
     //Button Actions
     func segueAction(page:Int){}
     
@@ -448,7 +451,7 @@ struct Overlay: View{// Compiler
                     BUTTONS(text: list.text, isIcon: list.isIcon, foreGroundColor: list.foreGroundColor, font: list.font,
                             frame: list.frame, alignment: list.alignment, backgroundColor: list.backgroundColor,
                             cornerRadius: list.cornerRadius, bold: list.bold, fontWeight: list.fontWeight,
-                            shadow: list.shadow, padding: list.padding, location: list.location)
+                            shadow: list.shadow, padding: list.padding, location: list.location,type: list.type, value: list.value)
                 }
             }
         }
@@ -545,14 +548,24 @@ struct BUTTONS:View{
     var padding:CGFloat
     var location:Int
    //@State var finalButtonLabelList:[CIMLText]
+    @StateObject var contractInterface = ContractModel()
+    var type:String
+    var value:String
     
     var body: some View {
         ZStack {
             Button(action: {
-                //Types:
-                //Toggle Button
-                //Submit Function
-                //Segue
+                print("press button")
+                if(type == "segue"){
+                    contractInterface.changePageSegue(page: Int(value) ?? 0)
+                    //contractInterface.getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-2.json")
+                    print("pressed Segue Button page status: \(contractInterface.dappletPage)")
+                } else if (type == "toggle"){
+                    contractInterface.toggleButton(status: Bool(value) ?? false)
+                    print("pressed togle Button")
+                } else if (type == "submit"){
+                    print("pressed Submit Button")
+                }
             }, label: {
                 if(isIcon){
                     Image(systemName: text)
