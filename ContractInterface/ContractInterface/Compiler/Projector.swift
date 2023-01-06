@@ -58,7 +58,7 @@ class ContractModel: ObservableObject{ //Build Settings
     
     var cancellables = Set<AnyCancellable>()
     init(){
-        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-2.json")
+        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
     }
     //MARK: get ciml func
     func getCIML(url:String) -> [CIML]{
@@ -108,6 +108,13 @@ class ContractModel: ObservableObject{ //Build Settings
                 }
             }
             
+            //MARK: Parse Vars
+            for vars in typ.variables{
+                    VariableList.append(Variable_Model(varName: vars.name ?? "varName Error",
+                                                       type: vars.type ?? "varType Error",
+                                                       value: vars.value ?? "varValue Error"))
+            }
+            
             for obj in typ.objects {
                 //initaillize any atributes that have unique data types
                 if(obj.alignment == "center" || obj.alignment == "leading" || obj.alignment == "trailing" ){
@@ -127,7 +134,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     //add default data optionals
                     print(obj.type)
                     print("---------------------------------------- append textLst")
-                    TextList.append(CIMLText(text: obj.value ?? "X",
+                    TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
                                              foreGroundColor: Color(.black),
                                              font: .headline, // add func
                                              frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -203,17 +210,6 @@ class ContractModel: ObservableObject{ //Build Settings
                     print("Error incorrect object type: \(String(describing: obj.type))")
                 }
             }
-            
-            //MARK: Parse Vars
-            for vars in typ.variables{
-                if (vars.type == "var"){
-                    VariableList.append(Variable_Model(varName: vars.name ?? "varName Error",
-                                                       type: vars.type ?? "varType Error",
-                                                       value: vars.value ?? "varValue Error"))
-                } else {
-                    print("Error incorrect variable type: \(String(describing: vars.type))")
-                }
-            }
 
             
             print("total TextList: ",TextList.count)
@@ -221,7 +217,26 @@ class ContractModel: ObservableObject{ //Build Settings
             print("total SysImageList: ",SysImageList.count)
             print("total ButtonList: ",ButtonList.count)
             print("total ViewList: ",ViewList.count)
+            print("total VarList: ",VariableList.count)
+
         }
+    }
+    
+    func varAllocation(objectName:String,objectValue:String)->String{
+        var tmpVar:String = ""
+        for vars in VariableList{
+            print("-------------------- variable list --------------------")
+            print(vars.varName)
+            print(objectName)
+            if (String(vars.varName) == String(objectName)){
+                print("------------------Objects --------------------")
+                tmpVar = vars.value
+                print(vars.varName)
+                print(vars.value)
+                return tmpVar
+            }
+        }
+        return(tmpVar == "" ? objectValue:tmpVar)
     }
     
     func Placement(object:String) -> (Int){
