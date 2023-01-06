@@ -59,6 +59,7 @@ class ContractModel: ObservableObject{ //Build Settings
     
     var cancellables = Set<AnyCancellable>()
     init(){
+        dappletPage = 0
         getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
     }
     //MARK: get ciml func
@@ -156,6 +157,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     //add default data optionals
                     print(obj.type)
                     print("---------------------------------------- append textLst")
+                    print(obj.frame?[0])
                     TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
                                              foreGroundColor: Color(.black),
                                              font: .headline, // add func
@@ -205,7 +207,6 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(obj.type)
                     print(ButtonList.count)
                 } else if (obj.type == "iconButton"){
-                    
                                     ButtonList.append(CIMLButton(text: obj.value ?? "exclamationmark.triangle.fill",
                                                  isIcon: true,
                                                  foreGroundColor: Color(obj.foreGroundColor ?? ".black"),
@@ -236,7 +237,6 @@ class ContractModel: ObservableObject{ //Build Settings
                 }
             }
 
-            
             print("total TextList: ",TextList.count)
             print("total TextField: ",TextFieldList.count)
             print("total SysImageList: ",SysImageList.count)
@@ -244,6 +244,10 @@ class ContractModel: ObservableObject{ //Build Settings
             print("total ViewList: ",ViewList.count)
             print("total VarList: ",VariableList.count)
 
+            
+            
+            print("dapplet page")
+            print(dappletPage)
         }
     }
     
@@ -384,10 +388,11 @@ struct DAppletView: View {
                     
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
-                        .foregroundColor(.yellow)
-                        .background(Color.black)
+                        .foregroundColor(Color(hex: contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00")))
+                        //.background(Color.black)
                         .onAppear{
                             //Color or Gradient
+                            print(contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00"))
                         }
                     
                     LazyVGrid(columns: layout){
@@ -403,7 +408,7 @@ struct DAppletView: View {
                             .foregroundColor(gridPlotView)
                             .frame(height: geo.size.width * 0.1)
                             .overlay{
-                                Overlay(cordinates: Int(item)!)
+                                Overlay(contractInterface: contractInterface, cordinates: Int(item)!)
                             }
                         }
                     }
@@ -436,7 +441,7 @@ struct DAppletView: View {
 struct Overlay: View{// Compiler
     //@StateObject var vmCIML = ManageCIMLDocument()
     var test:Double = 1.0
-    @StateObject var contractInterface = ContractModel()
+    @StateObject var contractInterface:ContractModel
 
     @State var finalTextList:[CIMLText] = []
     @State var finalTextFieldList:[CIMLTextField] = []
@@ -472,7 +477,7 @@ struct Overlay: View{// Compiler
                     BUTTONS(text: list.text, isIcon: list.isIcon, foreGroundColor: list.foreGroundColor, font: list.font,
                             frame: list.frame, alignment: list.alignment, backgroundColor: list.backgroundColor,
                             cornerRadius: list.cornerRadius, bold: list.bold, fontWeight: list.fontWeight,
-                            shadow: list.shadow, padding: list.padding, location: list.location,type: list.type, value: list.value)
+                            shadow: list.shadow, padding: list.padding, location: list.location, contractInterface: contractInterface,type: list.type, value: list.value)
                 }
             }
         }
@@ -569,7 +574,7 @@ struct BUTTONS:View{
     var padding:CGFloat
     var location:Int
    //@State var finalButtonLabelList:[CIMLText]
-    @StateObject var contractInterface = ContractModel()
+    @StateObject var contractInterface:ContractModel
     var type:String
     var value:String
     
@@ -613,3 +618,77 @@ struct BUTTONS:View{
     
 }
 
+extension Color {
+    init(hex string: String) {
+        var string: String = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        if string.hasPrefix("#") {
+            _ = string.removeFirst()
+        }
+
+        // Double the last value if incomplete hex
+        if !string.count.isMultiple(of: 2), let last = string.last {
+            string.append(last)
+        }
+
+        // Fix invalid values
+        if string.count > 8 {
+            string = String(string.prefix(8))
+        }
+
+        // Scanner creation
+        let scanner = Scanner(string: string)
+
+        var color: UInt64 = 0
+        scanner.scanHexInt64(&color)
+
+        if string.count == 2 {
+            let mask = 0xFF
+
+            let g = Int(color) & mask
+
+            let gray = Double(g) / 255.0
+
+            self.init(.sRGB, red: gray, green: gray, blue: gray, opacity: 1)
+
+        } else if string.count == 4 {
+            let mask = 0x00FF
+
+            let g = Int(color >> 8) & mask
+            let a = Int(color) & mask
+
+            let gray = Double(g) / 255.0
+            let alpha = Double(a) / 255.0
+
+            self.init(.sRGB, red: gray, green: gray, blue: gray, opacity: alpha)
+
+        } else if string.count == 6 {
+            let mask = 0x0000FF
+            let r = Int(color >> 16) & mask
+            let g = Int(color >> 8) & mask
+            let b = Int(color) & mask
+
+            let red = Double(r) / 255.0
+            let green = Double(g) / 255.0
+            let blue = Double(b) / 255.0
+
+            self.init(.sRGB, red: red, green: green, blue: blue, opacity: 1)
+
+        } else if string.count == 8 {
+            let mask = 0x000000FF
+            let r = Int(color >> 24) & mask
+            let g = Int(color >> 16) & mask
+            let b = Int(color >> 8) & mask
+            let a = Int(color) & mask
+
+            let red = Double(r) / 255.0
+            let green = Double(g) / 255.0
+            let blue = Double(b) / 255.0
+            let alpha = Double(a) / 255.0
+
+            self.init(.sRGB, red: red, green: green, blue: blue, opacity: alpha)
+
+        } else {
+            self.init(.sRGB, red: 1, green: 1, blue: 1, opacity: 1)
+        }
+    }
+}

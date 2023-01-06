@@ -91,6 +91,8 @@ struct ContractInterface: View {
                         Button(action: {
                             contractInterface.getCIML(url: searchBar)
                             showDapplet[0].toggle()
+                            contractInterface.dappletPage = 0
+                            print(contractInterface.dappletPage )
                             print("CIML Button Pressed")
                         }, label: {
                             Image(systemName: "magnifyingglass.circle.fill")
