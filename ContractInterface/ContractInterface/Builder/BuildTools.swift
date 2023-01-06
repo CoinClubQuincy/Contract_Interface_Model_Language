@@ -76,7 +76,7 @@ struct BuildTools: View {
             })
             .sheet(isPresented: $showSettings, content: {
                 //MARK: Settings Pallet
-                DAppletSettings(DevEnv: true, newDapplet: false, grid: contractInterface)
+                DAppletSettings(DevEnv: true, newDapplet: false, ciml: contractInterface)
                     .presentationDetents([.fraction(0.90)])
             })
 

@@ -45,10 +45,10 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var screenShots: [String] = []
     @Published var abi:String = ""
     @Published var byteCode:String = ""
-//    var variables: [Object] = []
-//    var functions: [String] = []
-//    var objects: [Object] = []
-//    var views: [Views] = []
+    var variables: [Object] = []
+    var functions: [String] = []
+    var objects: [Object] = []
+    var views: [Views] = []
     @Published var metadata: [String] = []
     //object attributes
     @Published var textField: String = ""
@@ -96,6 +96,27 @@ class ContractModel: ObservableObject{ //Build Settings
         //Parse CIML Objects
         print("-------------------------------------- CIML DOC --------------------------------------")
         for typ in ciml{
+            cimlVersion = typ.cimlVersion
+            appVersion = typ.appVersion
+            contractLanguage = typ.contractLanguage
+            name = typ.name
+            symbol = typ.symbol
+            logo = typ.logo
+            thumbnail = typ.thumbnail
+            websitelink = typ.websitelink
+            cimlURL = typ.cimlURL
+            description = typ.description
+            networks = typ.networks
+            contractMainnet = typ.contractMainnet
+            screenShots = typ.screenShots
+            abi = typ.abi
+            byteCode = typ.byteCode
+//            variables: [Object] = []
+//            functions: [String] = []
+//            objects: [Object] = []
+//            views: [Views] = []
+//            metadata: [String] = []
+//            //object attributes
             //MARK: Parse Views
             for viewCount in 0...totalViewCount{
                 for view in typ.views{

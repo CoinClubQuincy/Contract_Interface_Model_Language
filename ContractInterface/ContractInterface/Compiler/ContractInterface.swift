@@ -22,7 +22,7 @@ struct ContractInterface: View {
     @State var alertMessage:String = ""
     //
     
-    let data = Array(0...5).map { "DApp \($0)" }
+    let data = Array(0...0).map { "DApp \($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 80))
     ]
@@ -147,7 +147,7 @@ struct ContractInterface: View {
                                         })
                                         .sheet(isPresented: $showDAppSettings) {
                                             //MARK: SettingsPallet
-                                            DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,grid: contractInterface)
+                                            DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,ciml: contractInterface)
                                         }
                                         , alignment: .topLeading
                                     )

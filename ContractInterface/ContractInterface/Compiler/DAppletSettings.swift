@@ -16,12 +16,11 @@ struct DAppletSettings: View {
     var DevEnv:Bool
     var newDapplet:Bool
     @State var testnets:Bool = false
-    @StateObject var grid:ContractModel
+    @StateObject var ciml = ContractModel()
     enum settingStatus {
         case edit, delete, open
     }
-    
-    
+
     var body: some View{
         VStack{
             List{
@@ -33,9 +32,9 @@ struct DAppletSettings: View {
                         Circle()
                             .frame(width: 30)
                         
-                        Text("Name")
+                        Text(ciml.name)
                         Text("-")
-                        Text("SYMBOL")
+                        Text(ciml.symbol)
                     }
                     if(!DevEnv){
                         HStack{ // Event Listener
@@ -54,16 +53,16 @@ struct DAppletSettings: View {
                     HStack{
                         Text("{App} Version: ")
                         Spacer()
-                        Text("0.0.0")
+                        Text(ciml.appVersion)
                             .font(.title3)
                             .bold()
                     }
                     
-                    Text("This is the description of the Dapp provided")
+                    Text(ciml.description)
                     
                     HStack(){
                         Text("Website:")
-                        Text(" https\\:DAppletSite.com")
+                        Text(ciml.websitelink)
                             .font(.headline)
                             .foregroundColor(.blue)
                     }
@@ -110,10 +109,20 @@ struct DAppletSettings: View {
                             .bold()
                     }
                     if(DevEnv){
-                        Toggle("Grid", isOn: $grid.showGrid)
+                        Toggle("Grid", isOn: $ciml.showGrid)
                         Toggle("Dev Enviroment", isOn: $testnets)
                     }
-                    
+                    HStack(alignment: .center){
+                        Spacer()
+                        Button(action: {
+                            
+                        }, label: {
+                            Text("Delete")
+                                .frame(alignment: .center)
+                        })
+                        Spacer()
+                    }
+                    .listRowBackground(Color.red)
                 }
                 Section("3rd Party Verification "){
                     HStack {
@@ -138,10 +147,10 @@ struct DAppletSettings: View {
             if(DevEnv){
                 buttonAlert(title: "Edit DApplet", msg: "Are you sure you want to Edit this Dapplet?")
             } else{
-                buttonAlert(title:newDapplet ?  "Delete DApplet":"Open DApplet", msg: "Are you sure you want to Delete this Dapplet?")
+                //ciml.showDapplet[0].toggle()
             }
         }, label: {
-            Text(newDapplet ? "Open":"Edit")
+            Text(newDapplet ? "Open":"Delete")
                 .cornerRadius(20)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.black)
