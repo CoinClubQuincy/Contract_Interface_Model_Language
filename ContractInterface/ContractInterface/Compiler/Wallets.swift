@@ -50,6 +50,7 @@ struct Wallets: View {
     @State var fiatConvert:Int = 0
     @State var developerMode:Bool = false
     @State var faceID:Bool = false
+    @State var settingsPage:Bool = false
     
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
     @State var selectWalletView:Int = 0
@@ -126,6 +127,7 @@ struct Wallets: View {
             switch selectWalletView {
             case 0:
                 list
+                changeSettings
             case 1:
                 wallletQR
                 Spacer()
@@ -139,51 +141,72 @@ struct Wallets: View {
     //MARK: list
     var list:some View{
         List{
-            Section("Wallet"){
-                HStack{
-                    Picker("Wallet", selection: $selectedWallet) {
-                        Text("Wallet A").tag(wallet.wallet1)
-                        Text("Wallet B").tag(wallet.wallet2)
-                        Text("Wallet C").tag(wallet.wallet3)
+            
+            if(settingsPage){
+                Section("Network"){
+                    Picker("Network", selection: $selectedWallet) {
+                        Text("XDC").tag(network.xdc)
+                        Text("ETH").tag(network.eth)
                     }
-                }
-                NavigationLink(destination: transactionHistory) {
-                    Text("Transaction History")
-                }
-            }
-            Section("Tokens"){
-                HStack{
-                    HStack {
-                        Circle()
-                            .frame(width: 30)
-                        
-                        Text("PLI")
-                        Text("150,340")
+
+                    HStack{
+                        Text("RPC:")
                         Spacer()
-                        Text("$243.43")
+                        Text("https://XinFin.Network/")
+                    }
+                    Toggle("Face ID", isOn: $faceID)
+                    Toggle("Developer Mode", isOn: $developerMode)
+                    if(developerMode){
+                        
                     }
                 }
-            }
 
-            Section("Network"){
-                Picker("Network", selection: $selectedWallet) {
-                    Text("XDC").tag(network.xdc)
-                    Text("ETH").tag(network.eth)
+            } else {
+                
+                Section("Wallet"){
+                    HStack{
+                        Picker("Wallet", selection: $selectedWallet) {
+                            Text("Wallet A").tag(wallet.wallet1)
+                            Text("Wallet B").tag(wallet.wallet2)
+                            Text("Wallet C").tag(wallet.wallet3)
+                        }
+                    }
+                    NavigationLink(destination: transactionHistory) {
+                        Text("Transaction History")
+                    }
                 }
-
-                HStack{
-                    Text("RPC:")
-                    Spacer()
-                    Text("https://XinFin.Network/")
-                }
-                Toggle("Face ID", isOn: $faceID)
-                Toggle("Developer Mode", isOn: $developerMode)
-                if(developerMode){
-                    
+                Section("Tokens"){
+                    HStack{
+                        HStack {
+                            Circle()
+                                .frame(width: 30)
+                            Text("PLI")
+                            Text("150,340")
+                            Spacer()
+                            Text("$243.43")
+                        }
+                    }
                 }
             }
         }.listStyle(.grouped)
     }
+    
+    var changeSettings: some View{
+        Button(action: {
+            settingsPage.toggle()
+        }, label: {
+            
+            Text( settingsPage ? "Wallets":"Settings")
+                .cornerRadius(20)
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.black)
+                .padding(.top)
+        })
+        .background(settingsPage ? Color.yellow:Color.blue)
+        //.background(newDapplet ? Color.red:Color.blue)
+
+    }
+    
     //MARK: transactionHistory
     var transactionHistory: some View {
         ZStack{

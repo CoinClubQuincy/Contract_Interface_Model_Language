@@ -78,8 +78,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,10 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "636"
-            endingLineNumber = "636">
+            startingLineNumber = "651"
+            endingLineNumber = "651"
+            landmarkName = "init(hex:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -108,8 +110,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "objectAttributes_Font(objectAttribute:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -124,8 +126,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -140,8 +142,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
             landmarkName = "addBuildSYSImage(token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -172,8 +174,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -188,8 +190,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -204,8 +206,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -220,8 +222,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "594"
-            endingLineNumber = "594"
+            startingLineNumber = "609"
+            endingLineNumber = "609"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -236,8 +238,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -252,8 +254,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "415"
+            endingLineNumber = "415"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -300,8 +302,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -316,8 +318,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "parseCIML(ciml:)"
             landmarkType = "7">
          </BreakpointContent>

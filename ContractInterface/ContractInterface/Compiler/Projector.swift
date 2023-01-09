@@ -57,6 +57,7 @@ class ContractModel: ObservableObject{ //Build Settings
     let totalViewCount:Int = 50
     @Published var dappletPage:Int = 0
     
+    
     var cancellables = Set<AnyCancellable>()
     init(){
         dappletPage = 0
@@ -268,6 +269,22 @@ class ContractModel: ObservableObject{ //Build Settings
         return(tmpVar == "" ? objectValue:tmpVar)
     }
     
+    func varAllocationType(type:String)->String{
+        switch type {
+        //Data Type
+        case "string":
+            return ""
+        case "int":
+            return ""
+        case "bool":
+            return ""
+        //Button Type
+        case "segue":
+            return ""
+        default:
+            return "nil"
+        }
+    }
     func Placement(object:String) -> (Int){
         for objectLocation in ViewList{
             print(objectLocation.object)
@@ -278,6 +295,7 @@ class ContractModel: ObservableObject{ //Build Settings
         }
         return (0)
     }
+    
     
     //MARK: Object attributes functions
     func objectAttributes_alignment(objectAttribute:String){
@@ -432,10 +450,7 @@ struct DAppletView: View {
         .shadow(radius: 20)
         .background(Color.clear)
         .frame(width: 360*deviceSize, height: 640*deviceSize)
-        
-        
     }
-
 }
 //MARK: OverLay View
 struct Overlay: View{// Compiler
