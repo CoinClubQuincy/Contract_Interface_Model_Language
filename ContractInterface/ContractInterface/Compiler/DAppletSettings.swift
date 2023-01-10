@@ -112,17 +112,6 @@ struct DAppletSettings: View {
                         Toggle("Grid", isOn: $ciml.showGrid)
                         Toggle("Dev Enviroment", isOn: $testnets)
                     }
-                    HStack(alignment: .center){
-                        Spacer()
-                        Button(action: {
-                            
-                        }, label: {
-                            Text("Delete")
-                                .frame(alignment: .center)
-                        })
-                        Spacer()
-                    }
-                    .listRowBackground(Color.red)
                 }
                 Section("3rd Party Verification "){
                     HStack {
@@ -136,9 +125,22 @@ struct DAppletSettings: View {
                         }
                     }
                 }
+                HStack(alignment: .center){
+                    Spacer()
+                    Button(action: {
+                        
+                    }, label: {
+                        Text(DevEnv ? "Edit":"Delete")
+                            .font(.title)
+                            .foregroundColor(.black)
+                            .bold()
+                            .frame(alignment: .center)
+                    })
+                    Spacer()
+                }
+                .listRowBackground(DevEnv ? Color.blue:Color.red)
             }
             .listStyle(.grouped)
-            AlterType
         }
     }
     
