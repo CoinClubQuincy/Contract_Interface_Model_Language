@@ -32,7 +32,6 @@ struct ContractInterface: View {
             ZStack {
                 backgroundColor
                     .ignoresSafeArea(.all)
-                    .navigationTitle("DApplets")
                     .navigationBarItems(
                         leading:
                             NavigationLink(
