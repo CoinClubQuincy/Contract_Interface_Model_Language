@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import web3swift
-import Core
+//import web3swift
+//import Core
 
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
 //MARK: Web3 class
@@ -18,21 +18,14 @@ class Web3: ObservableObject {
     }
     private func establishRPC(RPC:String){
         //connect to RPC
-        guard var clientUrl = URL(string: RPC) else { return }
+//        guard var clientUrl = URL(string: RPC) else { return }
 //        let client = EthereumClient(url: clientUrl)
     }
     private func createWallet(){
 //        let keyStorage = EthereumKeyLocalStorage()
 //        let account = try? EthereumAccount.create(replacing: keyStorage, keystorePassword: "MY_PASSWORD")
     }
-    private func SendCrypto(amount:Int,address:String){
-//        let transaction: CodableTransaction = .emptyTransaction
-//        transaction.from = from ?? transaction.sender // `sender` one is if you have private key of your wallet address, so public key e.g. your wallet address could be interpreted
-//        transaction.value = value
-//        transaction.gasLimitPolicy = .manual(78423)
-//        transaction.gasPricePolicy = .manual(20000000000)
-//        web3.eth.send(transaction)
-    }
+    private func SendCrypto(amount:Int,address:String){}
     
     private func executeDApp(){}
 }

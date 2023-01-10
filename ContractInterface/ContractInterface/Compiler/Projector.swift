@@ -397,6 +397,7 @@ struct DAppletView: View {
     
     var body: some View {
         ZStack {
+            NavigationView{
                 GeometryReader{geo in
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
@@ -424,9 +425,21 @@ struct DAppletView: View {
                             }
                         }
                     }
-                    .padding(.top,geo.size.height * 0.001)
                 }
-            
+            }
+            .navigationBarItems(
+                leading:
+                    Image(systemName: "folder.badge.plus")
+                    .foregroundColor(.blue)
+                ,trailing:
+                    NavigationLink(
+                        destination: Text("Favorites")
+                            .navigationTitle("Favorites")
+                        ,label: {
+                            Image(systemName: "plus")
+                                .foregroundColor(.blue)
+                        })
+            )
         }
         .cornerRadius(15)
         .shadow(radius: 20)
