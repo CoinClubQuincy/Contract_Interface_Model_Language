@@ -379,6 +379,10 @@ class ContractModel: ObservableObject{ //Build Settings
     private func editCIML(address:String){
         print("you edited: \(address) DApplet")
     }
+    
+    
+    
+    
 }
 
 //MARK: Final View // View Comiler
@@ -390,7 +394,7 @@ struct DAppletView: View {
     @StateObject var contractInterface:ContractModel
     
     
-    let data = Array(1...126).map { "\($0)" }
+    let data = Array(1...146).map { "\($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 30,maximum: 30))
     ]
@@ -399,6 +403,7 @@ struct DAppletView: View {
         ZStack {
             NavigationView{
                 GeometryReader{geo in
+                    
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
                         .foregroundColor(Color(hex: contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00")))
@@ -444,6 +449,7 @@ struct DAppletView: View {
         .cornerRadius(15)
         .shadow(radius: 20)
         .background(Color.clear)
+        .frame(width: 360*deviceSize, height: 640*deviceSize)
     }
 }
 //MARK: OverLay View
@@ -701,4 +707,3 @@ extension Color {
         }
     }
 }
-

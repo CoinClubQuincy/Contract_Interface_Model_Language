@@ -95,24 +95,23 @@ struct Wallets: View {
                     selectWalletView = 1
                 }, label: {
                     Image(systemName: "qrcode")
-                        .padding(10)
+                        .padding(20)
                         .background(Color.blue)
                         .cornerRadius(50)
                 })
-                Spacer()
-                changeSettings
-                    .padding(.top)
                 Spacer()
                 Button(action: {
                     selectWalletView = 2
                 }, label: {
                    Image(systemName: "paperplane.fill")
-                        .padding(10)
+                        .padding(20)
                         .background(Color.blue)
                         .cornerRadius(50)
                 })
             }
             .padding(.horizontal,100)
+            .padding()
+            
             
             Text(qrdata)
                 .font(.footnote)
@@ -128,6 +127,7 @@ struct Wallets: View {
             switch selectWalletView {
             case 0:
                 list
+                changeSettings
             case 1:
                 wallletQR
                 Spacer()
@@ -162,6 +162,7 @@ struct Wallets: View {
                 }
 
             } else {
+                
                 Section("Wallet"){
                     HStack{
                         Picker("Wallet", selection: $selectedWallet) {
@@ -194,13 +195,14 @@ struct Wallets: View {
         Button(action: {
             settingsPage.toggle()
         }, label: {
-            Image(systemName: "gear")
-                 .padding(10)
-                 .background(Color.blue)
-                 .cornerRadius(50)
+            
+            Text( settingsPage ? "Wallets":"Settings")
+                .cornerRadius(20)
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.black)
+                .padding(.top)
         })
         .background(settingsPage ? Color.yellow:Color.blue)
-        .cornerRadius(20)
         //.background(newDapplet ? Color.red:Color.blue)
 
     }
