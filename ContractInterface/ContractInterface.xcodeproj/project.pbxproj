@@ -15,6 +15,7 @@
 		6672CE2C295E2A1100A1EAE4 /* BuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CE2B295E2A1100A1EAE4 /* BuildView.swift */; };
 		6672CE2E295E2B3800A1EAE4 /* DAppletSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6672CE2D295E2B3800A1EAE4 /* DAppletSettings.swift */; };
 		66A6CE652964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66A6CE632964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld */; };
+		66A76B4E296E4271000342A8 /* web3swift in Frameworks */ = {isa = PBXBuildFile; productRef = 66A76B4D296E4271000342A8 /* web3swift */; };
 		66D8A5532935A42A00D27FA8 /* ContractInterfaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5522935A42A00D27FA8 /* ContractInterfaceApp.swift */; };
 		66D8A5552935A42A00D27FA8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5542935A42A00D27FA8 /* Persistence.swift */; };
 		66D8A5582935A42A00D27FA8 /* ContractInterface.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5562935A42A00D27FA8 /* ContractInterface.xcdatamodeld */; };
@@ -24,6 +25,7 @@
 		66D8A56A2935A42C00D27FA8 /* ContractInterfaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5692935A42C00D27FA8 /* ContractInterfaceTests.swift */; };
 		66D8A5742935A42C00D27FA8 /* ContractInterfaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5732935A42C00D27FA8 /* ContractInterfaceUITests.swift */; };
 		66D8A5762935A42C00D27FA8 /* ContractInterfaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5752935A42C00D27FA8 /* ContractInterfaceUITestsLaunchTests.swift */; };
+		CA120B3372EFEB8B1DBB3997 /* Pods_ContractInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAAF49AD8F1C18C9D22B79A7 /* Pods_ContractInterface.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1493DB370BB5FA83E0D9C27B /* Pods-ContractInterface.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContractInterface.debug.xcconfig"; path = "Target Support Files/Pods-ContractInterface/Pods-ContractInterface.debug.xcconfig"; sourceTree = "<group>"; };
 		661035C5295CC7CD0065A3D1 /* CIML_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIML_Model.swift; sourceTree = "<group>"; };
 		661F807E294CE17600192F15 /* Projector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projector.swift; sourceTree = "<group>"; };
 		6634A9B4294CCD4300650A0E /* ContractInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInterface.swift; sourceTree = "<group>"; };
@@ -65,6 +68,8 @@
 		66D8A56F2935A42C00D27FA8 /* ContractInterfaceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ContractInterfaceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66D8A5732935A42C00D27FA8 /* ContractInterfaceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInterfaceUITests.swift; sourceTree = "<group>"; };
 		66D8A5752935A42C00D27FA8 /* ContractInterfaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInterfaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CAAF49AD8F1C18C9D22B79A7 /* Pods_ContractInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ContractInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAF48C0334835E3B1E39AC6C /* Pods-ContractInterface.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContractInterface.release.xcconfig"; path = "Target Support Files/Pods-ContractInterface/Pods-ContractInterface.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA120B3372EFEB8B1DBB3997 /* Pods_ContractInterface.framework in Frameworks */,
+				66A76B4E296E4271000342A8 /* web3swift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F0FEECEADD46BAAEBDEFB02 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1493DB370BB5FA83E0D9C27B /* Pods-ContractInterface.debug.xcconfig */,
+				DAF48C0334835E3B1E39AC6C /* Pods-ContractInterface.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		6672CE28295E26C900A1EAE4 /* Compiler */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +147,8 @@
 				66D8A5682935A42C00D27FA8 /* ContractInterfaceTests */,
 				66D8A5722935A42C00D27FA8 /* ContractInterfaceUITests */,
 				66D8A5502935A42A00D27FA8 /* Products */,
+				4F0FEECEADD46BAAEBDEFB02 /* Pods */,
+				F7191EBEB68F3837E3165F47 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -183,6 +201,14 @@
 			path = ContractInterfaceUITests;
 			sourceTree = "<group>";
 		};
+		F7191EBEB68F3837E3165F47 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CAAF49AD8F1C18C9D22B79A7 /* Pods_ContractInterface.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -190,15 +216,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 66D8A5792935A42C00D27FA8 /* Build configuration list for PBXNativeTarget "ContractInterface" */;
 			buildPhases = (
+				E5C40F4AF9877BDD975A549C /* [CP] Check Pods Manifest.lock */,
 				66D8A54B2935A42A00D27FA8 /* Sources */,
 				66D8A54C2935A42A00D27FA8 /* Frameworks */,
 				66D8A54D2935A42A00D27FA8 /* Resources */,
+				491D623924810D51F09355BC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = ContractInterface;
+			packageProductDependencies = (
+				66A76B4D296E4271000342A8 /* web3swift */,
+			);
 			productName = ContractInterface;
 			productReference = 66D8A54F2935A42A00D27FA8 /* ContractInterface.app */;
 			productType = "com.apple.product-type.application";
@@ -271,6 +302,9 @@
 				Base,
 			);
 			mainGroup = 66D8A5462935A42A00D27FA8;
+			packageReferences = (
+				66A76B4C296E4271000342A8 /* XCRemoteSwiftPackageReference "web3swift" */,
+			);
 			productRefGroup = 66D8A5502935A42A00D27FA8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -307,6 +341,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		491D623924810D51F09355BC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ContractInterface/Pods-ContractInterface-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ContractInterface/Pods-ContractInterface-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ContractInterface/Pods-ContractInterface-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5C40F4AF9877BDD975A549C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ContractInterface-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		66D8A54B2935A42A00D27FA8 /* Sources */ = {
@@ -478,6 +554,7 @@
 		};
 		66D8A57A2935A42C00D27FA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1493DB370BB5FA83E0D9C27B /* Pods-ContractInterface.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -517,6 +594,7 @@
 		};
 		66D8A57B2935A42C00D27FA8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAF48C0334835E3B1E39AC6C /* Pods-ContractInterface.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -685,6 +763,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		66A76B4C296E4271000342A8 /* XCRemoteSwiftPackageReference "web3swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/skywinder/web3swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		66A76B4D296E4271000342A8 /* web3swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 66A76B4C296E4271000342A8 /* XCRemoteSwiftPackageReference "web3swift" */;
+			productName = web3swift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		66A6CE632964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld */ = {

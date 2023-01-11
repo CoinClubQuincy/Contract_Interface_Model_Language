@@ -13,6 +13,7 @@ struct ContentView: View {
     @State var backgroundColor:LinearGradient = LinearGradient(gradient: Gradient(colors: [Color.white, Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing)
     //@StateObject var networkManager = ManageCIMLDocument()
     @StateObject var contractInterface = ContractModel()
+    @StateObject var web3 = Web3wallet()
     
     var body: some View {
         TabView(selection: $selectTab){
