@@ -100,6 +100,9 @@ struct Wallets: View {
                         .cornerRadius(50)
                 })
                 Spacer()
+                changeSettings
+                    .padding(.top)
+                Spacer()
                 Button(action: {
                     selectWalletView = 2
                 }, label: {
@@ -127,7 +130,6 @@ struct Wallets: View {
             switch selectWalletView {
             case 0:
                 list
-                changeSettings
             case 1:
                 wallletQR
                 Spacer()
@@ -141,14 +143,12 @@ struct Wallets: View {
     //MARK: list
     var list:some View{
         List{
-            
             if(settingsPage){
                 Section("Network"){
                     Picker("Network", selection: $selectedWallet) {
                         Text("XDC").tag(network.xdc)
                         Text("ETH").tag(network.eth)
                     }
-
                     HStack{
                         Text("RPC:")
                         Spacer()
@@ -160,9 +160,7 @@ struct Wallets: View {
                         
                     }
                 }
-
             } else {
-                
                 Section("Wallet"){
                     HStack{
                         Picker("Wallet", selection: $selectedWallet) {
@@ -195,14 +193,11 @@ struct Wallets: View {
         Button(action: {
             settingsPage.toggle()
         }, label: {
-            
-            Text( settingsPage ? "Wallets":"Settings")
-                .cornerRadius(20)
-                .frame(maxWidth: .infinity)
-                .foregroundColor(.black)
-                .padding(.top)
+            Image(systemName: "gear")
+                 .padding(20)
+                 .background(Color.blue)
+                 .cornerRadius(50)
         })
-        .background(settingsPage ? Color.yellow:Color.blue)
         //.background(newDapplet ? Color.red:Color.blue)
 
     }
