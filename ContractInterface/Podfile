@@ -5,4 +5,5 @@ platform :ios, '16.0'
 target 'ContractInterface' do
   use_frameworks!
   pod 'web3swift', '~> 3.0'
+  pod 'XDC3Swift'
 end

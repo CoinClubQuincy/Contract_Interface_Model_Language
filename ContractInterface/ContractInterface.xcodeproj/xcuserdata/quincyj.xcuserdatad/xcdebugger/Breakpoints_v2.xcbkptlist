@@ -94,8 +94,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "651"
-            endingLineNumber = "651"
+            startingLineNumber = "638"
+            endingLineNumber = "638"
             landmarkName = "init(hex:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "objectAttributes_Font(objectAttribute:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
             landmarkName = "addBuildSYSImage(token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "609"
-            endingLineNumber = "609"
+            startingLineNumber = "595"
+            endingLineNumber = "595"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -238,8 +238,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
+            startingLineNumber = "401"
+            endingLineNumber = "401"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
