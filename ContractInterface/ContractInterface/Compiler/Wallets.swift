@@ -10,52 +10,79 @@ import web3swift
 import Core
 import BigInt
 import CryptoSwift
+//import XDC3Swift
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
 //MARK: Web3 class
-class Web3wallet: ObservableObject {
-    var clientUrl:String = ""
-    init(){
-        createWallet(seed: "1234")
-    }
-    private func establishRPC(RPC:String){
-        //connect to RPC
-        guard var clientUrl = URL(string: RPC) else { return }
-
-    }
-    private func createWallet(seed:String){
-        // Create keystore and account with password.
-        let keystore = try! EthereumKeystoreV3(password: seed);
-        // generates a private key internally if node "privateKey" parameter supplied
-            let account = keystore!.addresses![0]
-            print(account.address)
-        print(keystore?.keystoreParams?.crypto)
-        
-            let data = try! keystore!.serialize() // internally serializes to JSON
-            print(try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue:0)))
-            let key = try! keystore!.UNSAFE_getPrivateKeyData(password: seed, account: account)
-        print("key: \(account), account: \(account.address)")
-            // you should rarely use this and expose a key manually
-    }
-    
-    private func checkAddressTotal(){
-        let address = EthereumAddress("0xE6877A4d8806e9A9F12eB2e8561EA6c1db19978d")!
-        //let web3Main = Web3.establishRPC(<#T##self: Web3##Web3#>)
-//        let balanceResult = web3Main.eth.getBalance(address)
-//        guard case .success(let balance) = balanceResult else {return}
-    }
-    
-    private func SendCrypto(from:EthereumAddress,value:Int,address:String){
-        var transaction: CodableTransaction = .emptyTransaction
-        transaction.from = from ?? transaction.sender
-        // `sender` one is if you have private key of your wallet address, so public key e.g. your wallet address could be interpreted
-        transaction.gasLimit = BigUInt(78423)
-        transaction.gasPrice = BigUInt(2000)
-        //web3.eth.send(transaction)
-        //web3.eth.send(<#T##CodableTransaction#>)
-    }
-    
-    private func executeDApp(){}
-}
+//class Web3wallet: ObservableObject {
+//    
+//    var clientUrl:String = ""
+//    init(){
+//        createWallet(seed: "1234")
+//        Task {
+//            print("check address")
+//            print("\(await checkAddressTotal(Address: "0xC0869eed9fdfb45623571940933654cdaa8feF7a"))")
+//        }
+//    }
+//    func createWallet(seed:String){
+//        // Create keystore and account with password.
+//        let keystore = try! EthereumKeystoreV3(password: seed);
+//        // generates a private key internally if node "privateKey" parameter supplied
+//        let account = keystore!.addresses![0]
+//        print(account.address)
+//        print(keystore?.keystoreParams?.crypto)
+//    
+//        let data = try! keystore!.serialize() // internally serializes to JSON
+//        print(try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue:0)))
+//        var key = try! keystore!.UNSAFE_getPrivateKeyData(password: seed, account: account)
+//        //let privateKey = String(decoding: key, as: UTF8.self)
+//        
+//        print("key: \(String(decoding: key, as: UTF8.self)), account: \(account.address)")
+//    }
+//    
+////    func setRPC(RPC:String = "http://127.0.0.1:8545") -> Web3? {
+////        let web3 = Web3(provider: URL(string: RPC)! as! Web3Provider)
+////        return web3
+////    }
+//    
+//    //0xC0869eed9fdfb45623571940933654cdaa8feF7a
+//    func checkAddressTotal(Address:String) async -> BigUInt{
+//        var web3 = Web3(provider: URL(string:  "http://127.0.0.1:8545")! as! Web3Provider )
+//        
+//        let address = EthereumAddress(Address)!
+//        let balanceResult = try! await web3.eth.getBalance(for: address)
+//        print(balanceResult)
+//        return balanceResult
+//    }
+//    
+//    func Send(from:EthereumAddress,value:BigUInt,to:String) async{
+//        var web3 = Web3(provider: URL(string:  "http://127.0.0.1:8545")! as! Web3Provider)
+//
+//        var transaction: CodableTransaction = .emptyTransaction
+//        transaction.from = from ?? transaction.sender
+//        transaction.value = value
+//        // `sender` one is if you have private key of your wallet address, so public key e.g. your wallet address could be interpreted
+//        transaction.gasLimit = BigUInt(78423)
+//        transaction.gasPrice = BigUInt(2000)
+//        try! await web3.eth.send(transaction)
+//        
+//    }
+//    
+//    func executeDApp() async{
+////        let yourContractABI: String = ""
+////        let toEthereumAddress: EthereumAddress = EthereumAddress("0xC0869eed9fdfb45623571940933654cdaa8feF7a") ?? <#default value#>!
+////        let abiVersion: Int = 0
+////
+////        let contract = await Web3.InfuraMainnetWeb3().contract(yourContractABI, at: toEthereumAddress, abiVersion: abiVersion)
+////
+////        let method: String = ""
+////        let parameters: [AnyObject] = []
+////        let extraData: Data = ""
+////        let transactionOptions: TransactionOptions = <OPTIONS>
+//
+////        let transactionRead = contract.read(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+////        let transactionWrite = contract.write(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+//    }
+//}
 
 //MARK: All_Wallets
 struct All_Wallets:Identifiable{
@@ -88,7 +115,7 @@ struct Wallets: View {
 
     @State private var selectedWallet: wallet = .wallet1
     
-    @StateObject var web3 = Web3wallet()
+    //@StateObject var web3 = Web3wallet()
     
     enum network: String, CaseIterable, Identifiable {
         case xdc, eth
@@ -115,6 +142,7 @@ struct Wallets: View {
             Text("2434.462")
                 .font(.largeTitle)
                 .bold()
+
             Text("$234.53")
                 .font(.caption)
                 .bold()

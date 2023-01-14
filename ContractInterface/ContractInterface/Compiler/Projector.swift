@@ -122,7 +122,7 @@ class ContractModel: ObservableObject{ //Build Settings
             //MARK: Parse Views
             for viewCount in 0...totalViewCount{
                 for view in typ.views{
-                    if (view.view == viewCount){
+                    if (view.view == dappletPage){
                         ViewList.append(Views(view: view.view ,
                                               object: view.object ,
                                               location: view.location))
@@ -159,7 +159,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(obj.type)
                     print("---------------------------------------- append textLst")
                     print(obj.frame?[0])
-                    TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
+                    TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error", objectType: "text"),
                                              foreGroundColor: Color(.black),
                                              font: .headline, // add func
                                              frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -176,7 +176,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(TextList.count)
                     //MARK: Parse TextField
                 }else if (obj.type == "textField"){
-                    TextFieldList.append(CIMLTextField(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
+                    TextFieldList.append(CIMLTextField(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error", objectType: "text"),
                                                        textField: obj.textField ?? "",
                                                        foreGroundColor: .gray,
                                                        frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -191,7 +191,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(TextFieldList.count)
                     //MARK: Parse Button
                 }else if (obj.type == "button"){
-                    ButtonList.append(CIMLButton(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error"),
+                    ButtonList.append(CIMLButton(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error", objectType: "text"),
                                                  isIcon: false,
                                                  foreGroundColor: .black,
                                                  font: .headline,
@@ -252,38 +252,24 @@ class ContractModel: ObservableObject{ //Build Settings
         }
     }
     
-    func varAllocation(objectName:String,objectValue:String)->String{
+    func varAllocation(objectName:String,objectValue:String,objectType:String)->String{
         var tmpVar:String = ""
         for vars in VariableList{
             print("-------------------- variable list --------------------")
             print(vars.varName)
+            print(vars.type)
             print(objectName)
-            if (String(vars.varName) == String(objectName)){
-                print("------------------Objects --------------------")
-                tmpVar = vars.value
-                print(vars.varName)
-                print(vars.value)
-                return tmpVar
+            if(vars.type == objectType){
+                if (String(vars.varName) == String(objectName)){
+                    print("------------------Objects --------------------")
+                    tmpVar = vars.value
+                    print(vars.varName)
+                    print(vars.value)
+                    return tmpVar
+                }
             }
         }
         return(tmpVar == "" ? objectValue:tmpVar)
-    }
-    
-    func varAllocationType(type:String)->String{
-        switch type {
-        //Data Type
-        case "string":
-            return ""
-        case "int":
-            return ""
-        case "bool":
-            return ""
-        //Button Type
-        case "segue":
-            return ""
-        default:
-            return "nil"
-        }
     }
     func Placement(object:String) -> (Int){
         for objectLocation in ViewList{
@@ -406,11 +392,11 @@ struct DAppletView: View {
                     
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
-                        .foregroundColor(Color(hex: contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00")))
+                        .foregroundColor(Color(hex: contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00", objectType: String(contractInterface.dappletPage))))
                         //.background(Color.black)
                         .onAppear{
                             //Color or Gradient
-                            print(contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00"))
+                            print(contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00", objectType: String(contractInterface.dappletPage)))
                         }
                     
                     LazyVGrid(columns: layout){
@@ -599,7 +585,7 @@ struct BUTTONS:View{
                 print("press button")
                 if(type == "segue"){
                     contractInterface.changePageSegue(page: Int(value) ?? 0)
-                    //contractInterface.getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-2.json")
+                    contractInterface.getCIML(url: contractInterface.cimlURL)
                     print("pressed Segue Button page status: \(contractInterface.dappletPage)")
                 } else if (type == "toggle"){
                     contractInterface.toggleButton(status: Bool(value) ?? false)
@@ -607,6 +593,7 @@ struct BUTTONS:View{
                 } else if (type == "submit"){
                     print("pressed Submit Button")
                 }
+                
             }, label: {
                 if(isIcon){
                     Image(systemName: text)
