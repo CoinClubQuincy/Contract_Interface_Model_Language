@@ -204,7 +204,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
                                                  location: Placement(object: obj.name ?? "nil") ?? 0,
-                                                 type: "segue", value: "1"))
+                                                 type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false), value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
                     print(obj.type)
                     print(ButtonList.count)
                 } else if (obj.type == "iconButton"){
@@ -221,7 +221,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
                                                  location: Placement(object: obj.name ?? "nil") ?? 0,
-                                                 type: "segue", value: "1"))
+                                                 type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false), value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
                     print(obj.type)
                     print(ButtonList.count)
                     //MARK: Parse SysImage
@@ -271,6 +271,27 @@ class ContractModel: ObservableObject{ //Build Settings
         }
         return(tmpVar == "" ? objectValue:tmpVar)
     }
+    
+    func buttonAlocation(objectName:String,typeValue:Bool)-> String{
+        for vars in VariableList{
+            if(objectName == vars.varName.dropFirst()){
+                if(typeValue){ // value alocation true
+                    switch vars.type{
+                    case "segue":
+                        return varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type)
+                    case "toggle":
+                        return varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type) == "true" ? "false":"true"
+                    default:
+                        return "error"
+                    }
+                } else {
+                    return vars.type
+                }
+            }
+        }
+        return ""
+    }
+    
     func Placement(object:String) -> (Int){
         for objectLocation in ViewList{
             print(objectLocation.object)
@@ -593,6 +614,7 @@ struct BUTTONS:View{
                 } else if (type == "submit"){
                     print("pressed Submit Button")
                 }
+                print("type: \(type) value: \(value)")
                 
             }, label: {
                 if(isIcon){

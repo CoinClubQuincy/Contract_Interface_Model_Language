@@ -351,7 +351,7 @@
 		B96BCDA4AF618BF171AA502CC84FCD8F /* Data Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81210E824E7B7C4690983CCC0A31A8B3 /* Data Conversion.swift */; };
 		B9D69BEA7C4FC2A38065C701270223E6 /* field_5x52.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CB4C39F0A3912716F23E15640516469 /* field_5x52.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		BB056B9351B1BE41C2703393F69623DD /* WSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0744F148B067053C5378C871EA39B1E2 /* WSEngine.swift */; };
-		BB50289055456B5B1944A3001112F9E4 /* Browser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */; };
+		BB50289055456B5B1944A3001112F9E4 /* web3swift-Browser in Resources */ = {isa = PBXBuildFile; fileRef = 12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */; };
 		BB80D47263E4B0F24FE73EE6D450067C /* Eth+GetCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06089E11191AB8CBBD3FDB0EC2CFE230 /* Eth+GetCode.swift */; };
 		BDE8260C3F536564BC9B0C9C7DE81B05 /* Web3ProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843872DF9F04521AA200E08E0BA5944C /* Web3ProviderProtocol.swift */; settings = {COMPILER_FLAGS = "-DCOCOAPODS"; }; };
 		BE1D3571B8136589C9B848B8E806E451 /* CodableTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544EA33793E0D9DD190068AA2D9EE5A2 /* CodableTransaction.swift */; settings = {COMPILER_FLAGS = "-DCOCOAPODS"; }; };
@@ -654,7 +654,7 @@
 		1072734E6AA4D2B95ADF4F5BFEE98DC6 /* Web3+Contract.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Web3+Contract.swift"; path = "Sources/web3swift/Web3/Web3+Contract.swift"; sourceTree = "<group>"; };
 		1159DD790D9C20505F743A93B8AF9B08 /* Web3Core-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Web3Core-dummy.m"; sourceTree = "<group>"; };
 		124FF2F9C4F6A53C6B3427F8BFB99A73 /* scalar_4x64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = scalar_4x64.h; path = secp256k1/Classes/secp256k1/src/scalar_4x64.h; sourceTree = "<group>"; };
-		12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Browser.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "web3swift-Browser"; path = Browser.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		12DFE73B822F873DDEB464F04D487F05 /* ReadTransaction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadTransaction.swift; path = Sources/web3swift/Operations/ReadTransaction.swift; sourceTree = "<group>"; };
 		13022EBF6970ECEF4BAE32A33F043111 /* hash_impl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hash_impl.h; path = secp256k1/hash_impl.h; sourceTree = "<group>"; };
 		1354F8A558E5898EC775F19111D2C1FD /* ecmult_impl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ecmult_impl.h; path = secp256k1/ecmult_impl.h; sourceTree = "<group>"; };
@@ -1757,7 +1757,7 @@
 				891B2270823847ED23F2ECFC28F935EC /* Starscream */,
 				45D36C22C663F68DE8BD9F06AE7B7880 /* Web3Core */,
 				8A2449DF78D58AD33A7C7504BB3F38A0 /* web3swift */,
-				12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */,
+				12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */,
 				8F784AF26216512290BE91EB674BFEAB /* XDC3Swift */,
 			);
 			name = Products;
@@ -2262,7 +2262,7 @@
 			);
 			name = "web3swift-Browser";
 			productName = Browser;
-			productReference = 12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */;
+			productReference = 12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */;
 			productType = "com.apple.product-type.bundle";
 		};
 		99313990C1D76A6D1D017868B6975CC8 /* CryptoSwift */ = {
@@ -2464,7 +2464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB50289055456B5B1944A3001112F9E4 /* Browser.bundle in Resources */,
+				BB50289055456B5B1944A3001112F9E4 /* web3swift-Browser in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3244,7 +3244,6 @@
 			baseConfigurationReference = 478C76E44075D601466F790E08C90CAE /* web3swift.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/web3swift";
-				DEVELOPMENT_TEAM = 4LU2RYBLDG;
 				IBSC_MODULE = web3swift;
 				INFOPLIST_FILE = "Target Support Files/web3swift/ResourceBundle-Browser-web3swift-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -3611,7 +3610,6 @@
 			baseConfigurationReference = 5AC1C1FD3A4BC0B9A6ADBEEE4F2F73D3 /* web3swift.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/web3swift";
-				DEVELOPMENT_TEAM = 4LU2RYBLDG;
 				IBSC_MODULE = web3swift;
 				INFOPLIST_FILE = "Target Support Files/web3swift/ResourceBundle-Browser-web3swift-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

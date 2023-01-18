@@ -14,7 +14,6 @@ struct ContentView: View {
     //@StateObject var networkManager = ManageCIMLDocument()
     @StateObject var contractInterface = ContractModel()
     //@StateObject var web3 = Web3wallet()
-    
     var body: some View {
         TabView(selection: $selectTab){
             ContractInterface(backgroundColor: $backgroundColor, contractInterface: contractInterface)
