@@ -13,76 +13,101 @@ import CryptoSwift
 //import XDC3Swift
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
 //MARK: Web3 class
-//class Web3wallet: ObservableObject {
-//    
-//    var clientUrl:String = ""
-//    init(){
-//        createWallet(seed: "1234")
-//        Task {
-//            print("check address")
-//            print("\(await checkAddressTotal(Address: "0xC0869eed9fdfb45623571940933654cdaa8feF7a"))")
-//        }
-//    }
-//    func createWallet(seed:String){
-//        // Create keystore and account with password.
-//        let keystore = try! EthereumKeystoreV3(password: seed);
-//        // generates a private key internally if node "privateKey" parameter supplied
-//        let account = keystore!.addresses![0]
-//        print(account.address)
-//        print(keystore?.keystoreParams?.crypto)
-//    
-//        let data = try! keystore!.serialize() // internally serializes to JSON
-//        print(try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions(rawValue:0)))
-//        var key = try! keystore!.UNSAFE_getPrivateKeyData(password: seed, account: account)
-//        //let privateKey = String(decoding: key, as: UTF8.self)
-//        
-//        print("key: \(String(decoding: key, as: UTF8.self)), account: \(account.address)")
-//    }
-//    
-////    func setRPC(RPC:String = "http://127.0.0.1:8545") -> Web3? {
-////        let web3 = Web3(provider: URL(string: RPC)! as! Web3Provider)
-////        return web3
-////    }
-//    
-//    //0xC0869eed9fdfb45623571940933654cdaa8feF7a
-//    func checkAddressTotal(Address:String) async -> BigUInt{
-//        var web3 = Web3(provider: URL(string:  "http://127.0.0.1:8545")! as! Web3Provider )
-//        
-//        let address = EthereumAddress(Address)!
-//        let balanceResult = try! await web3.eth.getBalance(for: address)
-//        print(balanceResult)
-//        return balanceResult
-//    }
-//    
-//    func Send(from:EthereumAddress,value:BigUInt,to:String) async{
-//        var web3 = Web3(provider: URL(string:  "http://127.0.0.1:8545")! as! Web3Provider)
+struct MyWeb3Provider: Web3Provider {
+    var network: Networks?
+    var attachedKeystoreManager: KeystoreManager?
+    var policies: Policies
+    var url: URL
+    var session: URLSession
+
+    init(url: URL) {
+        self.url = url
+        self.network = nil
+        self.attachedKeystoreManager = nil
+        self.policies = .auto
+        self.session = .init(configuration: .default)
+    }
+}
+
+
+class Web3wallet: ObservableObject {
+    
+    var clientUrl:String = ""
+
+    init(){
+        createWallet(seed: "1234")
+        Task {
+            print("check address")
+            let balance = await getBalanceTotal(address: "0xC0869eed9fdfb45623571940933654cdaa8feF7a")
+            print("balance: \(balance)")
+        }
+    }
+    func createWallet(seed:String){
+        let keystore = try! EthereumKeystoreV3(password: seed)
+        let keydata = try! JSONEncoder().encode(keystore?.keystoreParams)
+        let keystoreString = String(data: keydata, encoding: .utf8)
+
+        print("Keystore: \(keystoreString!)")
+
+        let address = keystore?.addresses![0]
+        print("Address: \(address?.address)")
+        
+    }
+    
+    func RPC(RPC:String = "http://127.0.0.1:8545",ID:BigInt = 5777) -> Web3? {
+        var provider = MyWeb3Provider(url: URL(string: "http://localhost:8545")!)
+
+        //var provider = URL(string: "http://localhost:8545") as! Web3Provider
+        let web3 = Web3(provider: provider)
+        //print(self.web3Provider.url)
+        return web3
+    }
+    
+    //0xC0869eed9fdfb45623571940933654cdaa8feF7a
+    func getBalanceTotal(address: String) async -> BigUInt{
+        let web3 = RPC()
+        guard let address = EthereumAddress(address) else { return 0 }
+        guard let balance = try! await web3?.eth.getBalance(for: address) else { return 0 }
+        print("getBalance: \(balance)")
+        return balance
+    }
+    
+    func Send(from:EthereumAddress,value:BigUInt,to:String) async{
+        let web3 = Web3(provider: URL(string:  "http://127.0.0.1:8545")! as! Web3Provider)
+
+        var transaction: CodableTransaction = .emptyTransaction
+        
+        let fromAddress = "0x0000000000000000000000000000000000000000"
+        let toAddress = "0x0000000000000000000000000000000000000001"
+
+        //let options = TransactionOptions.defaultOptions
+        transaction.from = EthereumAddress(fromAddress)
+        transaction.to = EthereumAddress(toAddress) ?? transaction.from!
+        transaction.value = value
+        transaction.gasLimit = BigUInt(78423)
+        transaction.gasPrice = BigUInt(2000)
+
+        try! await web3.eth.send(transaction)
+    }
+    
+    func executeDApp() async{
+//        let yourContractABI: String = ""
+//        let toEthereumAddress: EthereumAddress = EthereumAddress("0xC0869eed9fdfb45623571940933654cdaa8feF7a") ?? <#default value#>!
+//        let abiVersion: Int = 0
 //
-//        var transaction: CodableTransaction = .emptyTransaction
-//        transaction.from = from ?? transaction.sender
-//        transaction.value = value
-//        // `sender` one is if you have private key of your wallet address, so public key e.g. your wallet address could be interpreted
-//        transaction.gasLimit = BigUInt(78423)
-//        transaction.gasPrice = BigUInt(2000)
-//        try! await web3.eth.send(transaction)
-//        
-//    }
-//    
-//    func executeDApp() async{
-////        let yourContractABI: String = ""
-////        let toEthereumAddress: EthereumAddress = EthereumAddress("0xC0869eed9fdfb45623571940933654cdaa8feF7a") ?? <#default value#>!
-////        let abiVersion: Int = 0
-////
-////        let contract = await Web3.InfuraMainnetWeb3().contract(yourContractABI, at: toEthereumAddress, abiVersion: abiVersion)
-////
-////        let method: String = ""
-////        let parameters: [AnyObject] = []
-////        let extraData: Data = ""
-////        let transactionOptions: TransactionOptions = <OPTIONS>
+//        let contract = await Web3.InfuraMainnetWeb3().contract(yourContractABI, at: toEthereumAddress, abiVersion: abiVersion)
 //
-////        let transactionRead = contract.read(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
-////        let transactionWrite = contract.write(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
-//    }
-//}
+//        let method: String = ""
+//        let parameters: [AnyObject] = []
+//        let extraData: Data = ""
+//        let transactionOptions: TransactionOptions = <OPTIONS>
+
+//        let transactionRead = contract.read(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+//        let transactionWrite = contract.write(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+    }
+}
+
+
 
 //MARK: All_Wallets
 struct All_Wallets:Identifiable{
@@ -108,6 +133,10 @@ struct Wallets: View {
     
     @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
     @State var selectWalletView:Int = 0
+    
+    
+    @StateObject var web3 = Web3wallet()
+    
     enum wallet: String, CaseIterable, Identifiable {
         case wallet1, wallet2, wallet3, wallet4
         var id: Self { self }

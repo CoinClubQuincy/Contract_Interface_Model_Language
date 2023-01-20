@@ -245,8 +245,6 @@ class ContractModel: ObservableObject{ //Build Settings
             print("total ViewList: ",ViewList.count)
             print("total VarList: ",VariableList.count)
 
-            
-            
             print("dapplet page")
             print(dappletPage)
         }
