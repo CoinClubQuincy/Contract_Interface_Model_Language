@@ -34,11 +34,25 @@ class Web3wallet: ObservableObject {
     
     var clientUrl:String = ""
 
-    init(){
+    init() {
         createWallet(seed: "1234")
+
+
         Task {
+            do {
+                let web3 = RPC()
+                let accounts = try await web3?.eth.ownedAccounts()
+                for account in accounts! {
+                    print(account.address)
+                }
+            } catch {
+                print("Error getting accounts: \(error)")
+            }
+            
+            
             print("check address")
-            let balance = await getBalanceTotal(address: "0xC0869eed9fdfb45623571940933654cdaa8feF7a")
+            await Send(from: "0xD1D8a0ded1e2b8B65aFe8102f68f463299a49E2A", value: 1000000000000000000, to: "0x4BD2c7474E134257943121871a69a6043aF9fbF4")
+            let balance = await getBalanceTotal(address: "0xfbd92e244062f85fe354304b11a6d08ddd2733b43319cd0eb6d8546293b1346a") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
             print("balance: \(balance)")
         }
     }
@@ -55,8 +69,7 @@ class Web3wallet: ObservableObject {
     }
     
     func RPC(RPC:String = "http://127.0.0.1:8545",ID:BigInt = 5777) -> Web3? {
-        var provider = MyWeb3Provider(url: URL(string: "http://localhost:8545")!)
-
+        var provider = MyWeb3Provider(url: URL(string: RPC)!)
         //var provider = URL(string: "http://localhost:8545") as! Web3Provider
         let web3 = Web3(provider: provider)
         //print(self.web3Provider.url)
@@ -72,22 +85,39 @@ class Web3wallet: ObservableObject {
         return balance
     }
     
-    func Send(from:EthereumAddress,value:BigUInt,to:String) async{
-        let web3 = Web3(provider: URL(string:  "http://127.0.0.1:8545")! as! Web3Provider)
-
-        var transaction: CodableTransaction = .emptyTransaction
+    func Send(from:String,value:BigUInt,to:String) async{
+        let web3 = RPC()
+        let keystore = try! EthereumKeystoreV3("1234")
+        let wallet = try keystore?.addresses
         
-        let fromAddress = "0x0000000000000000000000000000000000000000"
-        let toAddress = "0x0000000000000000000000000000000000000001"
+        var transaction: CodableTransaction = .emptyTransaction
 
         //let options = TransactionOptions.defaultOptions
-        transaction.from = EthereumAddress(fromAddress)
-        transaction.to = EthereumAddress(toAddress) ?? transaction.from!
+        transaction.from = EthereumAddress(from, type: .normal)
+        guard let toAddress = EthereumAddress(to, type: .normal) else {
+            print("Send Failed")
+            return
+        }
+        
+        //let nonce = try await web3?.eth.getTransactionCount(for: EthereumAddress(from, type: .normal) ?? <#default value#>)
+        if let address = EthereumAddress(from, type: .normal) {
+            let nonce = try! await web3?.eth.getTransactionCount(for: address)
+            transaction.nonce = nonce ?? 0
+        } else {
+            transaction.nonce = 0
+            print("Failed to get nonce")
+        }
+        transaction.to = toAddress
         transaction.value = value
-        transaction.gasLimit = BigUInt(78423)
-        transaction.gasPrice = BigUInt(2000)
+        transaction.gasLimit = BigUInt(6721975)
+        transaction.gasPrice = BigUInt(20000000000)
 
-        try! await web3.eth.send(transaction)
+        do {
+            try await web3?.eth.send(transaction)
+        } catch {
+            print("Send Failed to deploy: \(error)")
+        }
+
     }
     
     func executeDApp() async{
