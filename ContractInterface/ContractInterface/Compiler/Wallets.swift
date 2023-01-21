@@ -32,6 +32,7 @@ struct MyWeb3Provider: Web3Provider {
 
 class Web3wallet: ObservableObject {
     
+    @Published var walletTotal: BigUInt = 0
     var clientUrl:String = ""
 
     init() {
@@ -124,7 +125,9 @@ class Web3wallet: ObservableObject {
         transaction.gasPrice = BigUInt(20000000000)
 
         do {
-            try await web3?.eth.send(transaction)
+            var submit = try await web3?.eth.send(transaction)
+            let transactionHash = submit?.transaction.hash
+            print(transactionHash)
             print("Send function executed")
         } catch {
             print("Send Failed to deploy: \(error)")
@@ -186,7 +189,6 @@ struct Wallets: View {
     
     
     @StateObject var web3 = Web3wallet()
-    @State var walletTotal: BigUInt = 0
     
     enum wallet: String, CaseIterable, Identifiable {
         case wallet1, wallet2, wallet3, wallet4
@@ -219,14 +221,12 @@ struct Wallets: View {
                 .frame(width: 120)
             
             Text("XDC")
-            Text(String(formatAndConvert(bigUint: walletTotal)))
+            Text(String(formatAndConvert(bigUint: web3.walletTotal)))
                 .font(.largeTitle)
                 .bold()
                 .onAppear{
                     Task{
-                        
-                        walletTotal = await web3.getBalanceTotal(address: qrdata)
-                        let AccountTotal = await web3.getBalanceTotal(address: qrdata)
+                        web3.walletTotal = await web3.getBalanceTotal(address: qrdata)
                     }
                 }
 
@@ -418,12 +418,14 @@ struct Wallets: View {
             switch SendComplete {
             case true:
                 List{
+                    
                     Section("Transaction"){
                         //Refactor into struct!!!!!!!!!
                         ListItem(leftItem: "Network:", rightItem: "XDC")
                         ListItem(leftItem: "Txn Hash::", rightItem: "0x1a964fb5309e9e14599948480c122b5912349e602a835120d870de69b3be15fe")
-                        ListItem(leftItem: "To:", rightItem: "xdc973c93dcb8c5eaad405e52a3e9fd100ad2f7d933")
-                        ListItem(leftItem: "From:", rightItem: "xdce64996f74579ed41674a26216f8ecf980494dc38")
+                        ListItem(leftItem: "To:", rightItem: sendto)
+                        ListItem(leftItem: "From:", rightItem: qrdata)
+                        ListItem(leftItem: "Amount:", rightItem: sendAmount)
                         
                         HStack{
                             Text("Transaction Complete")
