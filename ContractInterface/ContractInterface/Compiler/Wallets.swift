@@ -51,9 +51,10 @@ class Web3wallet: ObservableObject {
             
             
             print("check address")
-            await Send(from: "0xD1D8a0ded1e2b8B65aFe8102f68f463299a49E2A", value: 1000000000000000000, to: "0x4BD2c7474E134257943121871a69a6043aF9fbF4")
-            let balance = await getBalanceTotal(address: "0xfbd92e244062f85fe354304b11a6d08ddd2733b43319cd0eb6d8546293b1346a") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
-            print("balance: \(balance)")
+            //await Send(from: "0x76657848844eadeb25eBC7707543963e0882B23d", value: 1000000000000000000, to: "0xb381F0F9C909d464A5efF98d9678f77944Ba7e2C")
+            let balance1 = await getBalanceTotal(address: "0x76657848844eadeb25eBC7707543963e0882B23d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
+            let balance2 = await getBalanceTotal(address: "0xb381F0F9C909d464A5efF98d9678f77944Ba7e2C") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
+            print("balance1: \(balance1) -- balance2: \(balance2)")
         }
     }
     func createWallet(seed:String){
@@ -68,7 +69,7 @@ class Web3wallet: ObservableObject {
         
     }
     
-    func RPC(RPC:String = "http://127.0.0.1:8545",ID:BigInt = 5777) -> Web3? {
+    func RPC(RPC:String = "http://127.0.0.1:8545") -> Web3? {
         var provider = MyWeb3Provider(url: URL(string: RPC)!)
         //var provider = URL(string: "http://localhost:8545") as! Web3Provider
         let web3 = Web3(provider: provider)
@@ -83,6 +84,16 @@ class Web3wallet: ObservableObject {
         guard let balance = try! await web3?.eth.getBalance(for: address) else { return 0 }
         print("getBalance: \(balance)")
         return balance
+    }
+    func retriveLocalAccounts()async -> [EthereumAddress] {
+        do {
+            let web3 = RPC()
+            guard let accounts = try await web3?.eth.ownedAccounts() else { return [] }
+            return accounts
+        } catch {
+            print("Error getting accounts: \(error)")
+        }
+        return []
     }
     
     func Send(from:String,value:BigUInt,to:String) async{
@@ -114,6 +125,7 @@ class Web3wallet: ObservableObject {
 
         do {
             try await web3?.eth.send(transaction)
+            print("Send function executed")
         } catch {
             print("Send Failed to deploy: \(error)")
         }
@@ -138,7 +150,6 @@ class Web3wallet: ObservableObject {
 }
 
 
-
 //MARK: All_Wallets
 struct All_Wallets:Identifiable{
     let id: String = UUID().uuidString
@@ -147,6 +158,15 @@ struct All_Wallets:Identifiable{
     let network:String
     let keyNumber:Int
     let encryptedKey:String
+}
+
+extension Wallets{
+    func formatAndConvert(bigUint: BigUInt) -> Double {
+        let formattedString = String(bigUint / BigUInt(1e18)) + "." + String(bigUint % BigUInt(1e18))
+        let double = Double(formattedString)
+        let truncatedDouble = Double(String(format: "%.3f", double!))
+        return truncatedDouble!
+    }
 }
 
 //MARK: Wallets
@@ -161,11 +181,12 @@ struct Wallets: View {
     @State var faceID:Bool = false
     @State var settingsPage:Bool = false
     
-    @State private var qrdata = "xdce64996f74579ed41674a26216f8ecf980494dc38" //this is the QRC data
+    @State private var qrdata = "0x76657848844eadeb25eBC7707543963e0882B23d" //this is the QRC data
     @State var selectWalletView:Int = 0
     
     
     @StateObject var web3 = Web3wallet()
+    @State var walletTotal: BigUInt = 0
     
     enum wallet: String, CaseIterable, Identifiable {
         case wallet1, wallet2, wallet3, wallet4
@@ -198,11 +219,18 @@ struct Wallets: View {
                 .frame(width: 120)
             
             Text("XDC")
-            Text("2434.462")
+            Text(String(formatAndConvert(bigUint: walletTotal)))
                 .font(.largeTitle)
                 .bold()
+                .onAppear{
+                    Task{
+                        
+                        walletTotal = await web3.getBalanceTotal(address: qrdata)
+                        let AccountTotal = await web3.getBalanceTotal(address: qrdata)
+                    }
+                }
 
-            Text("$234.53")
+            Text("$0.00")
                 .font(.caption)
                 .bold()
             
@@ -291,7 +319,7 @@ struct Wallets: View {
             } else {
                 Section("Wallet"){
                     HStack{
-                        Picker("Wallet", selection: $selectedWallet) {
+                        Picker("Wallet", selection: $selectedWallet) {                            
                             Text("Wallet A").tag(wallet.wallet1)
                             Text("Wallet B").tag(wallet.wallet2)
                             Text("Wallet C").tag(wallet.wallet3)
@@ -384,6 +412,8 @@ struct Wallets: View {
     }
     //MARK: sendCrypto
     var sendCrypto:some View{
+        
+        
         VStack{
             switch SendComplete {
             case true:
@@ -419,7 +449,7 @@ struct Wallets: View {
                             .cornerRadius(10)
                     })
                     
-                    TextField("Send To", text: $sendAmount)
+                    TextField("Send To", text: $sendto)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.gray)
@@ -427,7 +457,7 @@ struct Wallets: View {
                 }
                 .padding(.horizontal)
                 
-                TextField("amount", text: $sendto)
+                TextField("amount", text: $sendAmount)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.gray)
@@ -465,10 +495,12 @@ struct Wallets: View {
                     })
 
                     
-                    Button(action: {}, label: {
+                    Button(action: {
+
+                    }, label: {
                         Image(systemName: "paperplane.fill")
                              .padding(20)
-                             .background(Color.blue)
+                             .background(Color.green)
                              .cornerRadius(50)
                         
                             .foregroundColor(.white)
@@ -490,6 +522,9 @@ struct Wallets: View {
                                         }
                                     }
                                 } perform: {
+                                    Task{
+                                        await web3.Send(from: qrdata, value: BigUInt(sendAmount) ?? 0, to: sendto)
+                                    }
                                     // at min duration
                                     withAnimation(.easeInOut){
                                         isPassed = true
@@ -501,6 +536,18 @@ struct Wallets: View {
                 .padding(.bottom)
                 
             }
+        }
+    }
+    
+    func showAddresses() async{
+        do {
+            let web3 = web3.RPC()
+            let accounts = try await web3?.eth.ownedAccounts()
+            for account in accounts! {
+                print(account.address)
+            }
+        } catch {
+            print("Error getting accounts: \(error)")
         }
     }
     
