@@ -120,17 +120,17 @@ class ContractModel: ObservableObject{ //Build Settings
 //            metadata: [String] = []
 //            //object attributes
             //MARK: Parse Views
-            for viewCount in 0...totalViewCount{
-                for view in typ.views{
-                    if (view.view == dappletPage){
-                        ViewList.append(Views(view: view.view ,
-                                              object: view.object ,
-                                              location: view.location))
-                    } else {
-                        print("Error incorrect view object: \(String(describing: view.object))")
-                    }
+
+            for view in typ.views{
+                if (view.view == dappletPage && view.view <= totalViewCount){
+                    ViewList.append(Views(view: view.view ,
+                                          object: view.object ,
+                                          location: view.location))
+                } else {
+                    print("Error incorrect view object: \(String(describing: view.object))")
                 }
             }
+            
             
             //MARK: Parse Vars
             for vars in typ.variables{
@@ -463,10 +463,6 @@ struct Overlay: View{// Compiler
     var test:Double = 1.0
     @StateObject var contractInterface:ContractModel
 
-    @State var finalTextList:[CIMLText] = []
-    @State var finalTextFieldList:[CIMLTextField] = []
-    @State var finalButtonList:[CIMLButton] = []
-    @State var finalsysImageList:[CIMLSYSImage] = []
     var cordinates:Int
     //MARK: DApplet Projector
     var body: some View{

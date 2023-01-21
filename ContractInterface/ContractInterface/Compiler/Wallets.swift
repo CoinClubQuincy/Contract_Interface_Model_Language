@@ -53,8 +53,8 @@ class Web3wallet: ObservableObject {
             
             print("check address")
             //await Send(from: "0x76657848844eadeb25eBC7707543963e0882B23d", value: 1000000000000000000, to: "0xb381F0F9C909d464A5efF98d9678f77944Ba7e2C")
-            let balance1 = await getBalanceTotal(address: "0x76657848844eadeb25eBC7707543963e0882B23d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
-            let balance2 = await getBalanceTotal(address: "0xb381F0F9C909d464A5efF98d9678f77944Ba7e2C") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
+            let balance1 = await getBalanceTotal(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
+            let balance2 = await getBalanceTotal(address: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
             print("balance1: \(balance1) -- balance2: \(balance2)")
         }
     }
@@ -164,11 +164,20 @@ struct All_Wallets:Identifiable{
 }
 
 extension Wallets{
+    //BigUInt -> Double
     func formatAndConvert(bigUint: BigUInt) -> Double {
         let formattedString = String(bigUint / BigUInt(1e18)) + "." + String(bigUint % BigUInt(1e18))
         let double = Double(formattedString)
         let truncatedDouble = Double(String(format: "%.3f", double!))
         return truncatedDouble!
+    }
+    //Double -> BigUInt
+    func inverseFormatAndConvert(double: Double) -> BigUInt {
+        let string = String(double)
+        let parts = string.split(separator: ".")
+        let left = BigUInt(parts[0])! * BigUInt(1e18)
+        let right = BigUInt(parts[1])!
+        return left + right
     }
 }
 
@@ -184,7 +193,7 @@ struct Wallets: View {
     @State var faceID:Bool = false
     @State var settingsPage:Bool = false
     
-    @State private var qrdata = "0x76657848844eadeb25eBC7707543963e0882B23d" //this is the QRC data
+    @State private var qrdata = "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d" //this is the QRC data
     @State var selectWalletView:Int = 0
     
     
@@ -216,6 +225,7 @@ struct Wallets: View {
     //MARK: userWallet
     var userWallet: some View{
         VStack {
+            if(selectWalletView != 2){
             Circle()
                 .scaledToFit()
                 .frame(width: 120)
@@ -229,11 +239,11 @@ struct Wallets: View {
                         web3.walletTotal = await web3.getBalanceTotal(address: qrdata)
                     }
                 }
-
+            
             Text("$0.00")
                 .font(.caption)
                 .bold()
-            
+        }
             HStack{
                 Button(action: {
                     selectWalletView = 1
@@ -452,6 +462,7 @@ struct Wallets: View {
                     })
                     
                     TextField("Send To", text: $sendto)
+                        .keyboardType(.numberPad)
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.gray)
@@ -525,7 +536,7 @@ struct Wallets: View {
                                     }
                                 } perform: {
                                     Task{
-                                        await web3.Send(from: qrdata, value: BigUInt(sendAmount) ?? 0, to: sendto)
+                                        await web3.Send(from: qrdata, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) ?? 0, to: sendto)
                                     }
                                     // at min duration
                                     withAnimation(.easeInOut){
