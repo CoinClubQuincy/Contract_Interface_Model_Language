@@ -15,6 +15,7 @@ struct ContractInterface: View {
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
     @State var showDapplet:[Bool] = [false]
+    @State var showDappletLanding:[Bool] = [false]
     
     //remove
     @State var presented: Bool = false
@@ -65,15 +66,16 @@ struct ContractInterface: View {
                     if(showDapplet[0]){
                         DAppletView(contractInterface: contractInterface)
                             .gesture(DragGesture(minimumDistance: 100, coordinateSpace: .local)
-                                                .onEnded({ value in
-                                                    if value.translation.height < 0 {
-                                                        // up
-                                                        withAnimation {
-                                                            showDapplet[0] = false
-                                                        }
-                                                    }
-                                                }))
-                    } else {
+                                .onEnded({ value in
+                                    if value.translation.height < 0 {
+                                        // up
+                                        withAnimation {
+                                            showDapplet[0] = false
+                                        }
+                                    }
+                                }))
+                        
+                    }else {
                     HStack {
 //                        ForEach(vm.ciml){ciml in
 //                            Text(ciml.name ?? "Error")
@@ -89,7 +91,7 @@ struct ContractInterface: View {
                           
                         Button(action: {
                             contractInterface.getCIML(url: searchBar)
-                            showDapplet[0].toggle()
+                            showDappletLanding[0].toggle()
                             contractInterface.dappletPage = 0
                             print(contractInterface.dappletPage )
                             print("CIML Button Pressed")
@@ -102,6 +104,11 @@ struct ContractInterface: View {
                                 .cornerRadius(10)
                                 .padding(.trailing,10)
                         })
+                        .sheet(isPresented: $showDappletLanding[0]) {
+                            print("Sheet dismissed!")
+                        } content: {
+                            LandingPage(showDapplet: $showDapplet[0])
+                        }
                     }
                         ScrollView {
                             LazyVGrid(columns: layout, spacing: 20){
