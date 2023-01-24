@@ -93,6 +93,7 @@ struct ContractInterface: View {
                             contractInterface.getCIML(url: searchBar)
                             showDappletLanding[0].toggle()
                             contractInterface.dappletPage = 0
+                            
                             print(contractInterface.dappletPage )
                             print("CIML Button Pressed")
                         }, label: {
@@ -108,6 +109,8 @@ struct ContractInterface: View {
                             print("Sheet dismissed!")
                         } content: {
                             LandingPage(showDapplet: $showDapplet[0])
+                                .presentationDetents([.fraction(0.7)])
+                                .presentationDragIndicator(.hidden)
                         }
                     }
                         ScrollView {

@@ -11,6 +11,7 @@ struct LandingPage: View {
     
     @StateObject var ciml = ContractModel()
     @Binding var showDapplet:Bool
+    @State var downloadable:Bool = false
 
     var body: some View {
         
@@ -21,34 +22,36 @@ struct LandingPage: View {
                 .scaledToFit()
                 .padding()
             
-            ZStack {
-//                RoundedRectangle(cornerRadius: 20)
-//                    .frame(maxWidth: .infinity)
-//                    .frame(height: 60)
-//                    .shadow(radius: 50)
-                VStack{
+            VStack {
+                HStack(alignment: .top){
                     Image("echo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 60, height: 60)
+                        .frame(width: 80, height: 80)
                         .cornerRadius(10)
                         .shadow(radius: 10)
                         .padding(5)
-                    Text(ciml.name)
-                        .font(.caption)
+
+                    ScrollView(.vertical){
+                        VStack(alignment: .leading){
+                            Text(ciml.name)
+                                .font(.title)
+                                .bold()
+                            Text(ciml.description)
+                                .foregroundColor(.gray)
+                        }
+                    }
                 }
-                .frame(maxWidth: .infinity)
+                Toggle("Downloadable", isOn: $downloadable).padding()
             }
                     HStack{
                         VStack(alignment: .leading){
                             ForEach(ciml.metadata, id: \.self){ meta in
                                 Text(meta)
+                                    .font(.caption)
                             }
                         }
                         
-                    }
-                    HStack{
-                        Text(ciml.description)
                     }
             HStack(alignment: .center){
                         Button(action: {
