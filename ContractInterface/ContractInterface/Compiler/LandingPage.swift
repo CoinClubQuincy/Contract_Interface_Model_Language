@@ -27,7 +27,7 @@ struct LandingPage: View {
                     Image("echo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 80, height: 80)
+                        .frame(width: 60, height: 60)
                         .cornerRadius(10)
                         .shadow(radius: 10)
                         .padding(5)
@@ -38,6 +38,7 @@ struct LandingPage: View {
                                 .font(.title)
                                 .bold()
                             Text(ciml.description)
+                                .font(.caption)
                                 .foregroundColor(.gray)
                         }
                     }

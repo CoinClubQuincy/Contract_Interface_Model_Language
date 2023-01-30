@@ -8,6 +8,8 @@
 import SwiftUI
 import Foundation
 import Combine
+import web3swift
+import BigInt
 //Hold all code compiling the CIML UI data
 //rename this!!! -> this is the main class that handels the CIML Models
 //MARK: ContractModel class
@@ -270,24 +272,41 @@ class ContractModel: ObservableObject{ //Build Settings
         return(tmpVar == "" ? objectValue:tmpVar)
     }
     
-    func buttonAlocation(objectName:String,typeValue:Bool)-> String{
+    //true: ButtonType, False Vartype
+    func buttonAlocation(objectName:String,typeValue:Bool)-> [String]{
+        var buttonList:[String] = []
+        var valueList:[String] = []
+       
+        
+        print("Allocate Button Vars")
         for vars in VariableList{
+            print(send)
             if(objectName == vars.varName.dropFirst()){
                 if(typeValue){ // value alocation true
-                    switch vars.type{
-                    case "segue":
-                        return varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type)
-                    case "toggle":
-                        return varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type) == "true" ? "false":"true"
+                    print("Vars Type: \(vars.type)")
+                    switch vars.type.prefix(4){
+                    case "segu": //segue
+                        buttonList.append(varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type))
+                    case "togg": //toggle
+                        buttonList.append(varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type) == "true" ? "false":"true")
+                    case "Send": "Send"
+                        print("Send Button: \(vars.varName),\(vars.value),\(vars.type)")
+                        buttonList.append(varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type))
                     default:
-                        return "error"
+                        return []
                     }
                 } else {
-                    return vars.type
+                    valueList.append(vars.type)
                 }
             }
         }
-        return ""
+        if(typeValue){
+            print(buttonList)
+            return buttonList
+        } else {
+            print(valueList)
+            return valueList
+        }
     }
     
     func Placement(object:String) -> (Int){
@@ -591,23 +610,35 @@ struct BUTTONS:View{
     var location:Int
    //@State var finalButtonLabelList:[CIMLText]
     @StateObject var contractInterface:ContractModel
-    var type:String
-    var value:String
+    @StateObject var web3 = Web3wallet()
+    var type:[String]
+    var value:[String]
     
     var body: some View {
         ZStack {
             Button(action: {
                 print("press button")
-                if(type == "segue"){
-                    contractInterface.changePageSegue(page: Int(value) ?? 0)
+                for i in 0..<type.count {
+                    print("Type: \(type[i])")
+                
+                if(type[i] == "segue"){
+                    print(value)
+                    contractInterface.changePageSegue(page: Int(value[i]) ?? 0)
                     contractInterface.getCIML(url: contractInterface.cimlURL)
                     print("pressed Segue Button page status: \(contractInterface.dappletPage)")
-                } else if (type == "toggle"){
-                    contractInterface.toggleButton(status: Bool(value) ?? false)
+                } else if (type[i] == "toggle"){
+                    contractInterface.toggleButton(status: Bool(value[i]) ?? false)
                     print("pressed togle Button")
-                } else if (type == "submit"){
+                } else if (type[i].prefix(4) == "Send"){
+                    print(i)
+                    print(value)
+                    let value = Int(value[i]) ?? 0
+                    Task{
+                        await web3.Send(from: "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b", value: BigUInt(value) ?? 0, to: String(type[i].suffix(42)))
+                    }
                     print("pressed Submit Button")
                 }
+            }
                 print("type: \(type) value: \(value)")
                 
             }, label: {

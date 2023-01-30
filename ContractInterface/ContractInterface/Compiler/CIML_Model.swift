@@ -177,8 +177,8 @@ struct CIMLButton: Identifiable {
     var shadow:CGFloat = 10.0
     var padding:CGFloat = 20
     var location:Int
-    var type:String
-    var value:String
+    var type:[String]
+    var value:[String]
 }
 
 
