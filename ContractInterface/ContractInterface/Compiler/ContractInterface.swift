@@ -74,10 +74,23 @@ struct ContractInterface: View {
                                         }
                                     }
                                 }))
+                        Text("Origin: \(contractInterface.contractMainnet)")
+                            .font(.caption)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 13)
+                            .shadow(radius: 20)
+                            .background(Color.green)
+                            .foregroundColor(.black)
+                            .cornerRadius(20)
+                            .padding(.horizontal,20)
+                        
+                        
                         Text("type: value:")
                             .font(.caption)
                             .frame(maxWidth: .infinity)
-                            .frame(height: 12)
+                            .frame(height: 13)
+                            .shadow(radius: 20)
                             .background(Color.gray)
                             .foregroundColor(.black)
                             .cornerRadius(20)

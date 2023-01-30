@@ -149,8 +149,10 @@ class Web3wallet: ObservableObject {
 
         do {
             var submit = try await web3?.eth.send(transaction)
-            let transactionHash = submit?.transaction.hash
-            print(transactionHash)
+            let transactionHash = submit?.transaction.hash ?? Data()
+            if let transactionHash = submit?.transaction.hash {
+                print(transactionHash.description)
+            }
             print("Send function executed")
         } catch {
             print("Send Failed to deploy: \(error)")

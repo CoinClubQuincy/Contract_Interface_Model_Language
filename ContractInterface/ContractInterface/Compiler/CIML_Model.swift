@@ -37,7 +37,8 @@ struct CIML: Codable {
     let cimlVersion, appVersion, contractLanguage, name: String
     let symbol, logo, thumbnail, websitelink: String
     let cimlURL, description: String
-    let networks, contractMainnet, screenShots: [String]
+    let contractMainnet: String
+    let networks, screenShots: [String]
     let abi, byteCode: String
     let variables: [Object]
     let functions: [String]

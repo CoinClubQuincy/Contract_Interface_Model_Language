@@ -62,8 +62,8 @@
             filePath = "ContractInterface/Compiler/CIML_Model.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "CodingKeys"
             landmarkType = "13">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "735"
-            endingLineNumber = "735"
+            startingLineNumber = "742"
+            endingLineNumber = "742"
             landmarkName = "init(hex:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -43,7 +43,7 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var cimlURL:String = ""
     @Published var description:String = ""
     @Published var networks:Any = []
-    @Published var contractMainnet:Any = []
+    @Published var contractMainnet:String = ""
     @Published var screenShots: [String] = []
     @Published var abi:String = ""
     @Published var byteCode:String = ""
@@ -662,6 +662,13 @@ struct BUTTONS:View{
                     print(i)
                     print(value)
                     let value = Int(value[i]) ?? 0
+                    let string = type[i]
+                    let page = String(string[string.index(string.startIndex, offsetBy: 4)])
+                    print("Page change: \(page)")
+
+                    
+                    contractInterface.changePageSegue(page: Int(page) ?? 0)
+                    contractInterface.getCIML(url: contractInterface.cimlURL)
                     Task{
                         await web3.Send(from: "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b", value: BigUInt(value) ?? 0, to: String(type[i].suffix(42)))
                     }
