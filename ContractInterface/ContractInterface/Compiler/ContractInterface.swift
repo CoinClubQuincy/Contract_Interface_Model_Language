@@ -74,7 +74,15 @@ struct ContractInterface: View {
                                         }
                                     }
                                 }))
-                        
+                        Text("type: value:")
+                            .font(.caption)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 12)
+                            .background(Color.gray)
+                            .foregroundColor(.black)
+                            .cornerRadius(20)
+                            .padding(.horizontal,50)
+
                     }else {
                     HStack {
 //                        ForEach(vm.ciml){ciml in

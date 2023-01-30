@@ -593,6 +593,7 @@ struct SYSIMAGE:View{
             .padding(padding)
         }
 }
+
 //MARK: BUTTONS View
 struct BUTTONS:View{
     var text:String
@@ -611,6 +612,7 @@ struct BUTTONS:View{
    //@State var finalButtonLabelList:[CIMLText]
     @StateObject var contractInterface:ContractModel
     @StateObject var web3 = Web3wallet()
+    @StateObject var controller = ButtonController()
     var type:[String]
     var value:[String]
     
@@ -618,6 +620,33 @@ struct BUTTONS:View{
         ZStack {
             Button(action: {
                 print("press button")
+                
+                
+            }, label: {
+                if(isIcon){
+                    Image(systemName: text)
+                        .foregroundColor(foreGroundColor)
+                        .frame(width: frame[0], height: frame[1], alignment: alignment)
+                        .background(isIcon ? .clear : backgroundColor)
+                        .shadow(radius: shadow)
+                        .padding(padding)
+                        .onLongPressGesture(minimumDuration: 0.1) {
+                            
+                        }
+                } else{
+                    Text(text)
+                        .foregroundColor(foreGroundColor)
+                        .font(font)
+                        .frame(width: frame[0], height: frame[1], alignment: alignment)
+                        .background(backgroundColor)
+                        .cornerRadius(cornerRadius)
+                        .bold(bold)
+                        .fontWeight(fontWeight)
+                        .shadow(radius: shadow)
+                        .padding(padding)
+                }
+            })
+            .simultaneousGesture(LongPressGesture().onEnded { _ in
                 for i in 0..<type.count {
                     print("Type: \(type[i])")
                 
@@ -639,32 +668,28 @@ struct BUTTONS:View{
                     print("pressed Submit Button")
                 }
             }
-                print("type: \(type) value: \(value)")
-                
-            }, label: {
-                if(isIcon){
-                    Image(systemName: text)
-                        .foregroundColor(foreGroundColor)
-                        .frame(width: frame[0], height: frame[1], alignment: alignment)
-                        .background(isIcon ? .clear : backgroundColor)
-                        .shadow(radius: shadow)
-                        .padding(padding)
-                } else{
-                    Text(text)
-                        .foregroundColor(foreGroundColor)
-                        .font(font)
-                        .frame(width: frame[0], height: frame[1], alignment: alignment)
-                        .background(backgroundColor)
-                        .cornerRadius(cornerRadius)
-                        .bold(bold)
-                        .fontWeight(fontWeight)
-                        .shadow(radius: shadow)
-                        .padding(padding)
-                }
+
+            })
+            .simultaneousGesture(TapGesture().onEnded {
+                controller.ubpdateButton(Type: type[0], Value: value[0])
+                print("type: \(controller.type) value: \(controller.value)")
             })
         }
     }
     
+}
+
+class ButtonController: ObservableObject{
+    @Published var type:String = ""
+    @Published var value:String = ""
+    
+    init(){
+        
+    }
+    func ubpdateButton(Type:String,Value:String){
+        type = Type
+        value = Value
+    }
 }
 
 extension Color {

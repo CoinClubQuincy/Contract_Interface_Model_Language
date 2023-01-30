@@ -40,6 +40,9 @@ class Web3wallet: ObservableObject {
 
 
         Task {
+            print("check txn count")
+            await checkAddresTxn(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d")
+            
             do {
                 let web3 = RPC()
                 let accounts = try await web3?.eth.ownedAccounts()
@@ -52,12 +55,32 @@ class Web3wallet: ObservableObject {
             
             
             print("check address")
-            //await Send(from: "0x76657848844eadeb25eBC7707543963e0882B23d", value: 1000000000000000000, to: "0xb381F0F9C909d464A5efF98d9678f77944Ba7e2C")
+            //await Send(from: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d", value: 1000000000000000000, to: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf")
             let balance1 = await getBalanceTotal(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
             let balance2 = await getBalanceTotal(address: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
             print("balance1: \(balance1) -- balance2: \(balance2)")
         }
     }
+    
+    func checkAddresTxn(address:String) async{
+        let web3 = RPC()
+        guard let transactionCount = try? await web3?.eth.getTransactionCount(for: EthereumAddress(from: address)!) else {
+            print("txn count error")
+            return
+        }
+        print("transaction count \(transactionCount)")
+        // Retrieve the details of each transaction
+        for i in 0..<transactionCount {
+            do {
+                let transaction = try await web3!.eth.transactionDetails(i.serialize())
+                //let next = try await web3!.eth.transactionReceipt(<#T##txHash: Data##Data#>)
+                print(transaction)
+            } catch {
+                print("Error getting transaction details: \(error)")
+            }
+        }
+    }
+    
     func createWallet(seed:String){
         let keystore = try! EthereumKeystoreV3(password: seed)
         let keydata = try! JSONEncoder().encode(keystore?.keystoreParams)
@@ -193,7 +216,7 @@ struct Wallets: View {
     @State var faceID:Bool = false
     @State var settingsPage:Bool = false
     
-    @State private var qrdata = "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d" //this is the QRC data
+    @State private var qrdata = "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b" //this is the QRC data
     @State var selectWalletView:Int = 0
     
     
