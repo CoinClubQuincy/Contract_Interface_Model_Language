@@ -4,7 +4,7 @@
 //
 //  Created by Quincy Jones on 12/28/22.
 //
-
+import Combine
 import SwiftUI
 import web3swift
 import Core
@@ -12,6 +12,9 @@ import BigInt
 import CryptoSwift
 //import XDC3Swift
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
+//https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd
+
+
 //MARK: Web3 class
 struct MyWeb3Provider: Web3Provider {
     var network: Networks?
@@ -28,6 +31,36 @@ struct MyWeb3Provider: Web3Provider {
         self.session = .init(configuration: .default)
     }
 }
+
+struct CoinPrice: Decodable {
+    let xdceCrowdSale: [String: Double]
+
+    enum CodingKeys: String, CodingKey {
+        case xdceCrowdSale = "xdce-crowd-sale"
+    }
+}
+
+class CoinPriceViewModel: ObservableObject {
+    @Published var price: Double = 0
+
+    private var cancellable: AnyCancellable?
+
+    init() {
+        fetchPrice()
+    }
+
+    func fetchPrice() {
+        cancellable = URLSession.shared.dataTaskPublisher(for: URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd")!)
+            .map { $0.data }
+            .decode(type: CoinPrice.self, decoder: JSONDecoder())
+            .map { $0.xdceCrowdSale["usd"] ?? 0 }
+            .replaceError(with: 0)
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.price, on: self)
+    }
+}
+
+
 
 
 class Web3wallet: ObservableObject {
@@ -171,7 +204,7 @@ class Web3wallet: ObservableObject {
 //        let parameters: [AnyObject] = []
 //        let extraData: Data = ""
 //        let transactionOptions: TransactionOptions = <OPTIONS>
-
+//
 //        let transactionRead = contract.read(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
 //        let transactionWrite = contract.write(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
     }
@@ -225,6 +258,8 @@ struct Wallets: View {
     
     @StateObject var web3 = Web3wallet()
     
+    @ObservedObject private var coinPriceViewModel = CoinPriceViewModel()
+    
     enum wallet: String, CaseIterable, Identifiable {
         case wallet1, wallet2, wallet3, wallet4
         var id: Self { self }
@@ -266,7 +301,7 @@ struct Wallets: View {
                     }
                 }
             
-            Text("$0.00")
+                Text("$\(coinPriceViewModel.price * formatAndConvert(bigUint:web3.walletTotal), specifier: "%.3f")")
                 .font(.caption)
                 .bold()
         }
@@ -645,8 +680,3 @@ struct ListItem: View{
     }
 }
 
-struct Wallets_Previews: PreviewProvider {
-    static var previews: some View {
-        Wallets()
-    }
-}
