@@ -120,7 +120,7 @@ class Web3wallet: ObservableObject {
         return []
     }
     
-    func Send(from:String,value:BigUInt,to:String) async{
+    func Send(from:String,value:BigUInt,to:String) async -> String{
         let web3 = RPC()
         let keystore = try! EthereumKeystoreV3("1234")
         let wallet = try keystore?.addresses
@@ -131,7 +131,7 @@ class Web3wallet: ObservableObject {
         transaction.from = EthereumAddress(from, type: .normal)
         guard let toAddress = EthereumAddress(to, type: .normal) else {
             print("Send Failed")
-            return
+            return "Error"
         }
         
         //let nonce = try await web3?.eth.getTransactionCount(for: EthereumAddress(from, type: .normal) ?? <#default value#>)
@@ -151,13 +151,13 @@ class Web3wallet: ObservableObject {
             var submit = try await web3?.eth.send(transaction)
             let transactionHash = submit?.transaction.hash ?? Data()
             if let transactionHash = submit?.transaction.hash {
-                print(transactionHash.description)
+                return submit?.hash ?? "Error"
             }
             print("Send function executed")
         } catch {
             print("Send Failed to deploy: \(error)")
         }
-
+        return "Error"
     }
     
     func executeDApp() async{
@@ -221,6 +221,7 @@ struct Wallets: View {
     @State private var qrdata = "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b" //this is the QRC data
     @State var selectWalletView:Int = 0
     
+    @State var txnHash:String = ""
     
     @StateObject var web3 = Web3wallet()
     
@@ -457,7 +458,7 @@ struct Wallets: View {
                     Section("Transaction"){
                         //Refactor into struct!!!!!!!!!
                         ListItem(leftItem: "Network:", rightItem: "XDC")
-                        ListItem(leftItem: "Txn Hash::", rightItem: "0x1a964fb5309e9e14599948480c122b5912349e602a835120d870de69b3be15fe")
+                        ListItem(leftItem: "Txn Hash::", rightItem: txnHash)
                         ListItem(leftItem: "To:", rightItem: sendto)
                         ListItem(leftItem: "From:", rightItem: qrdata)
                         ListItem(leftItem: "Amount:", rightItem: sendAmount)
@@ -561,7 +562,7 @@ struct Wallets: View {
                                     }
                                 } perform: {
                                     Task{
-                                        await web3.Send(from: qrdata, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) ?? 0, to: sendto)
+                                        txnHash = await  web3.Send(from: qrdata, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) ?? 0, to: sendto)
                                     }
                                     // at min duration
                                     withAnimation(.easeInOut){
