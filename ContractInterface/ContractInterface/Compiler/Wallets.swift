@@ -70,11 +70,11 @@ class Web3wallet: ObservableObject {
 
     init() {
         createWallet(seed: "1234")
-
+        
 
         Task {
+            await checkAddresTxn(address: "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b")
             print("check txn count")
-            await checkAddresTxn(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d")
             
             do {
                 let web3 = RPC()
@@ -106,8 +106,10 @@ class Web3wallet: ObservableObject {
         for i in 0..<transactionCount {
             do {
                 let transaction = try await web3!.eth.transactionDetails(i.serialize())
-                //let next = try await web3!.eth.transactionReceipt(<#T##txHash: Data##Data#>)
-                print(transaction)
+                let next = try await web3!.eth.transactionReceipt(transaction.transaction.hash ?? Data())
+                print("see this")
+//                print(transaction.blockHash)
+//                print(transaction.blockNumber)
             } catch {
                 print("Error getting transaction details: \(error)")
             }
@@ -234,7 +236,8 @@ extension Wallets{
         let string = String(double)
         let parts = string.split(separator: ".")
         let left = BigUInt(parts[0])! * BigUInt(1e18)
-        let right = BigUInt(parts[1])!
+        let right = BigUInt(parts[1])! * BigUInt(1e17)
+        print("left right: \(left + right)")
         return left + right
     }
 }
@@ -318,16 +321,6 @@ struct Wallets: View {
                     changeSettings
                 Spacer()
                         .padding(.top)
-                    Button(action: {
-                        selectWalletView = 3
-                    }, label: {
-                       Image(systemName: "plus")
-                            .padding(20)
-                            .background(Color.blue)
-                            .cornerRadius(50)
-                    })
-                
-                Spacer()
                 Button(action: {
                     selectWalletView = 2
                 }, label: {
@@ -360,8 +353,6 @@ struct Wallets: View {
                 Spacer()
             case 2:
                 sendCrypto
-            case 3:
-                Text("Create wallet")
             default:
                 list
             }
@@ -538,7 +529,7 @@ struct Wallets: View {
                     .cornerRadius(10)
                     .padding(.horizontal)
                 HStack{
-                    Text("$\(fiatConvert)")
+                    Text("$\(((Double(sendAmount) ?? 0) * coinPriceViewModel.price) )")
                         .padding()
                         .frame(maxWidth: .infinity)
                         .background(Color.gray)
