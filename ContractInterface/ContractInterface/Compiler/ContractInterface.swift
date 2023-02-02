@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CodeScanner
 //MARK: DApps
 struct ContractInterface: View {
     @Binding var backgroundColor:LinearGradient
@@ -17,11 +18,27 @@ struct ContractInterface: View {
     @State var showDapplet:[Bool] = [false]
     @State var showDappletLanding:[Bool] = [false]
     
-    //remove
     @State var presented: Bool = false
     @State var alertTitle:String = ""
     @State var alertMessage:String = ""
-    //
+    
+    
+    @State var isPresentingScanner = false
+    @State var scannedCode: String = "Scan CIML QR Document"
+    
+    var scannerSheet : some View {
+        ZStack{
+            CodeScannerView(codeTypes: [.qr]) { response in
+                if case let .success(result) = response {
+                    scannedCode = result.string
+                    isPresentingScanner = false
+                    contractInterface.getCIML(url: scannedCode)
+                    showDappletLanding[0].toggle()
+                    print("Scanned Code \(scannedCode)")
+                }
+            }
+        }
+    }
     
     let data = Array(0...0).map { "DApp \($0)" }
     let layout = [
@@ -35,17 +52,18 @@ struct ContractInterface: View {
                     .ignoresSafeArea(.all)
                     .navigationBarItems(
                         leading:
-                            NavigationLink(
-                                destination: Text("Favorites")
-                                .navigationTitle("Favorites")
-                                ,label: {
-                                    Image(systemName: "qrcode")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .foregroundColor(.black)
-                                        .padding(.trailing,10)
+                            Image(systemName: "qrcode")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundColor(.black)
+                                .padding(.trailing,10)
+                                .onTapGesture(count: 1) {
+                                    print("tapped!")
+                                    isPresentingScanner = true
                                 }
-                            )
+                                .sheet(isPresented: $isPresentingScanner){
+                                    scannerSheet
+                                }
                         ,
                         trailing:
                             NavigationLink(
@@ -196,6 +214,8 @@ struct ContractInterface: View {
         }
     }
     
+    
+
     //MARK: DApp Functions
     func getAlert() -> Alert{
         return Alert(title: Text(alertTitle),
