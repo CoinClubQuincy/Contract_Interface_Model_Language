@@ -10,6 +10,7 @@ import web3swift
 import Core
 import BigInt
 import CryptoSwift
+import CodeScanner
 //import XDC3Swift
 //https://cocoapods.org/pods/web3swift#projects-that-are-using-web3swift
 //https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd
@@ -82,8 +83,8 @@ class Web3wallet: ObservableObject {
 //            } catch {
 //                print("Error getting accounts: \(error)")
 //            }
-//            
-//            
+//
+//
 //            print("check address")
 //            //await Send(from: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d", value: 1000000000000000000, to: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf")
 //            let balance1 = await getBalanceTotal(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
@@ -275,6 +276,10 @@ struct Wallets: View {
     }
 
     @State private var selectedNetwork: network = .xdc
+    
+    @State var isPresentingScanner = false
+    @State var scannedCode: String = "Send To"
+    
   
     //MARK: body
     var body: some View {
@@ -503,12 +508,24 @@ struct Wallets: View {
                 .font(.footnote)
             case false:
                 HStack {
-                    Button(action: {}, label: {
+                    Button(action: {
+                        isPresentingScanner = true
+                    }, label: {
                         Image(systemName: "qrcode")
                             .padding()
                             .background(Color.blue)
                             .cornerRadius(10)
                     })
+                    .sheet(isPresented: $isPresentingScanner){
+                        CodeScannerView(codeTypes: [.qr]) { response in
+                            if case let .success(result) = response {
+                                scannedCode = result.string
+                                isPresentingScanner = false
+                                print("Scanned Code \(scannedCode)")
+                                sendto = scannedCode
+                            }
+                        }
+                    }
                     
                     TextField("Send To", text: $sendto)
                         .keyboardType(.numberPad)
