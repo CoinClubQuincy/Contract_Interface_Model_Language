@@ -14,47 +14,45 @@ struct LandingPage: View {
     @State var downloadable:Bool = false
 
     var body: some View {
-        
-        VStack {
-            Image("XTB")
-                .resizable()
-                .cornerRadius(20)
-                .scaledToFit()
-                .padding()
-            
-            VStack {
-                HStack(alignment: .top){
-                    Image("echo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 60, height: 60)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .padding(5)
-
-                    ScrollView(.vertical){
-                        VStack(alignment: .leading){
-                            Text(ciml.name)
-                                .font(.title)
-                                .bold()
-                            Text(ciml.description)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                        }
+        ZStack{
+            ZStack{
+                VStack {
+                    if let url = URL(string: ciml.thumbnail) {
+                        RemoteImageView(url: url)
+                            .cornerRadius(20)
+                            .scaledToFit()
+                            .padding(.top)
+                    } else {
+                        Text("Invalid URL")
                     }
-                }
-                Toggle("Downloadable", isOn: $downloadable).padding()
-            }
-                    HStack{
-                        VStack(alignment: .leading){
-                            ForEach(ciml.metadata, id: \.self){ meta in
-                                Text(meta)
-                                    .font(.caption)
+                    
+               
+                
+                    
+                    VStack {
+                        ListObject()
+                        HStack(){
+                            ScrollView(.horizontal){
+                                HStack{
+                                    ForEach(ciml.metadata, id: \.self){ meta in
+                                        Text(meta)
+                                            .padding(5)
+                                            .font(.caption)
+                                            .background(Color.blue)
+                                            .foregroundColor(.white)
+                                            .cornerRadius(20)
+                                            .task{
+                                                if(meta == "downloadable"){
+                                                    downloadable = true
+                                                }
+                                            }
+                                    }
+                                }.padding(.horizontal)
                             }
-                        }
-                        
                     }
-            HStack(alignment: .center){
+                        Toggle("Downloadable", isOn: $downloadable).padding()
+                    }
+                    HStack(alignment: .center){
                         Button(action: {
                             showDapplet = true
                         }, label: {
@@ -66,9 +64,79 @@ struct LandingPage: View {
                                 .cornerRadius(20)
                         })
                     }.padding()
-
-                    
-        }
-        }
+                }
+            }
+            .shadow(radius: 5)
+            .background(Color.white)
+            .cornerRadius(20)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal)
+            .padding(.vertical)
+            
+        }.background(Color.black)
+    }
 }
 
+struct ListObject: View{
+    @StateObject var ciml = ContractModel()
+    var body: some View {
+        HStack(alignment: .top){
+            if let url = URL(string: ciml.logo) {
+                RemoteImageView(url: url)
+                    .cornerRadius(5)
+                    .frame(width: 60, height: 60)
+                    .scaledToFit()
+                    .padding(.top)
+            } else {
+                Text("Invalid URL")
+            }
+    
+            ScrollView(.vertical){
+                VStack(alignment: .leading){
+                    Text(ciml.name)
+                        .font(.largeTitle)
+                        .bold()
+                    Text(ciml.description)
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+    }
+}
+
+struct RemoteImageView: View {
+    @State private var image: UIImage?
+    
+    let url: URL
+    
+    var body: some View {
+        VStack {
+            if image != nil {
+                Image(uiImage: image!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                Text("Loading...")
+            }
+        }.onAppear(perform: loadImage)
+    }
+    
+    private func loadImage() {
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data {
+                DispatchQueue.main.async {
+                    if let image = UIImage(data: data) {
+                        self.image = image
+                    } else {
+                        // handle failure to create UIImage from data
+                        print("error to create UIImage")
+                    }
+                }
+            } else {
+                // handle nil data
+                print("error for UIImage nil")
+            }
+        }.resume()
+    }
+}

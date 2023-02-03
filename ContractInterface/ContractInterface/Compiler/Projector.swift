@@ -63,7 +63,7 @@ class ContractModel: ObservableObject{ //Build Settings
     var cancellables = Set<AnyCancellable>()
     init(){
         dappletPage = 0
-        getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
+        //getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
     }
     //MARK: get ciml func
     func getCIML(url:String) -> [CIML]{
@@ -119,7 +119,7 @@ class ContractModel: ObservableObject{ //Build Settings
 //            functions: [String] = []
 //            objects: [Object] = []
 //            views: [Views] = []
-//            metadata: [String] = []
+            metadata = typ.metadata
 //            //object attributes
             //MARK: Parse Views
 

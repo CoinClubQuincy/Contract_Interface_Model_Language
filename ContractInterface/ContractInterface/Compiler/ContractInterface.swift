@@ -26,6 +26,8 @@ struct ContractInterface: View {
     @State var isPresentingScanner = false
     @State var scannedCode: String = "Scan CIML QR Document"
     
+    @State private var isLoading = false
+    
     var scannerSheet : some View {
         ZStack{
             CodeScannerView(codeTypes: [.qr]) { response in
@@ -129,9 +131,17 @@ struct ContractInterface: View {
                             .shadow(radius: 6)
                           
                         Button(action: {
-                            contractInterface.getCIML(url: searchBar)
-                            showDappletLanding[0].toggle()
+                            isLoading = true
+                            guard contractInterface.getCIML(url: searchBar) != nil else {
+                                isLoading = false
+                                contractInterface.dappletPage = 0
+                                showDappletLanding[0].toggle()
+                                return
+                            }
+                            
+                            
                             contractInterface.dappletPage = 0
+                            showDappletLanding[0].toggle()
                             
                             print(contractInterface.dappletPage )
                             print("CIML Button Pressed")
@@ -145,38 +155,41 @@ struct ContractInterface: View {
                                 .padding(.trailing,10)
                         })
                         .sheet(isPresented: $showDappletLanding[0]) {
-                            print("Sheet dismissed!")
+                            print("Landing Sheet dismissed!")
+                            isLoading = false
                         } content: {
                             LandingPage(showDapplet: $showDapplet[0])
                                 .presentationDetents([.fraction(0.7)])
                                 .presentationDragIndicator(.hidden)
                         }
                     }
-                        ScrollView {
-                            LazyVGrid(columns: layout, spacing: 20){
-                                ForEach(data, id: \.self){item in
-                                    HStack {
-                                        
-                                        Button(action: {
-                                            withAnimation {
-                                                showDapplet[0].toggle()
-                                                contractInterface.openCIML(address: searchBar)
-                                            }
-                                        }, label: {
-                                            VStack{
-                                                Image("echo")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 60, height: 60)
-                                                    .cornerRadius(10)
-                                                    .shadow(radius: 10)
-                                                    .padding(5)
-                                                Text(item)
-                                                    .font(.footnote)
-                                                    .foregroundColor(.black)
-                                            }
-                                        })
-                                    }
+                    
+                    ScrollView {
+                        LazyVGrid(columns: layout, spacing: 20){
+                            ForEach(data, id: \.self){item in
+                                HStack {
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            showDapplet[0].toggle()
+                                            contractInterface.openCIML(address: searchBar)
+                                        }
+                                    }, label: {
+                                        VStack{
+                                            Image("echo")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 60, height: 60)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 10)
+                                                .padding(5)
+                                            Text(item)
+                                                .font(.footnote)
+                                                .foregroundColor(.black)
+                                        }
+                                    })
+                                }
+                                
 //                                ZStack{
 //                                    Circle()
 //                                        .fill(Color.red)
@@ -186,30 +199,37 @@ struct ContractInterface: View {
 //                                        .font(.footnote)
 //                                        .foregroundColor(.white)
 //                                }
-                                    .overlay(
-                                        Button(action: {
-                                            showDAppSettings.toggle()
-                                        }, label: {
-                                            Image(systemName: "info.circle")
-                                                .foregroundColor(.blue)
-                                                .background(Color.white)
-                                                .cornerRadius(50)
-                                        })
-                                        .sheet(isPresented: $showDAppSettings) {
-                                            //MARK: SettingsPallet
-                                            DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,ciml: contractInterface)
-                                        }
-                                        , alignment: .topLeading
-                                    )
-                                }
+                                .overlay(
+                                    Button(action: {
+                                        showDAppSettings.toggle()
+                                    }, label: {
+                                        Image(systemName: "info.circle")
+                                            .foregroundColor(.blue)
+                                            .background(Color.white)
+                                            .cornerRadius(50)
+                                    })
+                                    .sheet(isPresented: $showDAppSettings) {
+                                        //MARK: SettingsPallet
+                                        DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,ciml: contractInterface)
+                                    }
+                                    , alignment: .topLeading
+                                )
                             }
-                            .padding(.top)
                         }
+                        .padding(.top)
+                    }
                     }
                     Spacer()
                 }
                 .padding(.top)
                 .padding(.horizontal)
+            }
+            .overlay{
+                ZStack {
+                    if(isLoading){
+                        Spinner(spinnerStart: 0.0, spinnerEndS1: 0.03, rotationDegreeS1: .degrees(360))
+                    }
+                }.frame(width: 200, height: 200)
             }
         }
     }
@@ -234,4 +254,66 @@ struct ContractInterface: View {
     
 }
 
+struct Spinner: View {
 
+    let rotationTime: Double = 0.75
+    let fullRotation: Angle = .degrees(360)
+
+    @State var spinnerStart: CGFloat
+    @State var spinnerEndS1: CGFloat
+    @State var rotationDegreeS1: Angle
+    let animationTime: Double = 1.2
+
+    var body: some View {
+        ZStack {
+            // S1
+            SpinnerCircle(start: spinnerStart, end: spinnerEndS1, rotation: rotationDegreeS1, color: .blue)
+
+        }.frame(width: 200, height: 200)
+        .onAppear() {
+            Timer.scheduledTimer(withTimeInterval: animationTime, repeats: true) { (mainTimer) in
+                self.animateSpinner()
+            }
+        }
+    }
+
+    // MARK: Animation methods
+    func animateSpinner(with timeInterval: Double, completion: @escaping (() -> Void)) {
+        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { _ in
+            withAnimation(Animation.easeInOut(duration: rotationTime)) {
+                completion()
+            }
+        }
+    }
+
+    func animateSpinner() {
+            animateSpinner(with: rotationTime) { self.spinnerEndS1 = 1.0 }
+
+            animateSpinner(with: (rotationTime * 2) - 0.025) {
+                self.rotationDegreeS1 += fullRotation
+            }
+
+            animateSpinner(with: (rotationTime * 2)) {
+                self.spinnerEndS1 = 0.03
+            }
+
+            animateSpinner(with: (rotationTime * 2) + 0.0525) { self.rotationDegreeS1 += fullRotation }
+
+            //animateSpinner(with: (rotationTime * 2) + 0.225) { self.fullRotation += fullRotation }
+        }
+}
+
+struct SpinnerCircle: View {
+    var start: CGFloat
+    var end: CGFloat
+    var rotation: Angle
+    var color: Color
+
+    var body: some View {
+        Circle()
+            .trim(from: start, to: end)
+            .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
+            .fill(color)
+            .rotationEffect(rotation)
+    }
+}
