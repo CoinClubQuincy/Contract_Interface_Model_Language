@@ -16,7 +16,7 @@ struct ContractInterface: View {
     @State var overlayinfo:Bool = false
     @State var showDAppSettings:Bool = false
     @State var showDapplet:[Bool] = [false]
-    @State var showDappletLanding:[Bool] = [false]
+    @State var showDappletLanding:Bool = false
     
     @State var presented: Bool = false
     @State var alertTitle:String = ""
@@ -35,7 +35,7 @@ struct ContractInterface: View {
                     scannedCode = result.string
                     isPresentingScanner = false
                     contractInterface.getCIML(url: scannedCode)
-                    showDappletLanding[0].toggle()
+                    showDappletLanding.toggle()
                     print("Scanned Code \(scannedCode)")
                 }
             }
@@ -132,17 +132,12 @@ struct ContractInterface: View {
                           
                         Button(action: {
                             isLoading = true
-                            guard contractInterface.getCIML(url: searchBar) != nil else {
-                                isLoading = false
-                                contractInterface.dappletPage = 0
-                                showDappletLanding[0].toggle()
-                                return
-                            }
-                            
-                            
                             contractInterface.dappletPage = 0
-                            showDappletLanding[0].toggle()
-                            
+                            contractInterface.getCIML(url: searchBar)
+                            //showDapplet[0].toggle()
+                            showDappletLanding.toggle()
+                            isLoading = false
+
                             print(contractInterface.dappletPage )
                             print("CIML Button Pressed")
                         }, label: {
@@ -154,13 +149,12 @@ struct ContractInterface: View {
                                 .cornerRadius(10)
                                 .padding(.trailing,10)
                         })
-                        .sheet(isPresented: $showDappletLanding[0]) {
-                            print("Landing Sheet dismissed!")
-                            isLoading = false
-                        } content: {
-                            LandingPage(showDapplet: $showDapplet[0])
-                                .presentationDetents([.fraction(0.7)])
-                                .presentationDragIndicator(.hidden)
+                        .sheet(isPresented: $showDappletLanding){
+                            withAnimation {
+                                LandingPage(ciml: contractInterface, showDapplet: $showDapplet[0])
+                                    .presentationDetents([.fraction(0.7)])
+                                    .presentationDragIndicator(.hidden)
+                            }
                         }
                     }
                     
@@ -172,7 +166,7 @@ struct ContractInterface: View {
                                     Button(action: {
                                         withAnimation {
                                             showDapplet[0].toggle()
-                                            contractInterface.openCIML(address: searchBar)
+                                            contractInterface.openCIML(address: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
                                         }
                                     }, label: {
                                         VStack{

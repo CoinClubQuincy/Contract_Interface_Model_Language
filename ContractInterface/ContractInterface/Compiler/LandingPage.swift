@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct LandingPage: View {
-    
-    @StateObject var ciml = ContractModel()
+    @StateObject var ciml:ContractModel
     @Binding var showDapplet:Bool
     @State var downloadable:Bool = false
 
@@ -24,13 +23,13 @@ struct LandingPage: View {
                             .padding(.top)
                     } else {
                         Text("Invalid URL")
+                            .task{
+                                print("CIML Thumbnail: \( ciml.thumbnail)")
+                            }
                     }
                     
-               
-                
-                    
                     VStack {
-                        ListObject()
+                        ListObject(ciml: ciml)
                         HStack(){
                             ScrollView(.horizontal){
                                 HStack{
@@ -78,7 +77,7 @@ struct LandingPage: View {
 }
 
 struct ListObject: View{
-    @StateObject var ciml = ContractModel()
+    @StateObject var ciml:ContractModel
     var body: some View {
         HStack(alignment: .top){
             if let url = URL(string: ciml.logo) {
@@ -89,6 +88,9 @@ struct ListObject: View{
                     .padding(.top)
             } else {
                 Text("Invalid URL")
+                    .task{
+                        print("CIML Logo: \( ciml.logo)")
+                    }
             }
     
             ScrollView(.vertical){
