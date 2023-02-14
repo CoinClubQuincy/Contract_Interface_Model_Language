@@ -46,8 +46,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "buttonAlocation(objectName:typeValue:)"
             landmarkType = "7">
          </BreakpointContent>

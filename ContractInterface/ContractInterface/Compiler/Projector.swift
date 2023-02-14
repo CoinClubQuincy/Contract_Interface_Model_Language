@@ -65,6 +65,36 @@ class ContractModel: ObservableObject{ //Build Settings
         dappletPage = 0
         //getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
     }
+    func save(){
+        let manager = CoreDataManager.shared
+        let CIML = ContractDoc(context: manager.persistantContainer.viewContext)
+        //Save CIML Doc
+        CIML.abi = abi
+        CIML.appVersion = appVersion
+        CIML.byteCode = byteCode
+        CIML.cimlDescription = description
+        CIML.cimlURL = cimlURL
+        CIML.cimlVersion = cimlVersion
+        CIML.contractLanguage = contractLanguage
+        CIML.contractMainnet = contractMainnet
+        //CIML.functions = functions
+        //CIML.logo = logo
+        CIML.name = name
+        //CIML.networks = networks
+        //CIML.objects = objects
+        //CIML.screenShots = screenShots
+        CIML.symbol = symbol
+        //CIML.thumbnail = thumbnail
+        //CIML.variables = variables
+        //CIML.views =
+        //CIML.metadata = metadata
+        CIML.websiteLink = websitelink
+        
+        manager.save()
+        
+    }
+    
+    
     //MARK: get ciml func
     func getCIML(url:String) -> [CIML]{
         print("buton clicked")

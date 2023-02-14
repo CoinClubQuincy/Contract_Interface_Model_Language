@@ -8,13 +8,18 @@
         <attribute name="cimlURL" optional="YES" attributeType="String"/>
         <attribute name="cimlVersion" optional="YES" attributeType="String"/>
         <attribute name="contractLanguage" optional="YES" attributeType="String"/>
-        <attribute name="contractMainnet" optional="YES" attributeType="Transformable"/>
+        <attribute name="contractMainnet" attributeType="String"/>
+        <attribute name="functions" optional="YES" attributeType="Transformable"/>
         <attribute name="logo" optional="YES" attributeType="Binary"/>
+        <attribute name="metadata" optional="YES" attributeType="Transformable"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="networks" optional="YES" attributeType="Transformable"/>
+        <attribute name="objects" optional="YES" attributeType="Transformable"/>
         <attribute name="screenShots" optional="YES" attributeType="Transformable"/>
         <attribute name="symbol" optional="YES" attributeType="String"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary"/>
+        <attribute name="variables" optional="YES" attributeType="Transformable"/>
+        <attribute name="views" optional="YES" attributeType="Transformable"/>
         <attribute name="websiteLink" optional="YES" attributeType="String"/>
     </entity>
     <entity name="FunctionDoc" representedClassName="FunctionDoc" syncable="YES" codeGenerationType="class">

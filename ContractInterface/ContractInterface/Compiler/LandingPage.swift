@@ -43,6 +43,7 @@ struct LandingPage: View {
                                             .task{
                                                 if(meta == "downloadable"){
                                                     downloadable = true
+                                                    ciml.save()
                                                 }
                                             }
                                     }

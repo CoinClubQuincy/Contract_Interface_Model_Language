@@ -28,6 +28,7 @@
 		66D8A5762935A42C00D27FA8 /* ContractInterfaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D8A5752935A42C00D27FA8 /* ContractInterfaceUITestsLaunchTests.swift */; };
 		66DA3F7129898A4D006B46D7 /* DeveloperPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DA3F7029898A4D006B46D7 /* DeveloperPreview.swift */; };
 		66DA3F75298B3E67006B46D7 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 66DA3F74298B3E67006B46D7 /* CodeScanner */; };
+		66DA3F77299C0951006B46D7 /* CIML_CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DA3F76299C0951006B46D7 /* CIML_CoreData.swift */; };
 		CA120B3372EFEB8B1DBB3997 /* Pods_ContractInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAAF49AD8F1C18C9D22B79A7 /* Pods_ContractInterface.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		66D8A5752935A42C00D27FA8 /* ContractInterfaceUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractInterfaceUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		66DA3F7029898A4D006B46D7 /* DeveloperPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperPreview.swift; sourceTree = "<group>"; };
 		66DA3F72298B3DA1006B46D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		66DA3F76299C0951006B46D7 /* CIML_CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIML_CoreData.swift; sourceTree = "<group>"; };
 		CAAF49AD8F1C18C9D22B79A7 /* Pods_ContractInterface.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ContractInterface.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF48C0334835E3B1E39AC6C /* Pods-ContractInterface.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ContractInterface.release.xcconfig"; path = "Target Support Files/Pods-ContractInterface/Pods-ContractInterface.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +126,7 @@
 				661F807E294CE17600192F15 /* Projector.swift */,
 				6672CE2D295E2B3800A1EAE4 /* DAppletSettings.swift */,
 				66278B7A29805C1800BEC040 /* LandingPage.swift */,
+				66DA3F76299C0951006B46D7 /* CIML_CoreData.swift */,
 			);
 			path = Compiler;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				66A6CE652964A5A5004FD7E2 /* CIMLDocuments.xcdatamodeld in Sources */,
 				665A55DD2950C66B003D85FC /* BuildTools.swift in Sources */,
 				6672CE2E295E2B3800A1EAE4 /* DAppletSettings.swift in Sources */,
+				66DA3F77299C0951006B46D7 /* CIML_CoreData.swift in Sources */,
 				66DA3F7129898A4D006B46D7 /* DeveloperPreview.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

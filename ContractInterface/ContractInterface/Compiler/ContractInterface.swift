@@ -9,6 +9,8 @@ import SwiftUI
 import CodeScanner
 //MARK: DApps
 struct ContractInterface: View {
+    @StateObject private var addCIML = ContractModel()
+    
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
     //@StateObject var ciml = ManageCIMLDocument.init()
@@ -295,6 +297,7 @@ struct Spinner: View {
 
             //animateSpinner(with: (rotationTime * 2) + 0.225) { self.fullRotation += fullRotation }
         }
+    
 }
 
 struct SpinnerCircle: View {
