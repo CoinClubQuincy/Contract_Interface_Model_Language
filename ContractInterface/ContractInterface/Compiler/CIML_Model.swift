@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Foundation
-
+import CoreData
 //{
 //  "cimlVersion": "1.0.1",
 //  "appVersion": "0.0.1",
@@ -31,6 +31,43 @@ import Foundation
 //  "metadata": [""]
 //}
 
+
+class DAppListVM: ObservableObject {
+    @Published var dapps = [DAppVM]()
+    
+    func getDApps(){
+        let dapps = CoreDataManager.shared.getAllDApps()
+        DispatchQueue.main.async {
+            self.dapps = dapps.map(DAppVM.init)
+        }
+    }
+}
+
+struct DAppVM{
+    let DApp: ContractDoc
+    var id: NSManagedObjectID{ return DApp.objectID }
+    var abi: String{ return DApp.abi ?? "" }
+    var appVersion: String{ return DApp.appVersion ?? "" }
+    //var metadata: NSManagedObjectID{ return DApp.objectID }
+    var byteCode: String{ return DApp.byteCode ?? "" }
+    var cimlDescription: String{ return DApp.cimlDescription ?? "" }
+    var cimlURL: String{ return DApp.cimlURL ?? "" }
+    var cimlVersion: String{ return DApp.cimlVersion ?? "" }
+    var contractLanguage: String{ return DApp.contractLanguage ?? "" }
+    var contractMainnet: String{ return DApp.contractMainnet ?? "" }
+    //var functions: String{ return DApp.functions ?? "" }
+    //var logo: String{ return DApp.logo ?? "" }
+    var name: String{ return DApp.name ?? "" }
+    //var networks: String{ return DApp.networks ?? "" }
+    //var objects: String{ return DApp.objects ?? "" }
+    //var screenShots: String{ return DApp.screenShots ?? "" }
+    var symbol: String{ return DApp.symbol ?? "" }
+    //var thumbnail: String{ return DApp.thumbnail ?? "" }
+    //var variables: String{ return DApp.variables ?? "" }
+    //var views: String{ return DApp.views ?? "" }
+    var websiteLink: String{ return DApp.websiteLink ?? "" }
+
+}
 
 // MARK: - CIMLModel
 struct CIML: Codable {

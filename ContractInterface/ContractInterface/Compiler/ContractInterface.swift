@@ -10,6 +10,7 @@ import CodeScanner
 //MARK: DApps
 struct ContractInterface: View {
     @StateObject private var addCIML = ContractModel()
+    @StateObject private var dappVM = DAppListVM()
     
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
@@ -151,7 +152,9 @@ struct ContractInterface: View {
                                 .cornerRadius(10)
                                 .padding(.trailing,10)
                         })
-                        .sheet(isPresented: $showDappletLanding){
+                        .sheet(isPresented: $showDappletLanding,onDismiss:{
+                            contractInterface.save()
+                        }){
                             withAnimation {
                                 LandingPage(ciml: contractInterface, showDapplet: $showDapplet[0])
                                     .presentationDetents([.fraction(0.7)])
@@ -162,7 +165,61 @@ struct ContractInterface: View {
                     
                     ScrollView {
                         LazyVGrid(columns: layout, spacing: 20){
-                            ForEach(data, id: \.self){item in
+                            ForEach(dappVM.dapps, id: \.id){dapp in
+                                HStack {
+                                    
+                                    Button(action: {
+                                        withAnimation {
+                                            showDapplet[0].toggle()
+                                            contractInterface.openCIML(address: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
+                                        }
+                                    }, label: {
+                                        VStack{
+                                            Image("echo")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 60, height: 60)
+                                                .cornerRadius(10)
+                                                .shadow(radius: 10)
+                                                .padding(5)
+                                            Text(dapp.name)
+                                                .font(.footnote)
+                                                .foregroundColor(.black)
+                                        }
+                                    })
+                                }
+                                
+//                                ZStack{
+//                                    Circle()
+//                                        .fill(Color.red)
+//                                        .frame(width: 20,height: 20)
+//
+//                                    Text("2")
+//                                        .font(.footnote)
+//                                        .foregroundColor(.white)
+//                                }
+                                .overlay(
+                                    Button(action: {
+                                        showDAppSettings.toggle()
+                                    }, label: {
+                                        Image(systemName: "info.circle")
+                                            .foregroundColor(.blue)
+                                            .background(Color.white)
+                                            .cornerRadius(50)
+                                    })
+                                    .sheet(isPresented: $showDAppSettings) {
+                                        //MARK: SettingsPallet
+                                        DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,ciml: contractInterface)
+                                    }
+                                    , alignment: .topLeading
+                                )
+                                .onAppear{
+                                    dappVM.getDApps()
+                                }
+                            }
+
+                            
+                            /* ForEach(data, id: \.self){item in
                                 HStack {
                                     
                                     Button(action: {
@@ -210,7 +267,7 @@ struct ContractInterface: View {
                                     }
                                     , alignment: .topLeading
                                 )
-                            }
+                            } */
                         }
                         .padding(.top)
                     }

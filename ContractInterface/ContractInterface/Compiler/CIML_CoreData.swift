@@ -17,11 +17,19 @@ class CoreDataManager{
     
     private init(){
         
-        persistantContainer = NSPersistentContainer(name: "ContractDoc")
+        persistantContainer = NSPersistentContainer(name: "CIMLDocuments")
         persistantContainer.loadPersistentStores { (description, error ) in
             if let error = error {
                 fatalError("Failed to initialize CoreData \(error)")
             }
+        }
+    }
+    func getAllDApps()-> [ContractDoc]{
+        let fetchRequest: NSFetchRequest<ContractDoc> = ContractDoc.fetchRequest()
+        do {
+            return try persistantContainer.viewContext.fetch(fetchRequest)
+        } catch {
+            return []
         }
     }
     
@@ -32,8 +40,4 @@ class CoreDataManager{
             print("Faild to save Movie \(error)")
         }
     }
-    
-    
-    
-    
 }
