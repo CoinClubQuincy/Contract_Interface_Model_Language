@@ -91,7 +91,6 @@ class ContractModel: ObservableObject{ //Build Settings
         CIML.websiteLink = websitelink
         
         manager.save()
-        
     }
     
     
@@ -302,12 +301,22 @@ class ContractModel: ObservableObject{ //Build Settings
         return(tmpVar == "" ? objectValue:tmpVar)
     }
     
+    func varUpdater(varname:String,varValue:String){
+        for var vars in VariableList{
+            if (vars.varName == varname){
+                vars.value = varValue
+            }
+            print(vars.varName)
+            print(vars.type)
+            print(vars.value)
+        }
+    }
+    
     //true: ButtonType, False Vartype
     func buttonAlocation(objectName:String,typeValue:Bool)-> [String]{
         var buttonList:[String] = []
         var valueList:[String] = []
        
-        
         print("Allocate Button Vars")
         for vars in VariableList{
             print(send)
@@ -703,6 +712,9 @@ struct BUTTONS:View{
                         await web3.Send(from: "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b", value: BigUInt(value) ?? 0, to: String(type[i].suffix(42)))
                     }
                     print("pressed Submit Button")
+                } else if (type[i].prefix(3) == "var"){
+                    // var-varNameToBeUpdated
+                    contractInterface.varUpdater(varname: String(type[i].dropFirst(4)), varValue: value[i])
                 }
             }
 
@@ -720,9 +732,10 @@ class ButtonController: ObservableObject{
     @Published var type:String = ""
     @Published var value:String = ""
     
-    init(){
-        
-    }
+    @Published var changeType:[String] = []
+    @Published var changevalue:[String] = []
+    init(){}
+    
     func ubpdateButton(Type:String,Value:String){
         type = Type
         value = Value
