@@ -66,6 +66,7 @@ class ContractModel: ObservableObject{ //Build Settings
         //getCIML(url: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
     }
     func save(){
+        print("currently saving data to hardware")
         let manager = CoreDataManager.shared
         let CIML = ContractDoc(context: manager.persistantContainer.viewContext)
         //Save CIML Doc

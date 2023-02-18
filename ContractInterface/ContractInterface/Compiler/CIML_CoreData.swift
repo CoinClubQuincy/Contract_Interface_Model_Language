@@ -24,6 +24,16 @@ class CoreDataManager{
             }
         }
     }
+    
+    func GetDAppByID(id: NSManagedObjectID)-> ContractDoc?{
+        do {
+            return try persistantContainer.viewContext.existingObject(with: id) as? ContractDoc
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
     func getAllDApps()-> [ContractDoc]{
         let fetchRequest: NSFetchRequest<ContractDoc> = ContractDoc.fetchRequest()
         do {
@@ -33,11 +43,23 @@ class CoreDataManager{
         }
     }
     
+    func delete(_ Dapp: ContractDoc){
+        persistantContainer.viewContext.delete(Dapp)
+        
+        do{
+            try persistantContainer.viewContext.save()
+        } catch {
+            persistantContainer.viewContext.rollback()
+            print("Failed to delete DApp \(error)")
+        }
+        
+    }
+    
     func save(){
         do{
             try persistantContainer.viewContext.save()
         } catch {
-            print("Faild to save Movie \(error)")
+            print("Faild to save DApp \(error)")
         }
     }
 }

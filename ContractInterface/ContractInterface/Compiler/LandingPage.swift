@@ -74,6 +74,7 @@ struct LandingPage: View {
             
         }.background(Color.black)
     }
+
 }
 
 struct ListObject: View{

@@ -35,6 +35,13 @@ import CoreData
 class DAppListVM: ObservableObject {
     @Published var dapps = [DAppVM]()
     
+    func deleteDApp(DApp: DAppVM){
+        let DApp = CoreDataManager.shared.GetDAppByID(id: DApp.id)
+        if let DApp = DApp {
+            CoreDataManager.shared.delete(DApp)
+        }
+    }
+    
     func getDApps(){
         let dapps = CoreDataManager.shared.getAllDApps()
         DispatchQueue.main.async {
