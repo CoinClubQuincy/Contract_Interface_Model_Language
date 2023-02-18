@@ -11,6 +11,7 @@ import CodeScanner
 struct ContractInterface: View {
     @StateObject private var addCIML = ContractModel()
     @StateObject private var dappVM = DAppListVM()
+    @Environment(\.presentationMode) var presentationMode
     
     @Binding var backgroundColor:LinearGradient
     @State var searchBar:String = ""
@@ -154,6 +155,8 @@ struct ContractInterface: View {
                         })
                         .sheet(isPresented: $showDappletLanding,onDismiss:{
                             contractInterface.save()
+                            presentationMode.wrappedValue.dismiss()
+                            
                         }){
                             withAnimation {
                                 LandingPage(ciml: contractInterface, showDapplet: $showDapplet[0])
@@ -209,16 +212,11 @@ struct ContractInterface: View {
                                     })
                                     .sheet(isPresented: $showDAppSettings) {
                                         //MARK: SettingsPallet
-                                        DAppletSettings(DevEnv: contractInterface.DevEnv, newDapplet: false,ciml: contractInterface)
+                                        DAppletSettings(DappletID: dapp.id.hash, DevEnv: contractInterface.DevEnv, newDapplet: false,ciml: contractInterface)
                                     }
                                     , alignment: .topLeading
                                 )
-                                .onAppear{
-                                    dappVM.getDApps()
-                                }
                             }
-
-                            
                             /* ForEach(data, id: \.self){item in
                                 HStack {
                                     
@@ -285,9 +283,13 @@ struct ContractInterface: View {
                 }.frame(width: 200, height: 200)
             }
         }
+        .onAppear{
+        dappVM.getDApps()
+        
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        print("old path: \(urls)")
     }
-    
-    
+    }
 
     //MARK: DApp Functions
     func getAlert() -> Alert{
