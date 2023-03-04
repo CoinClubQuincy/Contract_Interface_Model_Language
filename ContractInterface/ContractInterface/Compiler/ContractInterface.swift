@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CodeScanner
+import Combine
+
 //MARK: DApps
 struct ContractInterface: View {
     @StateObject private var addCIML = ContractModel()
@@ -31,6 +33,7 @@ struct ContractInterface: View {
     @State var scannedCode: String = "Scan CIML QR Document"
     
     @State private var isLoading = false
+    let showDappletLandingSubject = CurrentValueSubject<Bool, Never>(false)
     
     var scannerSheet : some View {
         ZStack{
@@ -154,14 +157,34 @@ struct ContractInterface: View {
                                 .padding(.trailing,10)
                         })
                         .sheet(isPresented: $showDappletLanding,onDismiss:{
-                            contractInterface.save()
-                            presentationMode.wrappedValue.dismiss()
-                            
+//                                    contractInterface.save()
+//                                    presentationMode.wrappedValue.dismiss()
+
+//                            ForEach(dappVM.dapps, id: \.id){dapp in
+//                                ZStack{}
+//                                    .onReceive(showDappletLandingSubject) {_ in
+//                                        if(contractInterface.contractMainnet == dapp.contractMainnet ){
+//                                            print("Already have DApp")
+//
+//                                        } else {
+//                                            print("Save Dapp")
+//                                            print(contractInterface.contractMainnet)
+//                                            print("next")
+//                                            print(dapp.contractMainnet)
+//                                            contractInterface.save()
+//                                            presentationMode.wrappedValue.dismiss()
+//                                        }
+//                                    }
+//                            }
+
                         }){
                             withAnimation {
                                 LandingPage(ciml: contractInterface, showDapplet: $showDapplet[0])
                                     .presentationDetents([.fraction(0.7)])
                                     .presentationDragIndicator(.hidden)
+                                    .onAppear{
+                                        showDappletLandingSubject.send(true)
+                                    }
                             }
                         }
                     }
@@ -173,8 +196,9 @@ struct ContractInterface: View {
                                     
                                     Button(action: {
                                         withAnimation {
-                                            showDapplet[0].toggle()
                                             contractInterface.openCIML(address: "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json")
+                                            
+                                            showDapplet[0].toggle()
                                         }
                                     }, label: {
                                         VStack{
@@ -290,6 +314,8 @@ struct ContractInterface: View {
         print("old path: \(urls)")
     }
     }
+    
+    
 
     //MARK: DApp Functions
     func getAlert() -> Alert{
@@ -373,3 +399,5 @@ struct SpinnerCircle: View {
             .rotationEffect(rotation)
     }
 }
+
+

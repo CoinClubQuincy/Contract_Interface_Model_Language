@@ -153,7 +153,11 @@ struct Views: Codable {
 }
 
 //MARK: Object ViewModels
-class Variable_Model: ObservableObject {
+class Variable_Model: ObservableObject,Equatable {
+    static func == (lhs: Variable_Model, rhs: Variable_Model) -> Bool {
+        return lhs.id == rhs.id && lhs.varName == rhs.varName && lhs.type == rhs.type && lhs.value == rhs.value
+    }
+    
     let id: String = UUID().uuidString
     let varName:String
     let type:String
@@ -163,6 +167,10 @@ class Variable_Model: ObservableObject {
         varName = Name
         type = Type
         value = Value
+        
+    }
+    func refresh()->UUID{
+        return  UUID(uuidString: id) ??  UUID()
     }
 }
 //MARK: Function Model

@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct DAppletSettings: View {
+    @StateObject private var dappVM = DAppListVM()
     @State var alertTitle:String = ""
     @State var alertMessage:String = ""
     @State var presented: Bool = false
     @State var totalNotifications:Int = 0
-    
+    var DappletID:Int
     var DevEnv:Bool
     var newDapplet:Bool
     @State var testnets:Bool = false
     @StateObject var ciml = ContractModel()
+
     enum settingStatus {
         case edit, delete, open
     }
@@ -128,7 +130,11 @@ struct DAppletSettings: View {
                 HStack(alignment: .center){
                     Spacer()
                     Button(action: {
-                        
+                        if(DevEnv){
+                            
+                        }else {
+                            deleteDApp(index: DappletID)
+                        }
                     }, label: {
                         Text(DevEnv ? "Edit":"Delete")
                             .font(.title)
@@ -149,10 +155,10 @@ struct DAppletSettings: View {
             if(DevEnv){
                 buttonAlert(title: "Edit DApplet", msg: "Are you sure you want to Edit this Dapplet?")
             } else{
-                //ciml.showDapplet[0].toggle()
+                //Delete data from Core data
             }
         }, label: {
-            Text(newDapplet ? "Open":"Delete")
+            Text(newDapplet ? "Edit":"Delete")
                 .cornerRadius(20)
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.black)
@@ -164,6 +170,19 @@ struct DAppletSettings: View {
             getAlert()
         })
 
+    }
+    
+    func deleteDApp(index: Int){
+            print(index)
+            print(dappVM.dapps)
+            print("End")
+        
+            let dapp = dappVM.dapps[index]
+            
+            dappVM.deleteDApp(DApp: dapp)
+            
+            dappVM.getDApps()
+        
     }
     
     func getAlert() -> Alert{

@@ -59,6 +59,7 @@ class ContractModel: ObservableObject{ //Build Settings
     let totalViewCount:Int = 50
     @Published var dappletPage:Int = 0
     
+    @Published var commit: Int = 0
     
     var cancellables = Set<AnyCancellable>()
     init(){
@@ -170,7 +171,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                        Type: vars.type ?? "varType Error",
                                                        Value: vars.value ?? "varValue Error"))
             }
-            
+            //test
             for obj in typ.objects {
                 //initaillize any atributes that have unique data types
                 if(obj.alignment == "center" || obj.alignment == "leading" || obj.alignment == "trailing" ){
@@ -203,6 +204,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                              shadow: obj.shadow ?? 0,
                                              padding: CGFloat(obj.padding ?? 0),
                                              location: Placement(object: obj.name ?? "nil") ?? 0))
+                    
                     print(obj.name)
                     print("check placement")
                     print(TextList.count)
@@ -269,6 +271,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print("Error incorrect object type: \(String(describing: obj.type))")
                 }
             }
+            
 
             print("total TextList: ",TextList.count)
             print("total TextField: ",TextFieldList.count)
@@ -304,29 +307,48 @@ class ContractModel: ObservableObject{ //Build Settings
     
     func varUpdater(varname: String,varvalue:String) {
         print("var updater executed")
+        for objectList in TextList {
+            print(objectList.text)
+        }
         var val: String = ""
+        
         //first list
         for var vars in VariableList {
             print("reading Var list for var-x")
             print("var \(vars.varName) nvar \(varname.dropFirst(4))")
             //second list
             if vars.varName == varname.dropFirst(4) {
+                var count = 0
+                print("check var \(vars.varName )")
+                
+                for var objectList in TextList {
+                    if(vars.value == objectList.text ){
+                        TextList[count].text = varvalue
+                        print("compare vars \(vars.value) - \(objectList.text)")
+                        print(varvalue)
+                        objectList.text = varvalue
+                    }
+                }
                 vars.value = varvalue
+                
                 print("this is the var: \(vars.value) old object: \(varname)")
                 //swap list
-//                for var swapVar in VariableList {
-//                    print("reading Var list for x")
-//
-//                    if swapVar.varName == varname.dropFirst(4) {
-//                        print("this is the var: \(swapVar.value) new object: \(swapVar.varName)")
-//                        swapVar.value = val
-//                    }
-//
-//                } //swap list
-                
+                //                for var swapVar in VariableList {
+                //                    print("reading Var list for x")
+                //
+                //                    if swapVar.varName == varname.dropFirst(4) {
+                //                        print("this is the var: \(swapVar.value) new object: \(swapVar.varName)")
+                //                        swapVar.value = val
+                //                    }
+                //
+                //                } //swap list
+                count += 1
             } //second list
-            
         } //first list
+        print("check text list")
+        for objectList in TextList {
+            print(objectList.text)
+        }
     }
     
     //true: ButtonType, False Vartype
@@ -485,7 +507,7 @@ struct DAppletView: View {
         ZStack {
             NavigationView{
                 GeometryReader{geo in
-                    
+            
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
                         .foregroundColor(Color(hex: contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00", objectType: String(contractInterface.dappletPage))))
@@ -509,6 +531,7 @@ struct DAppletView: View {
                             .frame(height: geo.size.width * 0.1)
                             .overlay{
                                 Overlay(contractInterface: contractInterface, cordinates: Int(item)!)
+                                
                             }
                         }
                     }
@@ -558,6 +581,7 @@ struct Overlay: View{// Compiler
                     TEXT_FIELD(text: list.text, textField: list.textField, foreGroundColor: list.foreGroundColor, frame: list.frame,
                             alignment: list.alignment, backgroundColor: list.backgroundColor,
                                cornerRadius: list.cornerRadius, shadow: list.shadow,padding: list.padding ,location: list.location)
+
                 }
             }
             ForEach(contractInterface.SysImageList){ list in
@@ -570,13 +594,15 @@ struct Overlay: View{// Compiler
                     BUTTONS(text: list.text, isIcon: list.isIcon, foreGroundColor: list.foreGroundColor, font: list.font,
                             frame: list.frame, alignment: list.alignment, backgroundColor: list.backgroundColor,
                             cornerRadius: list.cornerRadius, bold: list.bold, fontWeight: list.fontWeight,
-                            shadow: list.shadow, padding: list.padding, location: list.location, contractInterface: contractInterface,type: list.type, value: list.value)
+                            shadow: list.shadow, padding: list.padding, location: list.location, contractInterface: contractInterface,overlay: self, type: list.type, value: list.value)
                 }
             }
         }
-        .onAppear {
+    }
 
-        }
+    func UpdateFromButton(name:String,value:String){
+        contractInterface.varUpdater(varname: name, varvalue: value)
+       
     }
 }
 //MARK: TEXT View
@@ -671,6 +697,7 @@ struct BUTTONS:View{
     @StateObject var contractInterface:ContractModel
     @StateObject var web3 = Web3wallet()
     @StateObject var controller = ButtonController()
+    var overlay: Overlay
     var type:[String]
     var value:[String]
     
@@ -736,20 +763,15 @@ struct BUTTONS:View{
                     print(String(type[i].dropFirst(4)))
                     print(type[i])
                     print(value[i])
-                    contractInterface.varUpdater(varname: String(type[i]), varvalue: value[i])
+                    overlay.UpdateFromButton(name: String(type[i]), value: value[i])
+
                 }
             }
 
             })
             .simultaneousGesture(TapGesture().onEnded {
-                var tmp = ""
-                if (value[0] == ""){
-                    print("no value")
-                } else {
-                    tmp = value[0]
-                    controller.ubpdateButton(Type: type[0], Value: tmp)
-                    print("type: \(controller.type) value: \(controller.value)")
-                }
+
+                print("type: \(controller.type) value: \(controller.value)")
             })
         }
     }
