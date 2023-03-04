@@ -47,7 +47,7 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var screenShots: [String] = []
     @Published var abi:String = ""
     @Published var byteCode:String = ""
-    var variables: [Object] = []
+    @Published var variables: [Object] = []
     var functions: [String] = []
     var objects: [Object] = []
     var views: [Views] = []
@@ -166,9 +166,9 @@ class ContractModel: ObservableObject{ //Build Settings
             
             //MARK: Parse Vars
             for vars in typ.variables{
-                    VariableList.append(Variable_Model(varName: vars.name ?? "varName Error",
-                                                       type: vars.type ?? "varType Error",
-                                                       value: vars.value ?? "varValue Error"))
+                    VariableList.append(Variable_Model(Name: vars.name ?? "varName Error",
+                                                       Type: vars.type ?? "varType Error",
+                                                       Value: vars.value ?? "varValue Error"))
             }
             
             for obj in typ.objects {
@@ -302,15 +302,31 @@ class ContractModel: ObservableObject{ //Build Settings
         return(tmpVar == "" ? objectValue:tmpVar)
     }
     
-    func varUpdater(varname:String,varValue:String){
-        for var vars in VariableList{
-            if (vars.varName == varname){
-                vars.value = varValue
-            }
-            print(vars.varName)
-            print(vars.type)
-            print(vars.value)
-        }
+    func varUpdater(varname: String,varvalue:String) {
+        print("var updater executed")
+        var val: String = ""
+        //first list
+        for var vars in VariableList {
+            print("reading Var list for var-x")
+            print("var \(vars.varName) nvar \(varname.dropFirst(4))")
+            //second list
+            if vars.varName == varname.dropFirst(4) {
+                vars.value = varvalue
+                print("this is the var: \(vars.value) old object: \(varname)")
+                //swap list
+//                for var swapVar in VariableList {
+//                    print("reading Var list for x")
+//
+//                    if swapVar.varName == varname.dropFirst(4) {
+//                        print("this is the var: \(swapVar.value) new object: \(swapVar.varName)")
+//                        swapVar.value = val
+//                    }
+//
+//                } //swap list
+                
+            } //second list
+            
+        } //first list
     }
     
     //true: ButtonType, False Vartype
@@ -331,6 +347,8 @@ class ContractModel: ObservableObject{ //Build Settings
                         buttonList.append(varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type) == "true" ? "false":"true")
                     case "Send": "Send"
                         print("Send Button: \(vars.varName),\(vars.value),\(vars.type)")
+                        buttonList.append(varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type))
+                    case "var-":
                         buttonList.append(varAllocation(objectName: vars.varName, objectValue: vars.value, objectType: vars.type))
                     default:
                         return []
@@ -710,19 +728,28 @@ struct BUTTONS:View{
                     contractInterface.changePageSegue(page: Int(page) ?? 0)
                     contractInterface.getCIML(url: contractInterface.cimlURL)
                     Task{
-                        await web3.Send(from: "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b", value: BigUInt(value) ?? 0, to: String(type[i].suffix(42)))
+                        await web3.Send(from: "0x54Dd2A2508618e927643fD57d602Fe7cC9ed3b0A", value: BigUInt(value) ?? 0, to: String(type[i].suffix(42)))
                     }
                     print("pressed Submit Button")
                 } else if (type[i].prefix(3) == "var"){
                     // var-varNameToBeUpdated
-                    contractInterface.varUpdater(varname: String(type[i].dropFirst(4)), varValue: value[i])
+                    print(String(type[i].dropFirst(4)))
+                    print(type[i])
+                    print(value[i])
+                    contractInterface.varUpdater(varname: String(type[i]), varvalue: value[i])
                 }
             }
 
             })
             .simultaneousGesture(TapGesture().onEnded {
-                controller.ubpdateButton(Type: type[0], Value: value[0])
-                print("type: \(controller.type) value: \(controller.value)")
+                var tmp = ""
+                if (value[0] == ""){
+                    print("no value")
+                } else {
+                    tmp = value[0]
+                    controller.ubpdateButton(Type: type[0], Value: tmp)
+                    print("type: \(controller.type) value: \(controller.value)")
+                }
             })
         }
     }

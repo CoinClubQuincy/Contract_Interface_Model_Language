@@ -153,11 +153,17 @@ struct Views: Codable {
 }
 
 //MARK: Object ViewModels
-struct Variable_Model: Codable{
+class Variable_Model: ObservableObject {
     let id: String = UUID().uuidString
     let varName:String
     let type:String
     var value:String
+    
+    init(Name:String,Type:String,Value:String){
+        varName = Name
+        type = Type
+        value = Value
+    }
 }
 //MARK: Function Model
 struct Function_Model:Identifiable {

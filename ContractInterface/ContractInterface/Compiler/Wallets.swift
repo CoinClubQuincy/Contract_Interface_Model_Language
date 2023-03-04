@@ -252,7 +252,7 @@ struct Wallets: View {
     @State var faceID:Bool = false
     @State var settingsPage:Bool = false
     
-    @State private var qrdata = "0x521b16618C1965b1E2a9f9d8240d8AD7aaef0A6b" //this is the QRC data
+    @State private var qrdata = "0x54Dd2A2508618e927643fD57d602Fe7cC9ed3b0A" //this is the QRC data
     @State var selectWalletView:Int = 0
     
     @State var txnHash:String = ""
