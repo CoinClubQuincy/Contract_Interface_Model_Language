@@ -332,16 +332,6 @@ class ContractModel: ObservableObject{ //Build Settings
                 vars.value = varvalue
                 
                 print("this is the var: \(vars.value) old object: \(varname)")
-                //swap list
-                //                for var swapVar in VariableList {
-                //                    print("reading Var list for x")
-                //
-                //                    if swapVar.varName == varname.dropFirst(4) {
-                //                        print("this is the var: \(swapVar.value) new object: \(swapVar.varName)")
-                //                        swapVar.value = val
-                //                    }
-                //
-                //                } //swap list
                 count += 1
             } //second list
         } //first list

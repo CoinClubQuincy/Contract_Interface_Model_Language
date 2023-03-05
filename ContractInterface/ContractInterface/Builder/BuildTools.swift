@@ -10,8 +10,8 @@ import SwiftUI
 //MARK: BuildTools
 struct BuildTools: View {
     @State var CIMLvariables: [Variable_Model] = [
-        Variable_Model(varName: "var_name", type: "String", value: "This is data"),
-        Variable_Model(varName: "var_int", type: "Int", value: "27")
+//        Variable_Model(varName: "var_name", type: "String", value: "This is data"),
+//        Variable_Model(varName: "var_int", type: "Int", value: "27")
     ]
     
     @Binding var showObjects:Bool
@@ -76,7 +76,7 @@ struct BuildTools: View {
             })
             .sheet(isPresented: $showSettings, content: {
                 //MARK: Settings Pallet
-                DAppletSettings(DevEnv: true, newDapplet: false, ciml: contractInterface)
+                DAppletSettings(DappletID: 0, DevEnv: true, newDapplet: false, ciml: contractInterface)
                     .presentationDetents([.fraction(0.90)])
             })
 
