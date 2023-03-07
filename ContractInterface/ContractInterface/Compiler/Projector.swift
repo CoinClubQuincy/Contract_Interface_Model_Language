@@ -220,6 +220,8 @@ class ContractModel: ObservableObject{ //Build Settings
                                                        shadow: 0,
                                                        padding: 0,
                                                        location: Placement(object: obj.name ?? "nil") ?? 0))
+ 
+                    
                     print("text field count")
                     print(obj.type)
                     print(TextFieldList.count)
@@ -314,26 +316,43 @@ class ContractModel: ObservableObject{ //Build Settings
         
         //first list
         for var vars in VariableList {
+            var varCount = 0
             print("reading Var list for var-x")
             print("var \(vars.varName) nvar \(varname.dropFirst(4))")
+            if(vars.varName == varname.dropFirst(4) ){
+                VariableList[varCount].value = varvalue
+                print("compare vars \(VariableList[varCount].value) - \(varvalue)")
+                print(varvalue)
+            }
             //second list
             if vars.varName == varname.dropFirst(4) {
-                var count = 0
                 print("check var \(vars.varName )")
                 
+//                for var objectList in TextFieldList {
+//                    var textFieldCount = 0
+//                    if(vars.varName == varname.dropFirst(4) ){
+//                        VariableList[varCount].value = varvalue
+//                        print("compare vars \(VariableList[varCount].value) - \(varvalue)")
+//                        print(varvalue)
+//                    }
+//                    textFieldCount += 1
+//                }
+                
                 for var objectList in TextList {
+                    var Textcount = 0
                     if(vars.value == objectList.text ){
-                        TextList[count].text = varvalue
+                        TextList[Textcount].text = varvalue
                         print("compare vars \(vars.value) - \(objectList.text)")
                         print(varvalue)
-                        objectList.text = varvalue
                     }
+                    Textcount += 1
                 }
-                vars.value = varvalue
+                //vars.value = varvalue
                 
                 print("this is the var: \(vars.value) old object: \(varname)")
-                count += 1
             } //second list
+            
+            varCount += 1
         } //first list
         print("check text list")
         for objectList in TextList {
@@ -570,7 +589,7 @@ struct Overlay: View{// Compiler
                 if cordinates == list.location {
                     TEXT_FIELD(text: list.text, textField: list.textField, foreGroundColor: list.foreGroundColor, frame: list.frame,
                             alignment: list.alignment, backgroundColor: list.backgroundColor,
-                               cornerRadius: list.cornerRadius, shadow: list.shadow,padding: list.padding ,location: list.location)
+                               cornerRadius: list.cornerRadius, shadow: list.shadow,padding: list.padding ,location: list.location, overlay: self)
 
                 }
             }
@@ -636,7 +655,8 @@ struct TEXT_FIELD:View{
     var shadow:CGFloat
     var padding:CGFloat
     var location:Int
- 
+    var overlay: Overlay
+    
     var body: some View {
         TextField(text, text: $textField)
             .padding(10)
@@ -647,6 +667,10 @@ struct TEXT_FIELD:View{
             .cornerRadius(cornerRadius)
             .padding(alignment,padding)
             .shadow(radius: shadow)
+            .onChange(of: textField) { newValue in
+                print("New value: \(newValue)")
+                overlay.UpdateFromButton(name: String("var-\(text)"), value: newValue)
+            }
         
     }
 }
