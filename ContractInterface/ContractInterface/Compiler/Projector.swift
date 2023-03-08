@@ -203,7 +203,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                              fontWeight: .regular, // add func
                                              shadow: obj.shadow ?? 0,
                                              padding: CGFloat(obj.padding ?? 0),
-                                             location: Placement(object: obj.name ?? "nil") ?? 0))
+                                             location: Placement(object: obj.name ?? "nil") ))
                     
                     print(obj.name)
                     print("check placement")
@@ -219,7 +219,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                        cornerRadius: obj.cornerRadius ?? 0,
                                                        shadow: 0,
                                                        padding: 0,
-                                                       location: Placement(object: obj.name ?? "nil") ?? 0))
+                                                       location: Placement(object: obj.name ?? "nil") ))
  
                     
                     print("text field count")
@@ -239,7 +239,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  fontWeight: .regular, // add func
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
-                                                 location: Placement(object: obj.name ?? "nil") ?? 0,
+                                                 location: Placement(object: obj.name ?? "nil") ,
                                                  type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false), value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
                     print(obj.type)
                     print(ButtonList.count)
@@ -256,7 +256,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  fontWeight: .regular,
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
-                                                 location: Placement(object: obj.name ?? "nil") ?? 0,
+                                                                 location: Placement(object: obj.name ?? "nil") ,
                                                  type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false), value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
                     print(obj.type)
                     print(ButtonList.count)
@@ -266,7 +266,7 @@ class ContractModel: ObservableObject{ //Build Settings
                                                      frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
                                                      padding: 0,
                                                      color: .black,
-                                                     location: Placement(object: obj.name ?? "nil") ?? 0))
+                                                     location: Placement(object: obj.name ?? "nil") ))
                     print(obj.type)
                     print(SysImageList.count)
                 } else {
@@ -307,57 +307,39 @@ class ContractModel: ObservableObject{ //Build Settings
         return(tmpVar == "" ? objectValue:tmpVar)
     }
     
-    func varUpdater(varname: String,varvalue:String) {
+    func varUpdater(varname: String,varvalue:String,type:String) {
         print("var updater executed")
-        for objectList in TextList {
-            print(objectList.text)
-        }
-        var val: String = ""
+        var _: String = ""
+        print(varvalue)
+        print(varname)
+        print(type)
+        
         
         //first list
-        for var vars in VariableList {
+        for vars in VariableList {
             var varCount = 0
             print("reading Var list for var-x")
             print("var \(vars.varName) nvar \(varname.dropFirst(4))")
-            if(vars.varName == varname.dropFirst(4) ){
-                VariableList[varCount].value = varvalue
-                print("compare vars \(VariableList[varCount].value) - \(varvalue)")
-                print(varvalue)
-            }
+
             //second list
             if vars.varName == varname.dropFirst(4) {
                 print("check var \(vars.varName )")
                 
-//                for var objectList in TextFieldList {
-//                    var textFieldCount = 0
-//                    if(vars.varName == varname.dropFirst(4) ){
-//                        VariableList[varCount].value = varvalue
-//                        print("compare vars \(VariableList[varCount].value) - \(varvalue)")
-//                        print(varvalue)
-//                    }
-//                    textFieldCount += 1
-//                }
-                
-                for var objectList in TextList {
+                for objectList in TextList {
                     var Textcount = 0
-                    if(vars.value == objectList.text ){
+                    if(vars.varName == varname.dropFirst(4) ){
                         TextList[Textcount].text = varvalue
-                        print("compare vars \(vars.value) - \(objectList.text)")
+                        VariableList[varCount].value = varvalue
+                        
+                        print("compare vars \(vars.varName) - \(varname.dropFirst(4))")
                         print(varvalue)
                     }
                     Textcount += 1
                 }
-                //vars.value = varvalue
-                
                 print("this is the var: \(vars.value) old object: \(varname)")
             } //second list
-            
             varCount += 1
         } //first list
-        print("check text list")
-        for objectList in TextList {
-            print(objectList.text)
-        }
     }
     
     //true: ButtonType, False Vartype
@@ -609,8 +591,8 @@ struct Overlay: View{// Compiler
         }
     }
 
-    func UpdateFromButton(name:String,value:String){
-        contractInterface.varUpdater(varname: name, varvalue: value)
+    func UpdateFromButton(name:String,value:String,type:String){
+        contractInterface.varUpdater(varname: name, varvalue: value, type: type)
        
     }
 }
@@ -669,9 +651,8 @@ struct TEXT_FIELD:View{
             .shadow(radius: shadow)
             .onChange(of: textField) { newValue in
                 print("New value: \(newValue)")
-                overlay.UpdateFromButton(name: String("var-\(text)"), value: newValue)
-            }
-        
+                overlay.UpdateFromButton(name: String("var-\(text)"), value: newValue, type: "textFeild")
+        }
     }
 }
 //MARK: SYSIMAGE View
@@ -769,7 +750,7 @@ struct BUTTONS:View{
                     contractInterface.changePageSegue(page: Int(page) ?? 0)
                     contractInterface.getCIML(url: contractInterface.cimlURL)
                     Task{
-                        await web3.Send(from: "0x54Dd2A2508618e927643fD57d602Fe7cC9ed3b0A", value: BigUInt(value) ?? 0, to: String(type[i].suffix(42)))
+                        await web3.Send(from: "0x54Dd2A2508618e927643fD57d602Fe7cC9ed3b0A", value: BigUInt(value) , to: String(type[i].suffix(42)))
                     }
                     print("pressed Submit Button")
                 } else if (type[i].prefix(3) == "var"){
@@ -777,7 +758,7 @@ struct BUTTONS:View{
                     print(String(type[i].dropFirst(4)))
                     print(type[i])
                     print(value[i])
-                    overlay.UpdateFromButton(name: String(type[i]), value: value[i])
+                    overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
 
                 }
             }
