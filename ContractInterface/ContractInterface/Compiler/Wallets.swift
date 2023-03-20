@@ -193,21 +193,26 @@ class Web3wallet: ObservableObject {
         return "Error"
     }
     
-    func executeDApp(ContractABI:String,ContractAddress:EthereumAddress,Function:String,param:[String]) async{
-        let web3 = RPC()
-        guard let contractABI = try? Data(contentsOf: Bundle.main.url(forResource: ContractABI, withExtension: "json")!) else {
-            print("Failed to load contract ABI")
-            return
-        }
-        let contract = try! web3?.contract(ContractABI)
-        let result = try! contract?.createReadOperation()
-
-
-
-
-        
-        
-        
+    func ReadDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String]) async{
+        let web3 = RPC()!
+        let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
+        let readTransaction = contract.createReadOperation ("getVersion", parameters:[] as [AnyObject])!
+        readTransaction.transaction.from = keystoreManager.addresses?.first ?? keystore?.getAddress ()
+        let response = try await readTransaction.callContractMethod()
+        let balance = response["0" ] as? BigUInt
+        print (balance!.description)
+        print(String (balance!))
+    }
+    
+    func WrriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String]) async{
+        let web3 = RPC()!
+        let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
+        let readTransaction = contract.createWriteOperation ("getVersion", parameters:[] as [AnyObject])!
+        readTransaction.transaction.from = keystoreManager.addresses?.first ?? keystore?.getAddress ()
+        let response = try await readTransaction.callContractMethod()
+        let balance = response["0" ] as? BigUInt
+        print (balance!.description)
+        print(String (balance!))
     }
 }
 
@@ -384,7 +389,7 @@ struct Wallets: View {
             } else {
                 Section("Wallet"){
                     HStack{
-                        Picker("Wallet", selection: $selectedWallet) {                            
+                        Picker("Wallet", selection: $selectedWallet) {
                             Text("Wallet A").tag(wallet.wallet1)
                             Text("Wallet B").tag(wallet.wallet2)
                             Text("Wallet C").tag(wallet.wallet3)
