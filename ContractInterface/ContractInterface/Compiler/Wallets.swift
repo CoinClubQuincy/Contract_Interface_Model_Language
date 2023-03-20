@@ -193,20 +193,21 @@ class Web3wallet: ObservableObject {
         return "Error"
     }
     
-    func executeDApp() async{
-//        let yourContractABI: String = ""
-//        let toEthereumAddress: EthereumAddress = EthereumAddress("0xC0869eed9fdfb45623571940933654cdaa8feF7a") ?? <#default value#>!
-//        let abiVersion: Int = 0
-//
-//        let contract = await Web3.InfuraMainnetWeb3().contract(yourContractABI, at: toEthereumAddress, abiVersion: abiVersion)
-//
-//        let method: String = ""
-//        let parameters: [AnyObject] = []
-//        let extraData: Data = ""
-//        let transactionOptions: TransactionOptions = <OPTIONS>
-//
-//        let transactionRead = contract.read(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
-//        let transactionWrite = contract.write(method, parameters: parameters, extraData: extraData, transactionOptions: transactionOptions)
+    func executeDApp(ContractABI:String,ContractAddress:EthereumAddress,Function:String,param:[String]) async{
+        let web3 = RPC()
+        guard let contractABI = try? Data(contentsOf: Bundle.main.url(forResource: ContractABI, withExtension: "json")!) else {
+            print("Failed to load contract ABI")
+            return
+        }
+        let contract = try! web3?.contract(ContractABI)
+        let result = try! contract?.createReadOperation()
+
+
+
+
+        
+        
+        
     }
 }
 
