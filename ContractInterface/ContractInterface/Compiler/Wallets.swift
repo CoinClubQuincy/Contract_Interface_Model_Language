@@ -193,23 +193,27 @@ class Web3wallet: ObservableObject {
         return "Error"
     }
     
-    func ReadDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String]) async{
+    func ReadDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
         let web3 = RPC()!
+        let keystore = try! EthereumAddress(from, type: .normal)
+        
         let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
         let readTransaction = contract.createReadOperation ("getVersion", parameters:[] as [AnyObject])!
-        readTransaction.transaction.from = keystoreManager.addresses?.first ?? keystore?.getAddress ()
-        let response = try await readTransaction.callContractMethod()
+        readTransaction.transaction.from = keystore
+        let response = try! await readTransaction.callContractMethod()
         let balance = response["0" ] as? BigUInt
         print (balance!.description)
         print(String (balance!))
     }
-    
-    func WrriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String]) async{
+
+    func WrriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
         let web3 = RPC()!
+        let keystore = try! EthereumAddress(from, type: .normal)
+        
         let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
         let readTransaction = contract.createWriteOperation ("getVersion", parameters:[] as [AnyObject])!
-        readTransaction.transaction.from = keystoreManager.addresses?.first ?? keystore?.getAddress ()
-        let response = try await readTransaction.callContractMethod()
+        readTransaction.transaction.from = keystore
+        let response = try! await readTransaction.callContractMethod()
         let balance = response["0" ] as? BigUInt
         print (balance!.description)
         print(String (balance!))
@@ -608,7 +612,7 @@ struct Wallets: View {
                                     }
                                 } perform: {
                                     Task{
-                                        txnHash = await  web3.Send(from: qrdata, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) ?? 0, to: sendto)
+                                        txnHash = await  web3.Send(from: qrdata, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) , to: sendto)
                                     }
                                     // at min duration
                                     withAnimation(.easeInOut){
