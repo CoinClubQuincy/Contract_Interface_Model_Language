@@ -198,25 +198,25 @@ class Web3wallet: ObservableObject {
         let keystore = try! EthereumAddress(from, type: .normal)
         
         let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
-        let readTransaction = contract.createReadOperation ("getVersion", parameters:[] as [AnyObject])!
+        let readTransaction = contract.createReadOperation (Function, parameters:param as [AnyObject])!
         readTransaction.transaction.from = keystore
         let response = try! await readTransaction.callContractMethod()
         let balance = response["0" ] as? BigUInt
         print (balance!.description)
-        print(String (balance!))
+        print(response)
     }
 
-    func WrriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
+    func WriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
         let web3 = RPC()!
         let keystore = try! EthereumAddress(from, type: .normal)
         
         let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
-        let readTransaction = contract.createWriteOperation ("getVersion", parameters:[] as [AnyObject])!
+        let readTransaction = contract.createWriteOperation (Function, parameters:param as [AnyObject])!
         readTransaction.transaction.from = keystore
         let response = try! await readTransaction.callContractMethod()
         let balance = response["0" ] as? BigUInt
         print (balance!.description)
-        print(String (balance!))
+        print(response)
     }
 }
 
@@ -262,7 +262,7 @@ struct Wallets: View {
     @State var faceID:Bool = false
     @State var settingsPage:Bool = false
     
-    @State private var qrdata = "0x54Dd2A2508618e927643fD57d602Fe7cC9ed3b0A" //this is the QRC data
+    @State private var qrdata = "0x981f101912bc24E882755A6DD8015135D0cc4D4D" //this is the QRC data
     @State var selectWalletView:Int = 0
     
     @State var txnHash:String = ""

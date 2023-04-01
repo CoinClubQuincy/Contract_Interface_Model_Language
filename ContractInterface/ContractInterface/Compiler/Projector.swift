@@ -24,12 +24,9 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var ButtonList:[CIMLButton] = []
     @Published var SysImageList:[CIMLSYSImage] = []
     @Published var VariableList:[Variable_Model] = []
-    @Published var ViewList:[Views] = []
+    @Published var FuntionList:[Function_Model] = []
     
-//    @Published var finalTextList:[CIMLText] = []
-//    @Published var finalTextFieldList:[CIMLTextField] = []
-//    @Published var finalButtonList:[CIMLButton] = []
-//    @Published var finalsysImageList:[CIMLSYSImage] = []
+    @Published var ViewList:[Views] = []
     
     //All CIML variables
     @Published var cimlVersion:String = ""
@@ -48,7 +45,7 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var abi:String = ""
     @Published var byteCode:String = ""
     @Published var variables: [Object] = []
-    var functions: [String] = []
+    var functions: [Function_Model] = []
     var objects: [Object] = []
     var views: [Views] = []
     @Published var metadata: [String] = []
@@ -152,8 +149,14 @@ class ContractModel: ObservableObject{ //Build Settings
 //            views: [Views] = []
             metadata = typ.metadata
 //            //object attributes
+            //MARK: Parse Functions
+            for fun in typ.functions{
+                FuntionList.append(Function_Model(funcName: fun.funcName, objectName: fun.objectName, type: fun.type, inputValue: fun.inputValue, outputValue: fun.outputValue))
+            }
+            print("funtions are placed")
+            
+            
             //MARK: Parse Views
-
             for view in typ.views{
                 if (view.view == dappletPage && view.view <= totalViewCount){
                     ViewList.append(Views(view: view.view ,
@@ -281,6 +284,7 @@ class ContractModel: ObservableObject{ //Build Settings
             print("total ButtonList: ",ButtonList.count)
             print("total ViewList: ",ViewList.count)
             print("total VarList: ",VariableList.count)
+            print("total funcList: ",FuntionList.count)
 
             print("dapplet page")
             print(dappletPage)
@@ -464,6 +468,7 @@ class ContractModel: ObservableObject{ //Build Settings
             ButtonList.removeAll()
             VariableList.removeAll()
             ViewList.removeAll()
+            FuntionList.removeAll()
     }
         
     //Button Actions

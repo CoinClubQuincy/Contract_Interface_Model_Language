@@ -8,11 +8,13 @@
 import SwiftUI
 import CodeScanner
 import Combine
+import Core
 
 //MARK: DApps
 struct ContractInterface: View {
     @StateObject private var addCIML = ContractModel()
     @StateObject private var dappVM = DAppListVM()
+    @StateObject private var web3Wallet = Web3wallet()
     @Environment(\.presentationMode) var presentationMode
     
     @Binding var backgroundColor:LinearGradient
@@ -35,6 +37,126 @@ struct ContractInterface: View {
     @State private var isLoading = false
     let showDappletLandingSubject = CurrentValueSubject<Bool, Never>(false)
     
+    let abi: String = """
+[
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "Bool",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "Numb",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "String",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "read",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bool",
+                "name": "_bool",
+                "type": "bool"
+            }
+        ],
+        "name": "writeBool",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_int",
+                "type": "uint256"
+            }
+        ],
+        "name": "writeINT",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_string",
+                "type": "string"
+            }
+        ],
+        "name": "writeString",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+
+"""
+    
     var scannerSheet : some View {
         ZStack{
             CodeScannerView(codeTypes: [.qr]) { response in
@@ -45,6 +167,14 @@ struct ContractInterface: View {
                     showDappletLanding.toggle()
                     print("Scanned Code \(scannedCode)")
                 }
+            }
+        }.onAppear{
+            print("currently running read function")
+            Task{
+                await web3Wallet.ReadDApp(abiString: abi, ContractAddress: EthereumAddress("0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", type: .normal)!, Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                
+                await web3Wallet.WriteDApp(abiString: abi, ContractAddress: EthereumAddress("0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", type: .normal)!, Function: "writeINT", param: ["2020"], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                    
             }
         }
     }

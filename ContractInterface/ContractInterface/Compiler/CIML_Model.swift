@@ -85,7 +85,7 @@ struct CIML: Codable {
     let networks, screenShots: [String]
     let abi, byteCode: String
     let variables: [Object]
-    let functions: [String]
+    let functions: [Function_Model]
     let objects: [Object]
     let views: [Views]
     let metadata: [String]
@@ -174,12 +174,13 @@ class Variable_Model: ObservableObject,Equatable {
     }
 }
 //MARK: Function Model
-struct Function_Model:Identifiable {
+struct Function_Model: Codable {
     let id: String = UUID().uuidString
     let funcName:String
+    var objectName:String
     let type:String
     var inputValue:[String]
-    var outputValue:[String]
+    var outputValue:[String]?
 }
 //MARK: CIMLText
 struct CIMLText: Identifiable {
