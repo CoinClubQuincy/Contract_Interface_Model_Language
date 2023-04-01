@@ -205,7 +205,10 @@ class Web3wallet: ObservableObject {
         print (balance!.description)
         print(response)
     }
-
+    func abiConverter(from string: String) -> String {
+        let updatedString = string.replacingOccurrences(of: "@", with: "")
+        return updatedString
+    }
     func WriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
         let web3 = RPC()!
         let keystore = try! EthereumAddress(from, type: .normal)
