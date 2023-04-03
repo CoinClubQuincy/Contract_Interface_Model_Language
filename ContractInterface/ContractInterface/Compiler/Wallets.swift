@@ -192,34 +192,42 @@ class Web3wallet: ObservableObject {
         }
         return "Error"
     }
-    
-    func ReadDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
-        let web3 = RPC()!
-        let keystore = try! EthereumAddress(from, type: .normal)
-        
-        let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
-        let readTransaction = contract.createReadOperation (Function, parameters:param as [AnyObject])!
-        readTransaction.transaction.from = keystore
-        let response = try! await readTransaction.callContractMethod()
-        let balance = response["0" ] as? BigUInt
-        print (balance!.description)
-        print(response)
-    }
     func abiConverter(from string: String) -> String {
         let updatedString = string.replacingOccurrences(of: "@", with: "")
         return updatedString
     }
-    func WriteDApp(abiString:String,ContractAddress:EthereumAddress,Function:String,param:[String],from:String) async{
+    
+    func ReadDApp(abiString:String,ContractAddress:String,Function:String,param:[String],from:String) async -> String{
         let web3 = RPC()!
+        let contractAddress = EthereumAddress(ContractAddress, type: .normal)
         let keystore = try! EthereumAddress(from, type: .normal)
+        var AbiString = abiConverter(from: abiString)
         
-        let contract = Web3.Contract(web3: web3, abiString: abiString, at: ContractAddress)!
+        let contract = Web3.Contract(web3: web3, abiString: AbiString, at: contractAddress)!
+        let readTransaction = contract.createReadOperation (Function, parameters:param as [AnyObject])!
+        readTransaction.transaction.from = keystore
+        let response = try! await readTransaction.callContractMethod()
+        let balance = response["0" ] as? BigUInt
+        
+        print (balance!.description)
+        print(response)
+        return balance!.description
+    }
+
+    func WriteDApp(abiString:String,ContractAddress:String,Function:String,param:[String],from:String) async -> String{
+        let web3 = RPC()!
+        let contractAddress = EthereumAddress(ContractAddress, type: .normal)
+        let keystore = try! EthereumAddress(from, type: .normal)
+        var AbiString = abiConverter(from: abiString)
+        
+        let contract = Web3.Contract(web3: web3, abiString: AbiString, at: contractAddress)!
         let readTransaction = contract.createWriteOperation (Function, parameters:param as [AnyObject])!
         readTransaction.transaction.from = keystore
         let response = try! await readTransaction.callContractMethod()
         let balance = response["0" ] as? BigUInt
         print (balance!.description)
         print(response)
+        return balance!.description
     }
 }
 

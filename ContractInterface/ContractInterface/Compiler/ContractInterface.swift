@@ -171,9 +171,9 @@ struct ContractInterface: View {
         }.onAppear{
             print("currently running read function")
             Task{
-                await web3Wallet.ReadDApp(abiString: abi, ContractAddress: EthereumAddress("0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", type: .normal)!, Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                await web3Wallet.ReadDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
                 
-                await web3Wallet.WriteDApp(abiString: abi, ContractAddress: EthereumAddress("0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", type: .normal)!, Function: "writeINT", param: ["2020"], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                await web3Wallet.WriteDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "writeINT", param: ["2020"], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
                     
             }
         }
