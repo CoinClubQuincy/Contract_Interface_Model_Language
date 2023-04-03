@@ -58,6 +58,8 @@ class ContractModel: ObservableObject{ //Build Settings
     
     @Published var commit: Int = 0
     
+    @StateObject var web3Wallet = Web3wallet()
+    
     var cancellables = Set<AnyCancellable>()
     init(){
         dappletPage = 0
@@ -288,6 +290,156 @@ class ContractModel: ObservableObject{ //Build Settings
 
             print("dapplet page")
             print(dappletPage)
+        }
+    }
+    
+    //runs continuously and updates all read data from contract
+    func eventListener() async{
+        var varCount = 0
+        var ReadVar = "Func Error"
+        let abi: String = """
+    [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [],
+            "name": "Bool",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "Numb",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "String",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "read",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "bool",
+                    "name": "_bool",
+                    "type": "bool"
+                }
+            ],
+            "name": "writeBool",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_int",
+                    "type": "uint256"
+                }
+            ],
+            "name": "writeINT",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "_string",
+                    "type": "string"
+                }
+            ],
+            "name": "writeString",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ]
+
+    """
+        for Var in VariableList{
+            for Read in FuntionList {
+
+                if(Var.varName == Read.objectName && Read.type == "Read"){
+                    print("------ FunctionList ------")
+                    print(Var.varName+Read.objectName)
+                    
+                        ReadVar = await web3Wallet.ReadDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+
+                    for txt in TextList {
+                        var Textcount = 0
+                        print("------ TextList ------")
+                        print(TextList[Textcount].text )
+                        print(txt.text+Read.objectName)
+                        if(txt.text == VariableList[varCount].value){
+                            TextList[Textcount].text = ReadVar
+                        }
+                        Textcount += 1
+                    }
+                    VariableList[varCount].value = ReadVar
+                    print("------ VAR successfully swapped ------")
+                }
+            }
+            varCount += 1
         }
     }
     
@@ -593,6 +745,8 @@ struct Overlay: View{// Compiler
                             shadow: list.shadow, padding: list.padding, location: list.location, contractInterface: contractInterface,overlay: self, type: list.type, value: list.value)
                 }
             }
+        }.task{
+            await contractInterface.eventListener()
         }
     }
 
