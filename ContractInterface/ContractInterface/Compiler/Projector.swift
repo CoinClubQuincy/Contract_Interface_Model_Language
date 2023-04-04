@@ -58,7 +58,7 @@ class ContractModel: ObservableObject{ //Build Settings
     
     @Published var commit: Int = 0
     
-    @StateObject var web3Wallet = Web3wallet()
+    var web3Wallet = Web3wallet()
     
     var cancellables = Set<AnyCancellable>()
     init(){
@@ -293,8 +293,13 @@ class ContractModel: ObservableObject{ //Build Settings
         }
     }
     
+    func asyncWriteDApp(abiString: String, ContractAddress: String, Function: String, param: [String], from: String) async throws -> String {
+      let response = try await web3Wallet.WriteDApp(abiString: abiString, ContractAddress: ContractAddress, Function: Function, param: param, from: from)
+      return response
+    }
+    
     //runs continuously and updates all read data from contract
-    func eventListener() async{
+    func eventListener() async {
         var varCount = 0
         var ReadVar = "Func Error"
         let abi: String = """
@@ -418,12 +423,18 @@ class ContractModel: ObservableObject{ //Build Settings
     """
         for Var in VariableList{
             for Read in FuntionList {
-
                 if(Var.varName == Read.objectName && Read.type == "Read"){
                     print("------ FunctionList ------")
                     print(Var.varName+Read.objectName)
                     
-                        ReadVar = await web3Wallet.ReadDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                    do {
+                        ReadVar = try await asyncWriteDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                        print("Executed Contract Func")
+                    } catch {
+                      // handle the error
+                        print("func execution error")
+                    }
+
 
                     for txt in TextList {
                         var Textcount = 0
@@ -745,8 +756,11 @@ struct Overlay: View{// Compiler
                             shadow: list.shadow, padding: list.padding, location: list.location, contractInterface: contractInterface,overlay: self, type: list.type, value: list.value)
                 }
             }
-        }.task{
-            await contractInterface.eventListener()
+        }.task {
+            while true {
+                await contractInterface.eventListener()
+                await Task.sleep(500 * 1000 * 1000)
+            }
         }
     }
 
