@@ -71,6 +71,26 @@ class Web3wallet: ObservableObject {
 
     init() {
         createWallet(seed: "1234")
+        
+
+//        Task {
+//            do {
+//                let web3 = RPC()
+//                let accounts = try await web3?.eth.ownedAccounts()
+//                for account in accounts! {
+//                    print(account.address)
+//                }
+//            } catch {
+//                print("Error getting accounts: \(error)")
+//            }
+//
+//
+//            print("check address")
+//            //await Send(from: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d", value: 1000000000000000000, to: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf")
+//            let balance1 = await getBalanceTotal(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
+//            let balance2 = await getBalanceTotal(address: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
+//            print("balance1: \(balance1) -- balance2: \(balance2)")
+//        }
     }
     
     func checkAddresTxn(address:String) async{
@@ -173,7 +193,7 @@ class Web3wallet: ObservableObject {
         return "Error"
     }
     func abiConverter(from string: String) -> String {
-        let updatedString = string.replacingOccurrences(of: "@", with: "\"")
+        let updatedString = string.replacingOccurrences(of: "@", with: "")
         return updatedString
     }
     
