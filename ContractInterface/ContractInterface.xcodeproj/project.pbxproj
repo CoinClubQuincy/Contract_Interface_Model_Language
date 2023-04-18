@@ -327,6 +327,7 @@
 			packageReferences = (
 				66A76B4C296E4271000342A8 /* XCRemoteSwiftPackageReference "web3swift" */,
 				66DA3F73298B3E67006B46D7 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				6695188729EE057E00E02AE1 /* XCRemoteSwiftPackageReference "swift-nio" */,
 			);
 			productRefGroup = 66D8A5502935A42A00D27FA8 /* Products */;
 			projectDirPath = "";
@@ -797,6 +798,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6695188729EE057E00E02AE1 /* XCRemoteSwiftPackageReference "swift-nio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-nio.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		66A76B4C296E4271000342A8 /* XCRemoteSwiftPackageReference "web3swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/skywinder/web3swift.git";

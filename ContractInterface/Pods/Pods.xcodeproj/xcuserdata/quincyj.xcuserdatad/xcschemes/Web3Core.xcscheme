@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "621047930970B1C4E88EFA33437CC2A2"
-               BuildableName = "Core.framework"
+               BuildableName = "Web3Core.framework"
                BlueprintName = "Web3Core"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

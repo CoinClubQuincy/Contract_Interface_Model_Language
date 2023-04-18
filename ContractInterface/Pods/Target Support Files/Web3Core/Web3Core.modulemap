@@ -1,4 +1,4 @@
-framework module Core {
+framework module Web3Core {
   umbrella header "Web3Core-umbrella.h"
 
   export *

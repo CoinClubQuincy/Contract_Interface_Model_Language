@@ -94,8 +94,13 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "1003"
             endingLineNumber = "1003"
+=======
+            startingLineNumber = "890"
+            endingLineNumber = "890"
+>>>>>>> Stashed changes
             landmarkName = "init(hex:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +115,13 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "589"
             endingLineNumber = "589"
+=======
+            startingLineNumber = "475"
+            endingLineNumber = "475"
+>>>>>>> Stashed changes
             landmarkName = "objectAttributes_Font(objectAttribute:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +152,13 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "619"
             endingLineNumber = "619"
+=======
+            startingLineNumber = "505"
+            endingLineNumber = "505"
+>>>>>>> Stashed changes
             landmarkName = "addBuildSYSImage(token:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +221,13 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "672"
             endingLineNumber = "672"
+=======
+            startingLineNumber = "552"
+            endingLineNumber = "552"
+>>>>>>> Stashed changes
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -222,8 +242,13 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+<<<<<<< Updated upstream
             startingLineNumber = "678"
             endingLineNumber = "678"
+=======
+            startingLineNumber = "558"
+            endingLineNumber = "558"
+>>>>>>> Stashed changes
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
