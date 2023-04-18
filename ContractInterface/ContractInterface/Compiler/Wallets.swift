@@ -71,26 +71,6 @@ class Web3wallet: ObservableObject {
 
     init() {
         createWallet(seed: "1234")
-        
-
-//        Task {
-//            do {
-//                let web3 = RPC()
-//                let accounts = try await web3?.eth.ownedAccounts()
-//                for account in accounts! {
-//                    print(account.address)
-//                }
-//            } catch {
-//                print("Error getting accounts: \(error)")
-//            }
-//
-//
-//            print("check address")
-//            //await Send(from: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d", value: 1000000000000000000, to: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf")
-//            let balance1 = await getBalanceTotal(address: "0x4507ff30DDd534C54CE7ed4d6AC54f3B337CA91d") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
-//            let balance2 = await getBalanceTotal(address: "0x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf") //0xF74C4ebf2fC39Fd64ebab9197532Ef74242F2dA3
-//            print("balance1: \(balance1) -- balance2: \(balance2)")
-//        }
     }
     
     func checkAddresTxn(address:String) async{
@@ -134,7 +114,6 @@ class Web3wallet: ObservableObject {
         return web3
     }
     
-    //0xC0869eed9fdfb45623571940933654cdaa8feF7a
     func getBalanceTotal(address: String) async -> BigUInt{
         let web3 = RPC()
         guard let address = EthereumAddress(address) else { return 0 }
@@ -193,7 +172,7 @@ class Web3wallet: ObservableObject {
         return "Error"
     }
     func abiConverter(from string: String) -> String {
-        let updatedString = string.replacingOccurrences(of: "@", with: "")
+        let updatedString = string.replacingOccurrences(of: "@", with: "\"")
         return updatedString
     }
     
@@ -273,7 +252,8 @@ struct Wallets: View {
     @State var faceID:Bool = false
     @State var settingsPage:Bool = false
     
-    @State private var qrdata = "0x981f101912bc24E882755A6DD8015135D0cc4D4D" //this is the QRC data
+    
+    @State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003" //this is the QRC data
     @State var selectWalletView:Int = 0
     
     @State var txnHash:String = ""
@@ -323,7 +303,7 @@ struct Wallets: View {
                 .bold()
                 .onAppear{
                     Task{
-                        web3.walletTotal = await web3.getBalanceTotal(address: qrdata)
+                        web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
                     }
                 }
             
@@ -357,7 +337,7 @@ struct Wallets: View {
             .padding()
             
             
-            Text(qrdata)
+            Text(currentWallet)
                 .font(.footnote)
                 .bold(selectWalletView == 2 ? true:false)
                 .padding()
@@ -489,7 +469,7 @@ struct Wallets: View {
                 selectWalletView = 0
             }) {
                 
-                Image(uiImage: UIImage(data: getQRCodeDate(text: qrdata)!)!)
+                Image(uiImage: UIImage(data: getQRCodeDate(text: currentWallet)!)!)
                     .resizable()
                     .frame(width: 300, height: 300)
             }
@@ -509,7 +489,7 @@ struct Wallets: View {
                         ListItem(leftItem: "Network:", rightItem: "XDC")
                         ListItem(leftItem: "Txn Hash::", rightItem: txnHash)
                         ListItem(leftItem: "To:", rightItem: sendto)
-                        ListItem(leftItem: "From:", rightItem: qrdata)
+                        ListItem(leftItem: "From:", rightItem: currentWallet)
                         ListItem(leftItem: "Amount:", rightItem: sendAmount)
                         
                         HStack{
@@ -623,7 +603,7 @@ struct Wallets: View {
                                     }
                                 } perform: {
                                     Task{
-                                        txnHash = await  web3.Send(from: qrdata, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) , to: sendto)
+                                        txnHash = await  web3.Send(from: currentWallet, value: inverseFormatAndConvert(double: Double(sendAmount) ?? 0) , to: sendto)
                                     }
                                     // at min duration
                                     withAnimation(.easeInOut){

@@ -311,132 +311,17 @@ class ContractModel: ObservableObject{ //Build Settings
     
     //runs continuously and updates all read data from contract
     func eventListener() async {
+        print("Start Listener")
         var varCount = 0
         var ReadVar = "Func Error"
-        let abi: String = """
-    [
-        {
-            "inputs": [],
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "inputs": [],
-            "name": "Bool",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "Numb",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "String",
-            "outputs": [
-                {
-                    "internalType": "string",
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "read",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "bool",
-                    "name": "_bool",
-                    "type": "bool"
-                }
-            ],
-            "name": "writeBool",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "_int",
-                    "type": "uint256"
-                }
-            ],
-            "name": "writeINT",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "string",
-                    "name": "_string",
-                    "type": "string"
-                }
-            ],
-            "name": "writeString",
-            "outputs": [
-                {
-                    "internalType": "string",
-                    "name": "",
-                    "type": "string"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        }
-    ]
-
-    """
         for Var in VariableList{
+            print("read variables")
             for Read in FuntionList {
+                print("read func")
                 if(Var.varName == Read.objectName && Read.type == "Read"){
                     do {
-                        ReadVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                        print("read data")
+                        ReadVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: "read", param: [], from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
                         print("Executed Contract Func")
                     } catch {
                       // handle the error
@@ -692,7 +577,9 @@ struct DAppletView: View {
                                 
                             }
                             .task{
-                                //await contractInterface.eventListener()
+                                do{
+                                    await contractInterface.eventListener()
+                                }
                             }
                         }
                     }
