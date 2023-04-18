@@ -45,9 +45,9 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var abi:String = ""
     @Published var byteCode:String = ""
     @Published var variables: [Object] = []
-    var functions: [Function_Model] = []
-    var objects: [Object] = []
-    var views: [Views] = []
+    @Published var functions: [Function_Model] = []
+    @Published var objects: [Object] = []
+    @Published var views: [Views] = []
     @Published var metadata: [String] = []
     //object attributes
     @Published var textField: String = ""
@@ -293,9 +293,20 @@ class ContractModel: ObservableObject{ //Build Settings
         }
     }
     
-    func asyncWriteDApp(abiString: String, ContractAddress: String, Function: String, param: [String], from: String) async throws -> String {
+    private func asyncReadDApp(abiString: String, ContractAddress: String, Function: String, param: [String], from: String) async throws -> String {
+      let response = try await web3Wallet.ReadDApp(abiString: abiString, ContractAddress: ContractAddress, Function: Function, param: param, from: from)
+      return response
+    }
+    private func asyncWriteDApp(abiString: String, ContractAddress: String, Function: String, param: [String], from: String) async throws -> String {
       let response = try await web3Wallet.WriteDApp(abiString: abiString, ContractAddress: ContractAddress, Function: Function, param: param, from: from)
       return response
+    }
+    
+    func buttonEventListerner(object:String,value:String) async{
+        
+    }
+    func listener(type:String) async {
+        
     }
     
     //runs continuously and updates all read data from contract
@@ -424,23 +435,18 @@ class ContractModel: ObservableObject{ //Build Settings
         for Var in VariableList{
             for Read in FuntionList {
                 if(Var.varName == Read.objectName && Read.type == "Read"){
-                    print("------ FunctionList ------")
-                    print(Var.varName+Read.objectName)
-                    
                     do {
-                        ReadVar = try await asyncWriteDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                        ReadVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
                         print("Executed Contract Func")
                     } catch {
                       // handle the error
                         print("func execution error")
                     }
+                    print("web3 complete")
 
-
+                    print("------ TextList ------")
                     for txt in TextList {
                         var Textcount = 0
-                        print("------ TextList ------")
-                        print(TextList[Textcount].text )
-                        print(txt.text+Read.objectName)
                         if(txt.text == VariableList[varCount].value){
                             TextList[Textcount].text = ReadVar
                         }
@@ -480,7 +486,6 @@ class ContractModel: ObservableObject{ //Build Settings
         print(varvalue)
         print(varname)
         print(type)
-        
         
         //first list
         for vars in VariableList {
@@ -642,10 +647,6 @@ class ContractModel: ObservableObject{ //Build Settings
     private func editCIML(address:String){
         print("you edited: \(address) DApplet")
     }
-    
-    
-    
-    
 }
 
 //MARK: Final View // View Comiler
@@ -656,7 +657,6 @@ struct DAppletView: View {
     var deviceSize:Double = 1.0
     @StateObject var contractInterface:ContractModel
     
-    
     let data = Array(1...146).map { "\($0)" }
     let layout = [
         GridItem(.adaptive(minimum: 30,maximum: 30))
@@ -666,7 +666,6 @@ struct DAppletView: View {
         ZStack {
             NavigationView{
                 GeometryReader{geo in
-            
                     RoundedRectangle(cornerRadius: 15)
                         .frame(width: geo.size.width * 1.0,height: geo.size.height * 1.0)
                         .foregroundColor(Color(hex: contractInterface.varAllocation(objectName: "background", objectValue: "#00FF00", objectType: String(contractInterface.dappletPage))))
@@ -691,6 +690,9 @@ struct DAppletView: View {
                             .overlay{
                                 Overlay(contractInterface: contractInterface, cordinates: Int(item)!)
                                 
+                            }
+                            .task{
+                                //await contractInterface.eventListener()
                             }
                         }
                     }
@@ -755,11 +757,6 @@ struct Overlay: View{// Compiler
                             cornerRadius: list.cornerRadius, bold: list.bold, fontWeight: list.fontWeight,
                             shadow: list.shadow, padding: list.padding, location: list.location, contractInterface: contractInterface,overlay: self, type: list.type, value: list.value)
                 }
-            }
-        }.task {
-            while true {
-                await contractInterface.eventListener()
-                await Task.sleep(500 * 1000 * 1000)
             }
         }
     }
@@ -933,6 +930,15 @@ struct BUTTONS:View{
                     print(value[i])
                     overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
 
+                } else if(type[i].prefix(3) == "wri"){
+                    // var-varNameToBeUpdated
+                    print(String(type[i].dropFirst(4)))
+                    print(type[i])
+                    print(value[i])
+                    
+                    
+                    overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
+                    
                 }
             }
 
