@@ -59,6 +59,7 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var commit: Int = 0
     
     var web3Wallet = Web3wallet()
+    var CIMLWallet = Wallets()
     
     var cancellables = Set<AnyCancellable>()
     init(){
@@ -302,13 +303,41 @@ class ContractModel: ObservableObject{ //Build Settings
       return response
     }
     
-    func buttonEventListerner(object:String,value:String) async{
-        
+    func buttonEventListerner(function:String,value:String) async{
+        print("Start Listener")
+        var varCount = 0
+        var WriteVar = "Func Error"
+        for Var in VariableList{
+            print("read variables")
+            for Write in FuntionList {
+                print("read func")
+                if(Var.varName == Write.objectName && Write.type == "Write" && Write.funcName == function){
+                    do {
+                        print("read data")
+                        WriteVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: Write.funcName, param: [], from: CIMLWallet.currentWallet)
+                        print("Executed Contract Func")
+                    } catch {
+                      // handle the error
+                        print("func execution error")
+                    }
+                    print("web3 complete")
+
+                    print("------ TextList ------")
+                    for txt in TextList {
+                        var Textcount = 0
+                        if(txt.text == VariableList[varCount].value){
+                            TextList[Textcount].text = WriteVar
+                        }
+                        Textcount += 1
+                    }
+                    VariableList[varCount].value = WriteVar
+                    print("------ VAR successfully swapped ------")
+                }
+            }
+            varCount += 1
+        }
     }
-    func listener(type:String) async {
-        
-    }
-    
+
     //runs continuously and updates all read data from contract
     func eventListener() async {
         print("Start Listener")
@@ -321,7 +350,7 @@ class ContractModel: ObservableObject{ //Build Settings
                 if(Var.varName == Read.objectName && Read.type == "Read"){
                     do {
                         print("read data")
-                        ReadVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: "read", param: [], from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+                        ReadVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: Read.funcName, param: [], from: CIMLWallet.currentWallet)
                         print("Executed Contract Func")
                     } catch {
                       // handle the error
