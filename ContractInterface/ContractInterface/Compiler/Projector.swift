@@ -246,7 +246,8 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
                                                  location: Placement(object: obj.name ?? "nil") ,
-                                                 type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false), value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
+                                                 type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false),
+                                                 value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
                     print(obj.type)
                     print(ButtonList.count)
                 } else if (obj.type == "iconButton"){
@@ -262,8 +263,9 @@ class ContractModel: ObservableObject{ //Build Settings
                                                  fontWeight: .regular,
                                                  shadow: obj.shadow ?? 0,
                                                  padding: CGFloat(obj.padding ?? 0),
-                                                                 location: Placement(object: obj.name ?? "nil") ,
-                                                 type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false), value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
+                                                 location: Placement(object: obj.name ?? "nil") ,
+                                                 type: buttonAlocation(objectName: obj.name ?? "error", typeValue: false),
+                                                 value: buttonAlocation(objectName: obj.name ?? "error", typeValue: true)))
                     print(obj.type)
                     print(ButtonList.count)
                     //MARK: Parse SysImage
@@ -288,6 +290,8 @@ class ContractModel: ObservableObject{ //Build Settings
             print("total ViewList: ",ViewList.count)
             print("total VarList: ",VariableList.count)
             print("total funcList: ",FuntionList.count)
+            print(VariableList)
+            print(FuntionList)
 
             print("dapplet page")
             print(dappletPage)
@@ -303,8 +307,9 @@ class ContractModel: ObservableObject{ //Build Settings
       return response
     }
     
-    func buttonEventListerner(function:String,value:String) async{
+    func buttonEventListerner(function:String) async{
         print("Start Listener")
+        var prams:[String] = []
         var varCount = 0
         var WriteVar = "Func Error"
         for Var in VariableList{
@@ -314,7 +319,7 @@ class ContractModel: ObservableObject{ //Build Settings
                 if(Var.varName == Write.objectName && Write.type == "Write" && Write.funcName == function){
                     do {
                         print("read data")
-                        WriteVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: Write.funcName, param: [], from: CIMLWallet.currentWallet)
+                        WriteVar = try await asyncReadDApp(abiString: abi, ContractAddress: contractMainnet, Function: Write.funcName, param: prams, from: CIMLWallet.currentWallet)
                         print("Executed Contract Func")
                     } catch {
                       // handle the error
@@ -576,6 +581,8 @@ struct DAppletView: View {
         GridItem(.adaptive(minimum: 30,maximum: 30))
     ]
     
+    
+    
     var body: some View {
         ZStack {
             NavigationView{
@@ -606,9 +613,13 @@ struct DAppletView: View {
                                 
                             }
                             .task{
+                                var test:Bool = true
                                 do{
-                                    await contractInterface.eventListener()
+                                    if(test){
+                                        await contractInterface.eventListener()
+                                    }
                                 }
+                                test = false
                             }
                         }
                     }
@@ -778,6 +789,7 @@ struct BUTTONS:View{
     @StateObject var contractInterface:ContractModel
     @StateObject var web3 = Web3wallet()
     @StateObject var controller = ButtonController()
+    var CIMLwallet = Wallets()
     var overlay: Overlay
     var type:[String]
     var value:[String]
@@ -786,8 +798,6 @@ struct BUTTONS:View{
         ZStack {
             Button(action: {
                 print("press button")
-                
-                
             }, label: {
                 if(isIcon){
                     Image(systemName: text)
@@ -832,35 +842,41 @@ struct BUTTONS:View{
                     let page = String(string[string.index(string.startIndex, offsetBy: 4)])
                     print("Page change: \(page)")
 
-                    
                     contractInterface.changePageSegue(page: Int(page) ?? 0)
                     contractInterface.getCIML(url: contractInterface.cimlURL)
                     Task{
-                        await web3.Send(from: "0x54Dd2A2508618e927643fD57d602Fe7cC9ed3b0A", value: BigUInt(value) , to: String(type[i].suffix(42)))
+                        await web3.Send(from: CIMLwallet.currentWallet, value: BigUInt(value) , to: String(type[i].suffix(42)))
                     }
                     print("pressed Submit Button")
                 } else if (type[i].prefix(3) == "var"){
-                    // var-varNameToBeUpdated
-                    print(String(type[i].dropFirst(4)))
-                    print(type[i])
-                    print(value[i])
-                    overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
-
-                } else if(type[i].prefix(3) == "wri"){
-                    // var-varNameToBeUpdated
-                    print(String(type[i].dropFirst(4)))
-                    print(type[i])
-                    print(value[i])
-                    
-                    
-                    overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
-                    
+                    var textfield = String(type[i].dropFirst(4))
+                    print("------XXX------")
+                    print(textfield.prefix(9))
+                    if(textfield.prefix(9) == "textField"){
+                        print("This is Write")
+                        print(type[i])
+                        print(value[i])
+//                        for feild in contractInterface.TextFieldList {
+//                            if (feild.text == String(type[i].dropFirst(4))){
+//                                for fun in contractInterface.FuntionList{
+//                                    if(fun.objectName == value[i]){
+//                                        //send data to button event listener
+//                                    }
+//                                }
+//                            }
+//                        }
+                    } else {
+                        print(String(type[i].dropFirst(4)))
+                        print("This is Var")
+                        print(type[i])
+                        print(value[i])
+                        overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
+                    }
                 }
             }
 
             })
             .simultaneousGesture(TapGesture().onEnded {
-
                 print("type: \(controller.type) value: \(controller.value)")
             })
         }
