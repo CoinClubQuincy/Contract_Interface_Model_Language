@@ -198,8 +198,7 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(obj.type)
                     print("---------------------------------------- append textLst")
                     print(obj.frame?[0])
-                    TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error",
-                                             objectValue: obj.value ?? "Error", objectType: "text"),
+                    TextList.append(CIMLText(name: obj.name ?? "ERROR", text: varAllocation(objectName: obj.name ?? "Error",objectValue: obj.value ?? "Error", objectType: "text"),
                                              foreGroundColor: Color(.black),
                                              font: .headline, // add func
                                              frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -418,16 +417,16 @@ class ContractModel: ObservableObject{ //Build Settings
             if vars.varName == varname.dropFirst(4) {
                 print("check var \(vars.varName )")
                 
-                for objectList in TextList {
-                    var Textcount = 0
-                    if(vars.varName == varname.dropFirst(4) ){
-                        TextList[Textcount].text = varvalue
+                for objectList in 0..<TextList.count {
+                    if(TextList[objectList].name == varname.dropFirst(4) ){
+                        print("var count")
+                        print(TextList[objectList].text)
+                        TextList[objectList].text = varvalue
                         VariableList[varCount].value = varvalue
                         
                         print("compare vars \(vars.varName) - \(varname.dropFirst(4))")
                         print(varvalue)
                     }
-                    Textcount += 1
                 }
                 print("this is the var: \(vars.value) old object: \(varname)")
             } //second list
@@ -659,7 +658,7 @@ struct Overlay: View{// Compiler
         ZStack {
             ForEach(contractInterface.TextList) { list in
                 if cordinates == list.location {
-                    TEXT(text: list.text, foreGroundColor: list.foreGroundColor, font: list.font,
+                    TEXT(name: list.name, text: list.text, foreGroundColor: list.foreGroundColor, font: list.font,
                          frame: list.frame, alignment: list.alignment, backgroundColor: list.backgroundColor,
                          cornerRadius: list.cornerRadius, bold: list.bold, fontWeight: list.fontWeight,
                          shadow: list.shadow, padding: list.padding, location: list.location)
@@ -698,6 +697,7 @@ struct Overlay: View{// Compiler
 //MARK: TEXT View
 struct TEXT: View {
     let id: String = UUID().uuidString
+    var name:String
     var text:String
     var foreGroundColor:Color
     var font:Font
@@ -873,20 +873,20 @@ struct BUTTONS:View{
                                                     print("check text list")
                                                     for i in 0..<fun.inputValue.count{
                                                         print("count input vars")
-                                                        if(iTextList.text == fun.inputValue[i]){
+                                                        if(iTextList.name == fun.inputValue[i]){
                                                             print("get input values")
-                                                            inputValue.append(iTextList.text)
+                                                            inputValue.append(iTextList.name)
                                                         }
                                                     }
                                                 }
                                                 print(inputValue)
+                                                outputValue = ["Correct output"]
                                                 print("write data to chain")
-                                                await outputValue.append(web3.WriteDApp(abiString: contractInterface.abi, ContractAddress: contractInterface.contractMainnet, Function: fun.funcName, param: inputValue, from: CIMLwallet.currentWallet))
+                                                //await outputValue.append(web3.WriteDApp(abiString: contractInterface.abi, ContractAddress: contractInterface.contractMainnet, Function: fun.funcName, param: inputValue, from: CIMLwallet.currentWallet))
                                                 
                                                 print("update data on screen")
-                                                for i in 0..<fun.outputValue.count{
-                                                    overlay.UpdateFromButton(name: "var-" + String(i), value: outputValue[i], type: "button")
-                                                }
+                                                overlay.UpdateFromButton(name: "var-text2", value: outputValue[0], type: "button")
+                    
                                             }
                                         }
                                     }

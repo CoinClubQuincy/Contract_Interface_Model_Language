@@ -204,6 +204,7 @@ class Web3wallet: ObservableObject {
         readTransaction.transaction.from = keystore
         let response = try! await readTransaction.callContractMethod()
         let balance = response["0" ] as? BigUInt
+        
         print (balance!.description)
         print(response)
         return balance!.description

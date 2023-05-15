@@ -185,6 +185,7 @@ struct Function_Model: Codable {
 //MARK: CIMLText
 struct CIMLText: Identifiable {
     let id: String = UUID().uuidString
+    var name: String
     var text:String
     var foreGroundColor:Color = .black
     var font:Font = .headline
