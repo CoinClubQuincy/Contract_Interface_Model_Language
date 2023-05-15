@@ -180,7 +180,7 @@ struct Function_Model: Codable {
     var objectName:String
     let type:String
     var inputValue:[String]
-    var outputValue:[String]?
+    var outputValue:[String]
 }
 //MARK: CIMLText
 struct CIMLText: Identifiable {
@@ -201,6 +201,7 @@ struct CIMLText: Identifiable {
 //MARK: CIMLTextField
 struct CIMLTextField: Identifiable {
     let id: String = UUID().uuidString
+    var name: String
     var text:String
     var textField:String = ""
     var foreGroundColor:Color = .gray

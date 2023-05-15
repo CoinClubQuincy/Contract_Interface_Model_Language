@@ -198,7 +198,8 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(obj.type)
                     print("---------------------------------------- append textLst")
                     print(obj.frame?[0])
-                    TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error", objectType: "text"),
+                    TextList.append(CIMLText(text: varAllocation(objectName: obj.name ?? "Error",
+                                             objectValue: obj.value ?? "Error", objectType: "text"),
                                              foreGroundColor: Color(.black),
                                              font: .headline, // add func
                                              frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -216,7 +217,8 @@ class ContractModel: ObservableObject{ //Build Settings
                     print(TextList.count)
                     //MARK: Parse TextField
                 }else if (obj.type == "textField"){
-                    TextFieldList.append(CIMLTextField(text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error", objectType: "text"),
+                    TextFieldList.append(CIMLTextField(name: obj.name ?? "",
+                                                       text: varAllocation(objectName: obj.name ?? "Error", objectValue: obj.value ?? "Error", objectType: "text"),
                                                        textField: obj.textField ?? "",
                                                        foreGroundColor: .gray,
                                                        frame: [CGFloat(obj.frame?[0] ?? 100),CGFloat(obj.frame?[1] ?? 50)],
@@ -823,58 +825,82 @@ struct BUTTONS:View{
                 }
             })
             .simultaneousGesture(LongPressGesture().onEnded { _ in
-                for i in 0..<type.count {
-                    print("Type: \(type[i])")
-                
-                if(type[i] == "segue"){
-                    print(value)
-                    contractInterface.changePageSegue(page: Int(value[i]) ?? 0)
-                    contractInterface.getCIML(url: contractInterface.cimlURL)
-                    print("pressed Segue Button page status: \(contractInterface.dappletPage)")
-                } else if (type[i] == "toggle"){
-                    contractInterface.toggleButton(status: Bool(value[i]) ?? false)
-                    print("pressed togle Button")
-                } else if (type[i].prefix(4) == "Send"){
-                    print(i)
-                    print(value)
-                    let value = Int(value[i]) ?? 0
-                    let string = type[i]
-                    let page = String(string[string.index(string.startIndex, offsetBy: 4)])
-                    print("Page change: \(page)")
-
-                    contractInterface.changePageSegue(page: Int(page) ?? 0)
-                    contractInterface.getCIML(url: contractInterface.cimlURL)
-                    Task{
-                        await web3.Send(from: CIMLwallet.currentWallet, value: BigUInt(value) , to: String(type[i].suffix(42)))
-                    }
-                    print("pressed Submit Button")
-                } else if (type[i].prefix(3) == "var"){
-                    var textfield = String(type[i].dropFirst(4))
-                    print("------XXX------")
-                    print(textfield.prefix(9))
-                    if(textfield.prefix(9) == "textField"){
-                        print("This is Write")
-                        print(type[i])
-                        print(value[i])
-//                        for feild in contractInterface.TextFieldList {
-//                            if (feild.text == String(type[i].dropFirst(4))){
-//                                for fun in contractInterface.FuntionList{
-//                                    if(fun.objectName == value[i]){
-//                                        //send data to button event listener
-//                                    }
-//                                }
-//                            }
-//                        }
-                    } else {
-                        print(String(type[i].dropFirst(4)))
-                        print("This is Var")
-                        print(type[i])
-                        print(value[i])
-                        overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
+                Task{
+                    for i in 0..<type.count {
+                        print("Type: \(type[i])")
+                        
+                        if(type[i] == "segue"){
+                            print(value)
+                            contractInterface.changePageSegue(page: Int(value[i]) ?? 0)
+                            contractInterface.getCIML(url: contractInterface.cimlURL)
+                            print("pressed Segue Button page status: \(contractInterface.dappletPage)")
+                        } else if (type[i] == "toggle"){
+                            contractInterface.toggleButton(status: Bool(value[i]) ?? false)
+                            print("pressed togle Button")
+                        } else if (type[i].prefix(4) == "Send"){
+                            print(i)
+                            print(value)
+                            let value = Int(value[i]) ?? 0
+                            let string = type[i]
+                            let page = String(string[string.index(string.startIndex, offsetBy: 4)])
+                            print("Page change: \(page)")
+                            
+                            contractInterface.changePageSegue(page: Int(page) ?? 0)
+                            contractInterface.getCIML(url: contractInterface.cimlURL)
+                            Task{
+                                await web3.Send(from: CIMLwallet.currentWallet, value: BigUInt(value) , to: String(type[i].suffix(42)))
+                            }
+                            print("pressed Submit Button")
+                        } else if (type[i].prefix(3) == "var"){
+                            var textfield = String(type[i].dropFirst(4))
+                            print("------XXX------")
+                            print(textfield.prefix(9))
+                            if(textfield.prefix(9) == "textField"){
+                                print("This is Write")
+                                print(type[i])
+                                print(value[i])
+                                print(textfield.dropFirst(10))
+                                for feild in contractInterface.TextFieldList {
+                                    print(feild.name)
+                                    if (feild.name == String(textfield.dropFirst(10))){
+                                        print("True")
+                                        for fun in contractInterface.FuntionList{
+                                            if(fun.type == "Write" && value[i] == fun.objectName){
+                                                var inputValue: [String] = []
+                                                var outputValue: [String] = []
+                                                print("add to local var")
+                                                for iTextList in contractInterface.TextList{
+                                                    print("check text list")
+                                                    for i in 0..<fun.inputValue.count{
+                                                        print("count input vars")
+                                                        if(iTextList.text == fun.inputValue[i]){
+                                                            print("get input values")
+                                                            inputValue.append(iTextList.text)
+                                                        }
+                                                    }
+                                                }
+                                                print(inputValue)
+                                                print("write data to chain")
+                                                await outputValue.append(web3.WriteDApp(abiString: contractInterface.abi, ContractAddress: contractInterface.contractMainnet, Function: fun.funcName, param: inputValue, from: CIMLwallet.currentWallet))
+                                                
+                                                print("update data on screen")
+                                                for i in 0..<fun.outputValue.count{
+                                                    overlay.UpdateFromButton(name: "var-" + String(i), value: outputValue[i], type: "button")
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                print(String(type[i].dropFirst(4)))
+                                print("This is Var")
+                                print(type[i])
+                                print(value[i])
+                                overlay.UpdateFromButton(name: String(type[i]), value: value[i], type: "button")
+                            }
+                        }
                     }
                 }
-            }
-
             })
             .simultaneousGesture(TapGesture().onEnded {
                 print("type: \(controller.type) value: \(controller.value)")
