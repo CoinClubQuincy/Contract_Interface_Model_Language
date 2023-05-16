@@ -220,8 +220,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "887"
-            endingLineNumber = "887"
+            startingLineNumber = "891"
+            endingLineNumber = "891"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -268,8 +268,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "876"
-            endingLineNumber = "876"
+            startingLineNumber = "877"
+            endingLineNumber = "877"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -316,8 +316,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "881"
-            endingLineNumber = "881"
+            startingLineNumber = "885"
+            endingLineNumber = "885"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -380,6 +380,117 @@
                   startingLineNumber = "881"
                   endingLineNumber = "881"
                   offsetFromSymbolStart = "10748">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8E1810CF-A6A6-4A16-85F2-13BB48A026D1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/Projector.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "880"
+            endingLineNumber = "880"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "8E1810CF-A6A6-4A16-85F2-13BB48A026D1 - 7d9398c8db67f789"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.simultaneousGesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0 in ContractInterface.BUTTONS.body.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Projector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "881"
+                  endingLineNumber = "881"
+                  offsetFromSymbolStart = "11688">
+               </Location>
+               <Location
+                  uuid = "8E1810CF-A6A6-4A16-85F2-13BB48A026D1 - c802a58eb7c313bb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.simultaneousGesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0 in ContractInterface.BUTTONS.body.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Projector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "881"
+                  endingLineNumber = "881"
+                  offsetFromSymbolStart = "11924">
+               </Location>
+               <Location
+                  uuid = "8E1810CF-A6A6-4A16-85F2-13BB48A026D1 - 7d9398c8db67f789"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.simultaneousGesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0 in ContractInterface.BUTTONS.body.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Projector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "881"
+                  endingLineNumber = "881"
+                  offsetFromSymbolStart = "11528">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7BA166E3-C7F6-4753-B47A-52F5C47D399E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/Projector.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "892"
+            endingLineNumber = "892"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "7BA166E3-C7F6-4753-B47A-52F5C47D399E - 7d9398c8db67f9bf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.simultaneousGesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0 in ContractInterface.BUTTONS.body.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Projector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "895"
+                  endingLineNumber = "895"
+                  offsetFromSymbolStart = "10484">
+               </Location>
+               <Location
+                  uuid = "7BA166E3-C7F6-4753-B47A-52F5C47D399E - 7d9398c8db67f9bf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #3 (Swift.Bool) -&gt; () in closure #1 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.simultaneousGesture&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.Gesture&gt;(_: &#x3c4;_1_0, including: SwiftUI.GestureMask) -&gt; some&gt;&gt;.0 in ContractInterface.BUTTONS.body.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Projector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "895"
+                  endingLineNumber = "895"
+                  offsetFromSymbolStart = "10228">
                </Location>
             </Locations>
          </BreakpointContent>

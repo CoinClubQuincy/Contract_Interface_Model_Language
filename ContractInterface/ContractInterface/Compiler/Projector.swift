@@ -860,35 +860,37 @@ struct BUTTONS:View{
                                 print(type[i])
                                 print(value[i])
                                 print(textfield.dropFirst(10))
-                                for feild in contractInterface.TextFieldList {
-                                    print(feild.name)
-                                    if (feild.name == String(textfield.dropFirst(10))){
-                                        print("True")
-                                        for fun in contractInterface.FuntionList{
-                                            if(fun.type == "Write" && value[i] == fun.objectName){
-                                                var inputValue: [String] = []
-                                                var outputValue: [String] = []
-                                                print("add to local var")
-                                                for iTextList in contractInterface.TextList{
-                                                    print("check text list")
-                                                    for i in 0..<fun.inputValue.count{
-                                                        print("count input vars")
-                                                        if(iTextList.name == fun.inputValue[i]){
-                                                            print("get input values")
-                                                            inputValue.append(iTextList.name)
-                                                        }
-                                                    }
+
+                                print("True")
+                                for fun in contractInterface.FuntionList{
+                                    if(fun.type == "Write" && value[i] == fun.objectName){
+                                        var inputValue: [String] = []
+                                        var outputValue: [String] = []
+                                        var object:String = ""
+                                        print("add to local var")
+                                        for iTextList in contractInterface.TextList{
+                                            print("check text list")
+                                            for i in 0..<fun.inputValue.count{
+                                                print("count input vars")
+                                                print(iTextList.name)
+                                                print(fun.inputValue[i])
+                                                if(iTextList.name == fun.inputValue[i]){
+                                                    print("get input values")
+                                                    inputValue.append(iTextList.text)
                                                 }
-                                                print(inputValue)
-                                                outputValue = ["Correct output"]
-                                                print("write data to chain")
-                                                //await outputValue.append(web3.WriteDApp(abiString: contractInterface.abi, ContractAddress: contractInterface.contractMainnet, Function: fun.funcName, param: inputValue, from: CIMLwallet.currentWallet))
-                                                
-                                                print("update data on screen")
-                                                overlay.UpdateFromButton(name: "var-text2", value: outputValue[0], type: "button")
-                    
+                                                if(iTextList.name == fun.outputValue[i]){
+                                                    object = iTextList.name
+                                                }
                                             }
                                         }
+                                        print(inputValue)
+                                        print(object)
+                                        print("write data to chain")
+                                        //await inputValue.append(web3.WriteDApp(abiString: contractInterface.abi, ContractAddress: contractInterface.contractMainnet, Function: fun.funcName, param: inputValue, from: CIMLwallet.currentWallet))
+                                        
+                                        print("update data on screen")
+                                        overlay.UpdateFromButton(name: "var-" + object, value: inputValue[0], type: "button")
+            
                                     }
                                 }
                             } else {
