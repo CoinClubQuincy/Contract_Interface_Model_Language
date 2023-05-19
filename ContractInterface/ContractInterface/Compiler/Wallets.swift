@@ -186,7 +186,18 @@ class Web3wallet: ObservableObject {
         let readTransaction = contract.createReadOperation (Function, parameters:param as [AnyObject])!
         readTransaction.transaction.from = keystore
         let response = try! await readTransaction.callContractMethod()
-        let balance = response["0" ] as? BigUInt
+        
+        var balance: String?
+
+        if let balanceBigUInt = response["0"] as? BigUInt {
+            balance = balanceBigUInt.description
+        } else if let balanceString = response["0"] as? String {
+            balance = balanceString
+        } else if let balanceBigInt = response["0"] as? BigInt {
+            balance = balanceBigInt.description
+        } else if let balanceBool = response["0"] as? Bool {
+            balance = String(balanceBool)
+        }
         
         print (balance!.description)
         print(response)
@@ -203,7 +214,20 @@ class Web3wallet: ObservableObject {
         let readTransaction = contract.createWriteOperation (Function, parameters:param as [AnyObject])!
         readTransaction.transaction.from = keystore
         let response = try! await readTransaction.callContractMethod()
-        let balance = response["0" ] as? BigUInt
+        
+        //let balance = response["0" ] as? String
+        
+        var balance: String?
+
+        if let balanceBigUInt = response["0"] as? BigUInt {
+            balance = balanceBigUInt.description
+        } else if let balanceString = response["0"] as? String {
+            balance = balanceString
+        } else if let balanceBigInt = response["0"] as? BigInt {
+            balance = balanceBigInt.description
+        } else if let balanceBool = response["0"] as? Bool {
+            balance = String(balanceBool)
+        }
         
         print (balance!.description)
         print(response)

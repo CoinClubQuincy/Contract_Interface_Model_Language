@@ -867,6 +867,7 @@ struct BUTTONS:View{
                                         var inputValue: [String] = []
                                         var outputValue: [String] = []
                                         var object:String = ""
+                                        var newInput:String
                                         print("add to local var")
                                         for iTextList in contractInterface.TextList{
                                             print("check text list")
@@ -886,8 +887,15 @@ struct BUTTONS:View{
                                         print(inputValue)
                                         print(object)
                                         print("write data to chain")
-                                        //await inputValue.append(web3.WriteDApp(abiString: contractInterface.abi, ContractAddress: contractInterface.contractMainnet, Function: fun.funcName, param: inputValue, from: CIMLwallet.currentWallet))
-                                        
+                                        print(contractInterface.contractMainnet)
+                                        print(fun.funcName)
+                                        print(inputValue)
+                                        print(CIMLwallet.currentWallet)
+                                        newInput =  await web3.WriteDApp(abiString: contractInterface.abi,
+                                                                           ContractAddress: contractInterface.contractMainnet,
+                                                                           Function: fun.funcName, param: inputValue,
+                                                                           from: CIMLwallet.currentWallet)
+                                        inputValue.append(newInput)
                                         print("update data on screen")
                                         overlay.UpdateFromButton(name: "var-" + object, value: inputValue[0], type: "button")
             

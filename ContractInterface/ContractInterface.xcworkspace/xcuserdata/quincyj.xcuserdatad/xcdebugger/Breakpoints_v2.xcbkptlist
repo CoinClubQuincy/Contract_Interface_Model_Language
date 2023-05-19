@@ -220,8 +220,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
+            startingLineNumber = "899"
+            endingLineNumber = "899"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -268,8 +268,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "877"
-            endingLineNumber = "877"
+            startingLineNumber = "878"
+            endingLineNumber = "878"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -316,8 +316,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "885"
-            endingLineNumber = "885"
+            startingLineNumber = "886"
+            endingLineNumber = "886"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -394,8 +394,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "880"
-            endingLineNumber = "880"
+            startingLineNumber = "881"
+            endingLineNumber = "881"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -457,8 +457,8 @@
             filePath = "ContractInterface/Compiler/Projector.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "892"
-            endingLineNumber = "892"
+            startingLineNumber = "900"
+            endingLineNumber = "900"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -491,6 +491,147 @@
                   startingLineNumber = "895"
                   endingLineNumber = "895"
                   offsetFromSymbolStart = "10228">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "906258D7-54AC-4FB1-B041-9ECD81FD0680"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/ContractInterface.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "scannerSheet"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "906258D7-54AC-4FB1-B041-9ECD81FD0680 - ea3ae189dcaa3af7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "524">
+               </Location>
+               <Location
+                  uuid = "906258D7-54AC-4FB1-B041-9ECD81FD0680 - cb73095442b9e0f9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "906258D7-54AC-4FB1-B041-9ECD81FD0680 - dd22fffa02e0b6d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "906258D7-54AC-4FB1-B041-9ECD81FD0680 - cb73095442b9e0f9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "472800EE-8B9F-46C8-8225-DFCE5AB30045"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/ContractInterface.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "scannerSheet"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "472800EE-8B9F-46C8-8225-DFCE5AB30045 - 45395106563273"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "204">
+               </Location>
+               <Location
+                  uuid = "472800EE-8B9F-46C8-8225-DFCE5AB30045 - 5604a13398935675"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  uuid = "472800EE-8B9F-46C8-8225-DFCE5AB30045 - 779c78a805c58e51"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for closure #1 @Sendable () async -&gt; () in closure #2 () -&gt; () in ContractInterface.ContractInterface.scannerSheet.getter : some"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/ContractInterface.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64"
+                  offsetFromSymbolStart = "28">
                </Location>
             </Locations>
          </BreakpointContent>

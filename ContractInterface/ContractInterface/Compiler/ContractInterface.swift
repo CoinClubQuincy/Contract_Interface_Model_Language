@@ -37,126 +37,10 @@ struct ContractInterface: View {
     @State private var isLoading = false
     let showDappletLandingSubject = CurrentValueSubject<Bool, Never>(false)
     
-    let abi: String = """
-[
-    {
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
-    },
-    {
-        "inputs": [],
-        "name": "Bool",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "Numb",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "String",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "read",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "bool",
-                "name": "_bool",
-                "type": "bool"
-            }
-        ],
-        "name": "writeBool",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_int",
-                "type": "uint256"
-            }
-        ],
-        "name": "writeINT",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_string",
-                "type": "string"
-            }
-        ],
-        "name": "writeString",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    }
-]
-
-"""
     
+    var abi = """
+ [{@inputs@:[],@stateMutability@:@nonpayable@,@type@:@constructor@},{@inputs@:[{@internalType@:@uint256@,@name@:@_int@,@type@:@uint256@}],@name@:@writeINT@,@outputs@:[{@internalType@:@uint256@,@name@:@@,@type@:@uint256@}],@stateMutability@:@nonpayable@,@type@:@function@},{@inputs@:[{@internalType@:@string@,@name@:@_string@,@type@:@string@},{@internalType@:@string@,@name@:@_Nstring@,@type@:@string@}],@name@:@writeMultiString@,@outputs@:[{@internalType@:@string@,@name@:@@,@type@:@string@},{@internalType@:@string@,@name@:@@,@type@:@string@},{@internalType@:@string@,@name@:@@,@type@:@string@}],@stateMutability@:@nonpayable@,@type@:@function@},{@inputs@:[{@internalType@:@string@,@name@:@_string@,@type@:@string@}],@name@:@writeString@,@outputs@:[{@internalType@:@string@,@name@:@@,@type@:@string@}],@stateMutability@:@nonpayable@,@type@:@function@},{@inputs@:[],@name@:@Bool@,@outputs@:[{@internalType@:@bool@,@name@:@@,@type@:@bool@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[],@name@:@Numb@,@outputs@:[{@internalType@:@uint256@,@name@:@@,@type@:@uint256@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[],@name@:@read@,@outputs@:[{@internalType@:@uint256@,@name@:@@,@type@:@uint256@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[],@name@:@String@,@outputs@:[{@internalType@:@string@,@name@:@@,@type@:@string@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[{@internalType@:@bool@,@name@:@_bool@,@type@:@bool@}],@name@:@writeBool@,@outputs@:[{@internalType@:@bool@,@name@:@@,@type@:@bool@}],@stateMutability@:@pure@,@type@:@function@}]
+ """
     var scannerSheet : some View {
         ZStack{
             CodeScannerView(codeTypes: [.qr]) { response in
@@ -171,10 +55,17 @@ struct ContractInterface: View {
         }.onAppear{
             print("currently running read function")
             Task{
-                await web3Wallet.ReadDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "read", param: [], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
+                await web3Wallet.ReadDApp(abiString: abi,
+                                          ContractAddress: "0x8d71325b899658DD4470774789b016F98BA02309",
+                                          Function: "read",
+                                          param: [],
+                                          from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
                 
-                await web3Wallet.WriteDApp(abiString: abi, ContractAddress: "0x8561145E722A2AD0e73c7d2Dc95FCE9C1664153f", Function: "writeINT", param: ["2020"], from: "0x981f101912bc24E882755A6DD8015135D0cc4D4D")
-                    
+                await web3Wallet.WriteDApp(abiString: abi,
+                                           ContractAddress: "0x8d71325b899658DD4470774789b016F98BA02309",
+                                           Function: "writeBool",
+                                           param: ["true"],
+                                           from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
             }
         }
     }
@@ -429,13 +320,13 @@ struct ContractInterface: View {
                 .padding(.top)
                 .padding(.horizontal)
             }
-            .overlay{
-                ZStack {
-                    if(isLoading){
-                        Spinner(spinnerStart: 0.0, spinnerEndS1: 0.03, rotationDegreeS1: .degrees(360))
-                    }
-                }.frame(width: 200, height: 200)
-            }
+//            .overlay{
+//                ZStack {
+//                    if(isLoading){
+//                        Spinner(spinnerStart: 0.0, spinnerEndS1: 0.03, rotationDegreeS1: .degrees(360))
+//                    }
+//                }.frame(width: 200, height: 200)
+//            }
         }
         .onAppear{
         dappVM.getDApps()
