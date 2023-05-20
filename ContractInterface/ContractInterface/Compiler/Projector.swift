@@ -866,7 +866,7 @@ struct BUTTONS:View{
                                     if(fun.type == "Write" && value[i] == fun.objectName){
                                         var inputValue: [String] = []
                                         var outputValue: [String] = []
-                                        var object:String = ""
+                                        var object:[String] = []
                                         var newInput:String
                                         print("add to local var")
                                         for iTextList in contractInterface.TextList{
@@ -880,7 +880,7 @@ struct BUTTONS:View{
                                                     inputValue.append(iTextList.text)
                                                 }
                                                 if(iTextList.name == fun.outputValue[i]){
-                                                    object = iTextList.name
+                                                    object.append(iTextList.name)
                                                 }
                                             }
                                         }
@@ -895,9 +895,17 @@ struct BUTTONS:View{
                                                                            ContractAddress: contractInterface.contractMainnet,
                                                                            Function: fun.funcName, param: inputValue,
                                                                            from: CIMLwallet.currentWallet)
+                                        inputValue.removeAll()
                                         inputValue.append(newInput)
                                         print("update data on screen")
-                                        overlay.UpdateFromButton(name: "var-" + object, value: inputValue[0], type: "button")
+                                        print(inputValue)
+                                        for allInputs in 0..<inputValue.count{
+                                            print("All Inputs")
+                                            print(allInputs)
+                                            print(inputValue[allInputs])
+                                            print(object[allInputs])
+                                            overlay.UpdateFromButton(name: "var-" + object[allInputs], value: inputValue[allInputs], type: "button")
+                                        }
             
                                     }
                                 }
