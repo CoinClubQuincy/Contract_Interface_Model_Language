@@ -335,7 +335,7 @@
 		B627679198AFB2FBD2FCD31D9E410B31 /* PBKDF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2908FA185C8490C8952896986157E7A2 /* PBKDF1.swift */; };
 		B6FA4465B0B3BF29E92E4EBF265B451D /* Strideable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167934F43D734CCB2BCD49D4DE243556 /* Strideable.swift */; };
 		B863B5081997B4D40FBC9ED0FA20A03F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8DEC7D90772A54191D61AE08132096 /* Foundation.framework */; };
-		B8FD2EFDE51BBC2FF876782531861852 /* web3swift-Browser in Resources */ = {isa = PBXBuildFile; fileRef = 12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */; };
+		B8FD2EFDE51BBC2FF876782531861852 /* Browser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */; };
 		B96BCDA4AF618BF171AA502CC84FCD8F /* Data Conversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8124026DB830D8E66EB88E12D6C7C0 /* Data Conversion.swift */; };
 		B983A96148AC900C2263B1A1965FB163 /* CryptoExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89A42E46F3CBFA59EBACB22A16FF960 /* CryptoExtension.swift */; settings = {COMPILER_FLAGS = "-DCOCOAPODS"; }; };
 		B98DC5FF7131C6ADA69908BECC3B0ED5 /* group_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 484C0DAF062723FC115B8CA6D98EA330 /* group_impl.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -639,7 +639,7 @@
 		10E3DB01195CE818A19B6295A85CEA15 /* WSEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WSEngine.swift; path = Sources/Engine/WSEngine.swift; sourceTree = "<group>"; };
 		121DE4F9BA2F45E86FAB752D44458459 /* AEAD.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AEAD.swift; path = Sources/CryptoSwift/AEAD/AEAD.swift; sourceTree = "<group>"; };
 		121E1810F3B56BB936D5F7502108145F /* TCPTransport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TCPTransport.swift; path = Sources/Transport/TCPTransport.swift; sourceTree = "<group>"; };
-		12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "web3swift-Browser"; path = Browser.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Browser.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		13496227FB43F1BF35981388CE14AD20 /* lax_der_privatekey_parsing.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = lax_der_privatekey_parsing.h; path = secp256k1/Classes/secp256k1/contrib/lax_der_privatekey_parsing.h; sourceTree = "<group>"; };
 		135149FC50115757876A74D3FDA9A843 /* ZeroPadding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZeroPadding.swift; path = Sources/CryptoSwift/ZeroPadding.swift; sourceTree = "<group>"; };
 		13E08EAABC62A6C068DB13BB200AB618 /* secp256k1.c-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "secp256k1.c-umbrella.h"; sourceTree = "<group>"; };
@@ -1660,7 +1660,7 @@
 				891B2270823847ED23F2ECFC28F935EC /* Starscream.framework */,
 				45D36C22C663F68DE8BD9F06AE7B7880 /* Web3Core */,
 				8A2449DF78D58AD33A7C7504BB3F38A0 /* web3swift */,
-				12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */,
+				12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */,
 				8F784AF26216512290BE91EB674BFEAB /* XDC3Swift */,
 			);
 			name = Products;
@@ -2232,7 +2232,7 @@
 			);
 			name = "web3swift-Browser";
 			productName = Browser;
-			productReference = 12DC6A0FDF284A2C935F5EA9F6111B0B /* web3swift-Browser */;
+			productReference = 12DC6A0FDF284A2C935F5EA9F6111B0B /* Browser.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		99313990C1D76A6D1D017868B6975CC8 /* CryptoSwift */ = {
@@ -2455,7 +2455,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8FD2EFDE51BBC2FF876782531861852 /* web3swift-Browser in Resources */,
+				B8FD2EFDE51BBC2FF876782531861852 /* Browser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3416,6 +3416,7 @@
 			baseConfigurationReference = A6E89B6F3FD33E0D4405659429C467A1 /* web3swift.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/web3swift";
+				DEVELOPMENT_TEAM = 4LU2RYBLDG;
 				IBSC_MODULE = web3swift;
 				INFOPLIST_FILE = "Target Support Files/web3swift/ResourceBundle-Browser-web3swift-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -3607,6 +3608,7 @@
 			baseConfigurationReference = AF4919FF4D0E2A54E6123C0C35689E87 /* web3swift.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/web3swift";
+				DEVELOPMENT_TEAM = 4LU2RYBLDG;
 				IBSC_MODULE = web3swift;
 				INFOPLIST_FILE = "Target Support Files/web3swift/ResourceBundle-Browser-web3swift-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

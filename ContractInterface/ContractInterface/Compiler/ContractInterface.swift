@@ -54,19 +54,19 @@ struct ContractInterface: View {
             }
         }.onAppear{
             print("currently running read function")
-            Task{
-                await web3Wallet.ReadDApp(abiString: abi,
-                                          ContractAddress: "0x8d71325b899658DD4470774789b016F98BA02309",
-                                          Function: "read",
-                                          param: [],
-                                          from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
-                
-                await web3Wallet.WriteDApp(abiString: abi,
-                                           ContractAddress: "0x8d71325b899658DD4470774789b016F98BA02309",
-                                           Function: "writeBool",
-                                           param: ["true"],
-                                           from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
-            }
+//            Task{
+//                await web3Wallet.ReadDApp(abiString: abi,
+//                                          ContractAddress: "0x8d71325b899658DD4470774789b016F98BA02309",
+//                                          Function: "read",
+//                                          param: [],
+//                                          from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+//                
+//                await web3Wallet.WriteDApp(abiString: abi,
+//                                           ContractAddress: "0x8d71325b899658DD4470774789b016F98BA02309",
+//                                           Function: "writeBool",
+//                                           param: ["true"],
+//                                           from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+//            }
         }
     }
     

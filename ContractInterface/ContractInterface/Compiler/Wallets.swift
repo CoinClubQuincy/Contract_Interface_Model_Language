@@ -61,51 +61,63 @@ class CoinPriceViewModel: ObservableObject {
     }
 }
 
-
-
-
 class Web3wallet: ObservableObject {
     
     @Published var walletTotal: BigUInt = 0
     var clientUrl:String = ""
 
     init() {
-        createWallet(seed: "1234")
+        var walletAddy  = createWallet(seed: "1234")
+        print("Addresses -- User")
+        print(walletAddy)
+        Task{
+            //await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+            await retrieveLocalAccounts()
+        }
     }
     
-    func checkAddresTxn(address:String) async{
+    //check
+    func checkAddresTxn(address:String) async ->([String],Int){
         let web3 = RPC()
         guard let transactionCount = try? await web3?.eth.getTransactionCount(for: EthereumAddress(from: address)!) else {
             print("txn count error")
-            return
+            return (["Error"],0)
         }
         print("transaction count \(transactionCount)")
         // Retrieve the details of each transaction
         for i in 0..<transactionCount {
             do {
                 let transaction = try await web3!.eth.transactionDetails(i.serialize())
+                print(transaction.transaction.description)
                 let next = try await web3!.eth.transactionReceipt(transaction.transaction.hash ?? Data())
                 print("see this")
-//                print(transaction.blockHash)
-//                print(transaction.blockNumber)
+                print(transaction.blockHash)
+                print(transaction.blockNumber)
             } catch {
                 print("Error getting transaction details: \(error)")
             }
         }
+        return ([""],Int(transactionCount))
     }
-    
-    func createWallet(seed:String){
-        let keystore = try! EthereumKeystoreV3(password: seed)
-        let keydata = try! JSONEncoder().encode(keystore?.keystoreParams)
-        let keystoreString = String(data: keydata, encoding: .utf8)
+    //check
+    func createWallet(seed: String) -> String {
+        do {
+            let keystore = try EthereumKeystoreV3(password: seed)
+            
+            let keydata = try! JSONEncoder().encode(keystore?.keystoreParams)
+            let keystoreString = String(data: keydata, encoding: .utf8)
 
-        print("Keystore: \(keystoreString!)")
+            print("Keystore: \(keystoreString!)")
 
-        let address = keystore?.addresses![0]
-        print("Address: \(address?.address)")
-        
+            let address = keystore?.addresses![0]
+            print("Address: \(address?.address)")
+            return address?.address ?? "Error"
+        } catch {
+            print("Error creating wallet: \(error)")
+            return ""
+        }
     }
-    
+
     func RPC(RPC:String = "http://127.0.0.1:8545") -> Web3? {
         var provider = MyWeb3Provider(url: URL(string: RPC)!)
         //var provider = URL(string: "http://localhost:8545") as! Web3Provider
@@ -121,17 +133,20 @@ class Web3wallet: ObservableObject {
         print("getBalance: \(balance)")
         return balance
     }
-    func retriveLocalAccounts()async -> [EthereumAddress] {
+    
+    func retrieveLocalAccounts() async -> [String] {
         do {
             let web3 = RPC()
             guard let accounts = try await web3?.eth.ownedAccounts() else { return [] }
-            return accounts
+            let addressesString = accounts.map { $0.address }
+            print(addressesString)
+            return addressesString
         } catch {
             print("Error getting accounts: \(error)")
         }
         return []
     }
-    
+
     func Send(from:String,value:BigUInt,to:String) async -> String{
         let web3 = RPC()
         let keystore = try! EthereumKeystoreV3("1234")
@@ -171,6 +186,7 @@ class Web3wallet: ObservableObject {
         }
         return "Error"
     }
+    
     func abiConverter(from string: String) -> String {
         let updatedString = string.replacingOccurrences(of: "@", with: "\"")
         return updatedString
