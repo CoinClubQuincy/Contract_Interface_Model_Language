@@ -67,10 +67,10 @@ class Web3wallet: ObservableObject {
     var clientUrl:String = ""
 
     init() {
-        var walletAddy  = createWallet(seed: "1234")
-        print("Addresses -- User")
-        print(walletAddy)
         Task{
+            var walletAddy  = createWallet(seed: "1234")
+            print("Addresses -- User")
+            print(walletAddy)
             //await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
             await retrieveLocalAccounts()
         }
@@ -110,6 +110,8 @@ class Web3wallet: ObservableObject {
             print("Keystore: \(keystoreString!)")
 
             let address = keystore?.addresses![0]
+            keystore?.isHDKeystore = true
+            keystore?.keystoreParams?.isHDWallet = true
             print("Address: \(address?.address)")
             return address?.address ?? "Error"
         } catch {
