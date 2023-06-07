@@ -2,60 +2,8 @@
 
 - ***<u>Contract Interface Model Language</u>*** - **(CIML)** is a UI File used for blokchain Dapps to compile their user interface within a mobile or web app on demand this json file follows a strict set of rules to allow for dynamic compiling of user interfaces into a multitude of devices which have adopted the framework.
 
-# CIML Syntax
-
-```txt
-CIML V1.0.1
-
-----Functions: 
-    //syntax: [functionNane()][DataType][execution type: x (exeecute) | view | payable]
 
 
-  - Map functions to objects on screen
-  - syntax: 
-          [funcName(uint,string)][newName -> (int)]
-
-  - List - orientation(H,V)
-          [H[for][array][ I -> (objects)]
-  
-  - Status 
-          [while][() -> ()]
-  - Sort
-    - [sort][A-Z][] (leters a-z,numbers 1-00) 
-
-
-----Variables: Store data to place in objects
-
-----Objects: any view generated on the screen
-
-  - Object Types: 
-      // syntax: [View][viewNumber][Background(.modifire)]
-    - [Text()]  |  [TextField()]
-        .frame()
-        .font()
-        .foregroundColor()
-        .background ()
-        .cornerRadius()
-
-    - [Image()]
-        - url()
-        -  SystemName:””
-
-    - [Button(label)][action]
-        - Actions:
-            - Toggle()
-            - Submit()
-            - SwitchView()
-            - dropdown(1,2,3)
-        - Labels:
-            - Image(systemName:””)
-            - Text()
-            - Toggle()
-            - Shape()
-
-    - View: [view][newView][1]
-        [View][Background.color(xxx)][type][name][][][][][][]
-```
 
 # CIML File
 
@@ -87,7 +35,6 @@ CIML V1.0.1
 # CIML DApplet Examples
 
 
-https://user-images.githubusercontent.com/16103963/211093918-f0fc30b7-7c66-4df2-af6a-849e6e2dcb1f.MOV
 
 
 
