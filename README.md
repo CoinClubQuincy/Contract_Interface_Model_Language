@@ -198,9 +198,3 @@
 
 
 ```
-
-#### Lucid Chart View CIML Items List:
-
-- https://lucid.app/lucidchart/bf04da8a-c07d-475b-a1d9-899715191f84/edit?invitationId=inv_049fcb1d-7182-4992-9b10-cd3a65113b85
-
-### **Version:CIML-1.0.1**
