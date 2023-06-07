@@ -3,8 +3,7 @@
 - ***<u>Contract Interface Model Language</u>*** - **(CIML)** is a UI File used for blokchain Dapps to compile their user interface within a mobile or web app on demand this json file follows a strict set of rules to allow for dynamic compiling of user interfaces into a multitude of devices which have adopted the framework.
 
 
-
-
+https://youtu.be/9Pho88SSpsU
 # CIML File
 
 ```json
