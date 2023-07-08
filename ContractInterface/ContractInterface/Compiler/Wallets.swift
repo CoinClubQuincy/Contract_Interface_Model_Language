@@ -65,9 +65,10 @@ class Web3wallet: ObservableObject {
     
     @Published var walletTotal: BigUInt = 0
     var clientUrl:String = ""
-
     init() {
         Task{
+            print("Start task")
+            print(parseNetworkInfo(symbol: "Ganache", network: .primary)?.2)
             var walletAddy  = createWallet(seed: "1234")
             print("Addresses -- User")
             print(walletAddy)
