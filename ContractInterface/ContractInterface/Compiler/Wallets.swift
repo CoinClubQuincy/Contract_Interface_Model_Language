@@ -46,12 +46,10 @@ class CoinPriceViewModel: ObservableObject {
 
     private var cancellable: AnyCancellable?
 
-    init() {
-        fetchPrice()
-    }
+    init() {}
 
-    func fetchPrice() {
-        cancellable = URLSession.shared.dataTaskPublisher(for: URL(string: "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd")!)
+    func fetchPrice(priceFeed:String) {
+        cancellable = URLSession.shared.dataTaskPublisher(for: URL(string: priceFeed)!)
             .map { $0.data }
             .decode(type: CoinPrice.self, decoder: JSONDecoder())
             .map { $0.xdceCrowdSale["usd"] ?? 0 }
@@ -67,8 +65,6 @@ class Web3wallet: ObservableObject {
     var clientUrl:String = ""
     init() {
         Task{
-            print("Start task")
-            print(parseNetworkInfo(symbol: "Ganache", network: .primary)?.2)
             var walletAddy  = createWallet(seed: "1234")
             print("Addresses -- User")
             print(walletAddy)
@@ -286,19 +282,17 @@ extension Wallets{
 
 //MARK: Wallets
 struct Wallets: View {
-    @State var isComplete:Bool = false
-    @State var isPassed:Bool = false
-    @State var sendto:String = ""
-    @State var sendAmount:String = ""
+    @State private var isComplete:Bool = false
+    @State private var isPassed:Bool = false
+    @State private var sendto:String = ""
+    @State private var sendAmount:String = ""
     @State var SendComplete:Bool = false
-    @State var fiatConvert:Int = 0
+    @State private var fiatConvert:Int = 0
     @State var developerMode:Bool = false
-    @State var faceID:Bool = false
-    @State var settingsPage:Bool = false
+    @State private var settingsPage:Bool = false
     
-    
-    @State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003" //this is the QRC data
-    @State var selectWalletView:Int = 0
+    @State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
+    @State private var selectWalletView:Int = 0
     
     @State var txnHash:String = ""
     
@@ -311,26 +305,29 @@ struct Wallets: View {
         var id: Self { self }
     }
 
-    @State private var selectedWallet: wallet = .wallet1
+    @State var selectedWallet:String = ""
+    @State var selectedNetwork:String = ""
+    @State private var isPresentingScanner = false
+    @State private var scannedCode: String = "Send To"
     
-    //@StateObject var web3 = Web3wallet()
-    
-    enum network: String, CaseIterable, Identifiable {
-        case xdc, eth
-        var id: Self { self }
-    }
-
-    @State private var selectedNetwork: network = .xdc
-    
-    @State var isPresentingScanner = false
-    @State var scannedCode: String = "Send To"
-    
-  
+    @State var networkSymbol:String = ""
+    @State var networkrpc:String = ""
+    @State var localAcounts:[String] = []
     //MARK: body
     var body: some View {
         ZStack{
             userWallet
+        }.onAppear{
+            if let (name, symbol, rpcPrimary, priceFeed) = parseNetworkInfo(symbol: "XDC", network: .primary) {
+                coinPriceViewModel.fetchPrice(priceFeed: priceFeed)
+                networkSymbol = symbol
+                networkrpc = rpcPrimary
             }
+            Task{
+                localAcounts =  await web3.retrieveLocalAccounts()
+                //currentWallet = localAcounts[0]
+            }
+        }
     }
     
     //MARK: userWallet
@@ -341,7 +338,7 @@ struct Wallets: View {
                 .scaledToFit()
                 .frame(width: 120)
             
-            Text("XDC")
+            Text(networkSymbol)
             Text(String(formatAndConvert(bigUint: web3.walletTotal)))
                 .font(.largeTitle)
                 .bold()
@@ -405,33 +402,44 @@ struct Wallets: View {
             }
     }
 }
+
     //MARK: list
     var list:some View{
         List{
             if(settingsPage){
-                Section("Network"){
-                    Picker("Network", selection: $selectedWallet) {
-                        Text("XDC").tag(network.xdc)
-                        Text("ETH").tag(network.eth)
+                Section(header: Text("Network")) {
+                    Picker("Network", selection: $selectedNetwork) {
+                        ForEach(extractNamesAndSymbols(jsonString: networkRPCs)?.symbols ?? [], id: \.self) { symbol in
+                            Text(symbol).tag(symbol)
+                        }
+                        .onChange(of: selectedNetwork) { newValue in
+                            if let (name, symbol, rpcPrimary, priceFeed) = parseNetworkInfo(symbol: newValue, network: .primary) {
+                                coinPriceViewModel.fetchPrice(priceFeed: priceFeed)
+                                networkSymbol = symbol
+                                networkrpc = rpcPrimary
+                            }
+                        }
                     }
-                    HStack{
+                    HStack {
                         Text("RPC:")
                         Spacer()
-                        Text("https://XinFin.Network/")
+                        Text(networkrpc)
                     }
-                    Toggle("Face ID", isOn: $faceID)
                     Toggle("Developer Mode", isOn: $developerMode)
-                    if(developerMode){
-                        
+                    if developerMode {
+
                     }
                 }
             } else {
                 Section("Wallet"){
-                    HStack{
+                    HStack {
                         Picker("Wallet", selection: $selectedWallet) {
-                            Text("Wallet A").tag(wallet.wallet1)
-                            Text("Wallet B").tag(wallet.wallet2)
-                            Text("Wallet C").tag(wallet.wallet3)
+                            ForEach(localAcounts, id: \.self) { account in
+                                Text(account).tag(account)
+                            }
+                        }
+                        .onChange(of: selectedWallet) { newValue in
+                            currentWallet = newValue
                         }
                     }
                     NavigationLink(destination: transactionHistory) {

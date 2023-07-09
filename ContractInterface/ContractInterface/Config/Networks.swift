@@ -21,6 +21,50 @@ enum NetworkRPC {
     case failover
     case testnet
 }
+/**
+ Extracts the names and symbols from a JSON string representing network RPC information.
+ - Parameters:
+    - jsonString: The JSON string containing the network RPC information.
+ - Returns:
+    A tuple containing two arrays: `names` and `symbols`. If the JSON string is successfully decoded and the necessary data is extracted, the function returns the tuple. Otherwise, it returns `nil`.
+ - Note:
+    The JSON string should follow a specific format with the following structure:
+    ```
+    [
+      {
+        "name": "Network Name",
+        "symbol": "Network Symbol",
+        "rpcPrimary": "Primary RPC URL",
+        "rpcFailover": "Failover RPC URL",
+        "rpcTestnet": "Testnet RPC URL",
+        "priceFeed": "Price Feed URL"
+      },
+      // ... (more network RPC information objects)
+    ]
+    ```
+    The `name` and `symbol` fields are mandatory for each network RPC information object.
+    - `name`: The name of the network.
+    - `symbol`: The symbol or ticker of the network.
+    - `rpcPrimary`: The primary RPC URL for the network.
+    - `rpcFailover`: The failover RPC URL for the network.
+    - `rpcTestnet`: The testnet RPC URL for the network.
+    - `priceFeed`: The URL for the price feed API of the network.
+*/
+func extractNamesAndSymbols(jsonString: String) -> (names: [String], symbols: [String])? {
+    guard let jsonData = jsonString.data(using: .utf8) else {
+        return nil
+    }
+    
+    do {
+        let networkRPCs = try JSONDecoder().decode([NetworkInfo].self, from: jsonData)
+        let names = networkRPCs.map { $0.name }
+        let symbols = networkRPCs.map { $0.symbol }
+        return (names, symbols)
+    } catch {
+        print("Error decoding JSON: \(error)")
+        return nil
+    }
+}
 
 /// Parses the network information JSON data and retrieves the RPC endpoints for the specified symbol and network type.
 /// - Parameters:
@@ -74,7 +118,7 @@ let networkRPCs = """
       },
       {
         "name": "Binance Smart Chain Mainnet",
-        "symbol": "",
+        "symbol": "BSB",
         "rpcPrimary": "https://bsc-dataseed.binance.org",
         "rpcFailover": "https://bsc-dataseed1.defibit.io",
         "rpcTestnet": "https://data-seed-prebsc-1-s1.binance.org:8545",
