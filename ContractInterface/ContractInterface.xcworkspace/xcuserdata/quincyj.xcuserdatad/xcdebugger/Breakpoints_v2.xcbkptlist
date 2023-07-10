@@ -636,5 +636,449 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/Wallets.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "checkAddresTxn(address:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - d3202746b9c1db4f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "328">
+               </Location>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - 22f18f5e718cf042"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) await resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - adf1deb11be81f4d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - f931c60a84b3c752"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "172">
+               </Location>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - d3202746b9c1db4f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "420">
+               </Location>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - adf1deb11be81f4d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "EBEE5ADC-0CE8-43CA-8A7E-4F5F5053D7B8 - f931c60a84b3c752"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "176">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/Wallets.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "checkAddresTxn(address:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - 7843499c7db35437"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "284">
+               </Location>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - f931c60a84b3c02e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "300">
+               </Location>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - adf1deb11be81831"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "796">
+               </Location>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - 7843499c7db35437"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "256">
+               </Location>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - 7843499c7db35437"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "276">
+               </Location>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - f931c60a84b3c02e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "272">
+               </Location>
+               <Location
+                  uuid = "4630CC39-DD10-4F95-818C-DEADE34337A1 - f931c60a84b3c02e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "292">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/Wallets.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "checkAddresTxn(address:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - 4e85156fc51465ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "2372">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - 19568c5a273ea1a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "2068">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - adf1deb11be819b5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "1520">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - c2aa822bac9ffbb2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "1996">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - 7843499c7db355b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "1328">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - f931c60a84b3c1aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "1344">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - 4e85156fc514658a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "2372">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - 19568c5a273ea188"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "2068">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - adf1deb11be81994"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "1520">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - c2aa822bac9ffb93"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(8) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "1996">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - 7843499c7db35592"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "1328">
+               </Location>
+               <Location
+                  uuid = "7F128D3B-2586-468D-9117-6DC3E57E82D8 - f931c60a84b3c18b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for ContractInterface.Web3wallet.checkAddresTxn(address: Swift.String) async -&gt; (Swift.Array&lt;Swift.String&gt;, Swift.Int)"
+                  moduleName = "ContractInterface"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/quincyj/Documents/GitHub/ContractInterface/ContractInterface/ContractInterface/Compiler/Wallets.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "1344">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

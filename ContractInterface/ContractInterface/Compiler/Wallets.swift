@@ -68,7 +68,7 @@ class Web3wallet: ObservableObject {
             var walletAddy  = createWallet(seed: "1234")
             print("Addresses -- User")
             print(walletAddy)
-            //await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+            await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
             await retrieveLocalAccounts()
         }
     }
@@ -85,7 +85,7 @@ class Web3wallet: ObservableObject {
         for i in 0..<transactionCount {
             do {
                 let transaction = try await web3!.eth.transactionDetails(i.serialize())
-                print(transaction.transaction.description)
+                print(transaction.transaction.description.base58EncodedString)
                 let next = try await web3!.eth.transactionReceipt(transaction.transaction.hash ?? Data())
                 print("see this")
                 print(transaction.blockHash)
@@ -94,6 +94,7 @@ class Web3wallet: ObservableObject {
                 print("Error getting transaction details: \(error)")
             }
         }
+        
         return ([""],Int(transactionCount))
     }
     //check
@@ -291,7 +292,8 @@ struct Wallets: View {
     @State var developerMode:Bool = false
     @State private var settingsPage:Bool = false
     
-    @State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
+    //@State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
+    @AppStorage("currentWallet") var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
     @State private var selectWalletView:Int = 0
     
     @State var txnHash:String = ""
@@ -334,10 +336,18 @@ struct Wallets: View {
     var userWallet: some View{
         VStack {
             if(selectWalletView != 2){
-            Circle()
-                .scaledToFit()
-                .frame(width: 120)
-            
+                ZStack{
+                    Circle()
+                        .foregroundColor(.clear)
+                        .scaledToFit()
+                        .frame(width: 120)
+                    
+                }.overlay{
+                    Image(networkSymbol)
+                        .resizable()
+                        .scaledToFit()
+                }
+               
             Text(networkSymbol)
             Text(String(formatAndConvert(bigUint: web3.walletTotal)))
                 .font(.largeTitle)
@@ -436,10 +446,15 @@ struct Wallets: View {
                         Picker("Wallet", selection: $selectedWallet) {
                             ForEach(localAcounts, id: \.self) { account in
                                 Text(account).tag(account)
+                                    .font(.caption)
                             }
                         }
                         .onChange(of: selectedWallet) { newValue in
+                            print("Test")
                             currentWallet = newValue
+                            Task{
+                                web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
+                            }
                         }
                     }
                     NavigationLink(destination: transactionHistory) {
