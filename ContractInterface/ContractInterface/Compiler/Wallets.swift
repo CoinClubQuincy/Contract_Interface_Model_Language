@@ -62,6 +62,7 @@ class CoinPriceViewModel: ObservableObject {
 class Web3wallet: ObservableObject {
     
     @Published var walletTotal: BigUInt = 0
+    @Published var rpc:String = "http://127.0.0.1:8545"
     var clientUrl:String = ""
     init() {
         Task{
@@ -72,10 +73,12 @@ class Web3wallet: ObservableObject {
             await retrieveLocalAccounts()
         }
     }
-    
+    func changeRPC(RPC:String){
+        rpc = RPC
+    }
     //check
     func checkAddresTxn(address:String) async ->([String],Int){
-        let web3 = RPC()
+        let web3 = RPC(RPC: rpc)
         guard let transactionCount = try? await web3?.eth.getTransactionCount(for: EthereumAddress(from: address)!) else {
             print("txn count error")
             return (["Error"],0)
@@ -127,7 +130,7 @@ class Web3wallet: ObservableObject {
     }
     
     func getBalanceTotal(address: String) async -> BigUInt{
-        let web3 = RPC()
+        let web3 = RPC(RPC: rpc)
         guard let address = EthereumAddress(address) else { return 0 }
         guard let balance = try! await web3?.eth.getBalance(for: address) else { return 0 }
         print("getBalance: \(balance)")
@@ -136,7 +139,7 @@ class Web3wallet: ObservableObject {
     
     func retrieveLocalAccounts() async -> [String] {
         do {
-            let web3 = RPC()
+            let web3 = RPC(RPC: rpc)
             guard let accounts = try await web3?.eth.ownedAccounts() else { return [] }
             let addressesString = accounts.map { $0.address }
             print(addressesString)
@@ -148,7 +151,7 @@ class Web3wallet: ObservableObject {
     }
 
     func Send(from:String,value:BigUInt,to:String) async -> String{
-        let web3 = RPC()
+        let web3 = RPC(RPC: rpc)
         let keystore = try! EthereumKeystoreV3("1234")
         let wallet = try keystore?.addresses
         
@@ -193,7 +196,7 @@ class Web3wallet: ObservableObject {
     }
     
     func ReadDApp(abiString:String,ContractAddress:String,Function:String,param:[String],from:String) async -> String{
-        let web3 = RPC()!
+        let web3 = RPC(RPC: rpc)!
         let contractAddress = EthereumAddress(ContractAddress, type: .normal)
         let keystore = try! EthereumAddress(from, type: .normal)
         var AbiString = abiConverter(from: abiString)
@@ -221,7 +224,7 @@ class Web3wallet: ObservableObject {
     }
 
     func WriteDApp(abiString:String,ContractAddress:String,Function:String,param:[String],from:String) async -> String{
-        let web3 = RPC()!
+        let web3 = RPC(RPC: rpc)!
         let contractAddress = EthereumAddress(ContractAddress, type: .normal)
         let keystore = try! EthereumAddress(from, type: .normal)
         var AbiString = abiConverter(from: abiString)
@@ -301,11 +304,6 @@ struct Wallets: View {
     @StateObject var web3 = Web3wallet()
     
     @ObservedObject private var coinPriceViewModel = CoinPriceViewModel()
-    
-    enum wallet: String, CaseIterable, Identifiable {
-        case wallet1, wallet2, wallet3, wallet4
-        var id: Self { self }
-    }
 
     @State var selectedWallet:String = ""
     @State var selectedNetwork:String = ""
@@ -324,6 +322,7 @@ struct Wallets: View {
                 coinPriceViewModel.fetchPrice(priceFeed: priceFeed)
                 networkSymbol = symbol
                 networkrpc = rpcPrimary
+                web3.rpc = rpcPrimary
             }
             Task{
                 localAcounts =  await web3.retrieveLocalAccounts()
@@ -427,6 +426,14 @@ struct Wallets: View {
                                 coinPriceViewModel.fetchPrice(priceFeed: priceFeed)
                                 networkSymbol = symbol
                                 networkrpc = rpcPrimary
+                                web3.changeRPC(RPC: rpcPrimary)
+                                print("RPC")
+                                print(rpcPrimary)
+                                print(web3.rpc)
+                                Task{
+                                    web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
+                                    localAcounts =  await web3.retrieveLocalAccounts()
+                                }
                             }
                         }
                     }
@@ -454,6 +461,7 @@ struct Wallets: View {
                             currentWallet = newValue
                             Task{
                                 web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
+
                             }
                         }
                     }
@@ -688,7 +696,7 @@ struct Wallets: View {
     
     func showAddresses() async{
         do {
-            let web3 = web3.RPC()
+            let web3 = web3.RPC(RPC: web3.rpc)
             let accounts = try await web3?.eth.ownedAccounts()
             for account in accounts! {
                 print(account.address)
