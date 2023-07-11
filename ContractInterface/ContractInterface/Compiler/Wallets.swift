@@ -292,7 +292,7 @@ struct Wallets: View {
     @State private var sendAmount:String = ""
     @State var SendComplete:Bool = false
     @State private var fiatConvert:Int = 0
-    @State var developerMode:Bool = false
+    @AppStorage("developerMode") var developerMode:Bool = false
     @State private var settingsPage:Bool = false
     
     //@State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
@@ -310,15 +310,15 @@ struct Wallets: View {
     @State private var isPresentingScanner = false
     @State private var scannedCode: String = "Send To"
     
-    @State var networkSymbol:String = ""
-    @State var networkrpc:String = ""
+    @AppStorage("networkSymbol")  var networkSymbol:String = "XDC"
+    @AppStorage("networkrpc") var networkrpc:String = ""
     @State var localAcounts:[String] = []
     //MARK: body
     var body: some View {
         ZStack{
             userWallet
         }.onAppear{
-            if let (name, symbol, rpcPrimary, priceFeed) = parseNetworkInfo(symbol: "XDC", network: .primary) {
+            if let (name, symbol, rpcPrimary, priceFeed) = parseNetworkInfo(symbol: networkSymbol, network: .primary) {
                 coinPriceViewModel.fetchPrice(priceFeed: priceFeed)
                 networkSymbol = symbol
                 networkrpc = rpcPrimary
@@ -444,7 +444,7 @@ struct Wallets: View {
                     }
                     Toggle("Developer Mode", isOn: $developerMode)
                     if developerMode {
-
+                        
                     }
                 }
             } else {
