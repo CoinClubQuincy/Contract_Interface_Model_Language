@@ -254,7 +254,6 @@ class Web3wallet: ObservableObject {
     }
 }
 
-
 //MARK: All_Wallets
 struct All_Wallets:Identifiable{
     let id: String = UUID().uuidString
@@ -270,7 +269,7 @@ extension Wallets{
     func formatAndConvert(bigUint: BigUInt) -> Double {
         let formattedString = String(bigUint / BigUInt(1e18)) + "." + String(bigUint % BigUInt(1e18))
         let double = Double(formattedString)
-        let truncatedDouble = Double(String(format: "%.3f", double!))
+        let truncatedDouble = Double(String(format: "%.4f", double!))
         return truncatedDouble!
     }
     //Double -> BigUInt
@@ -290,29 +289,29 @@ struct Wallets: View {
     @State private var isPassed:Bool = false
     @State private var sendto:String = ""
     @State private var sendAmount:String = ""
-    @State var SendComplete:Bool = false
+    @State private var SendComplete:Bool = false
     @State private var fiatConvert:Int = 0
-    @AppStorage("developerMode") var developerMode:Bool = false
+    @AppStorage("developerMode") private var developerMode:Bool = false
     @State private var settingsPage:Bool = false
     
     //@State var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
-    @AppStorage("currentWallet") var currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
+    @AppStorage("currentWallet") var currentWallet = ""
     @State private var selectWalletView:Int = 0
     
-    @State var txnHash:String = ""
+    @State private var txnHash:String = ""
     
     @StateObject var web3 = Web3wallet()
     
     @ObservedObject private var coinPriceViewModel = CoinPriceViewModel()
 
-    @State var selectedWallet:String = ""
-    @State var selectedNetwork:String = ""
+    @State private var selectedWallet:String = ""
+    @State private var selectedNetwork:String = ""
     @State private var isPresentingScanner = false
     @State private var scannedCode: String = "Send To"
     
-    @AppStorage("networkSymbol")  var networkSymbol:String = "XDC"
-    @AppStorage("networkrpc") var networkrpc:String = ""
-    @State var localAcounts:[String] = []
+    @State var networkSymbol:String
+    @AppStorage("networkrpc") private var networkrpc:String = ""
+    @State private var localAcounts:[String] = []
     //MARK: body
     var body: some View {
         ZStack{
@@ -326,7 +325,12 @@ struct Wallets: View {
             }
             Task{
                 localAcounts =  await web3.retrieveLocalAccounts()
-                //currentWallet = localAcounts[0]
+                if localAcounts.count != 0{
+                    currentWallet = localAcounts[0]
+                    web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
+                }else {
+                    currentWallet = "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"
+                }
             }
         }
     }
@@ -431,8 +435,9 @@ struct Wallets: View {
                                 print(rpcPrimary)
                                 print(web3.rpc)
                                 Task{
-                                    web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
                                     localAcounts =  await web3.retrieveLocalAccounts()
+                                    currentWallet = localAcounts[0]
+                                    web3.walletTotal = await web3.getBalanceTotal(address: currentWallet)
                                 }
                             }
                         }

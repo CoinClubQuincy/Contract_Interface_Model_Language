@@ -59,7 +59,7 @@ class ContractModel: ObservableObject{ //Build Settings
     @Published var commit: Int = 0
     
     var web3Wallet = Web3wallet()
-    var CIMLWallet = Wallets()
+    var CIMLWallet = Wallets(networkSymbol: "XDC")
     
     var cancellables = Set<AnyCancellable>()
     init(){
@@ -791,7 +791,7 @@ struct BUTTONS:View{
     @StateObject var contractInterface:ContractModel
     @StateObject var web3 = Web3wallet()
     @StateObject var controller = ButtonController()
-    var CIMLwallet = Wallets()
+    var CIMLwallet = Wallets(networkSymbol: "XDC")
     var overlay: Overlay
     var type:[String]
     var value:[String]

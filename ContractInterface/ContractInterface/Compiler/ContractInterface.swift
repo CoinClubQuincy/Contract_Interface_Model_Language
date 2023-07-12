@@ -97,7 +97,7 @@ struct ContractInterface: View {
                         ,
                         trailing:
                             NavigationLink(
-                                destination: Wallets()
+                                destination: Wallets(networkSymbol: "XDC")
                                 .navigationTitle("Wallet")
                                 ,label: {
                                     Image(systemName: "wallet.pass.fill")

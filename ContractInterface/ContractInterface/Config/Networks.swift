@@ -117,30 +117,6 @@ let networkRPCs = """
         "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
       },
       {
-        "name": "Binance Smart Chain Mainnet",
-        "symbol": "BSB",
-        "rpcPrimary": "https://bsc-dataseed.binance.org",
-        "rpcFailover": "https://bsc-dataseed1.defibit.io",
-        "rpcTestnet": "https://data-seed-prebsc-1-s1.binance.org:8545",
-        "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
-      },
-      {
-        "name": "Polygon Mainnet",
-        "symbol": "MATIC",
-        "rpcPrimary": "https://rpc-mainnet.maticvigil.com",
-        "rpcFailover": "https://polygon-rpc.com",
-        "rpcTestnet": "https://rpc-mumbai.matic.today",
-        "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
-      },
-      {
-        "name": "Ethereum Classic Mainnet",
-        "symbol": "ETC",
-        "rpcPrimary": "https://ethereumclassic.network",
-        "rpcFailover": "https://ethereumclassic.network",
-        "rpcTestnet": "https://kotti.ethereumclassic.network",
-        "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
-      },
-      {
         "name": "Ganache",
         "symbol": "Ganache",
         "rpcPrimary": "HTTP://127.0.0.1:8545",
@@ -150,3 +126,28 @@ let networkRPCs = """
       }
     ]
 """
+
+//{
+//  "name": "Binance Smart Chain Mainnet",
+//  "symbol": "BSB",
+//  "rpcPrimary": "https://bsc-dataseed.binance.org",
+//  "rpcFailover": "https://bsc-dataseed1.defibit.io",
+//  "rpcTestnet": "https://data-seed-prebsc-1-s1.binance.org:8545",
+//  "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
+//},
+//{
+//  "name": "Polygon Mainnet",
+//  "symbol": "MATIC",
+//  "rpcPrimary": "https://rpc-mainnet.maticvigil.com",
+//  "rpcFailover": "https://polygon-rpc.com",
+//  "rpcTestnet": "https://rpc-mumbai.matic.today",
+//  "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
+//},
+//{
+//  "name": "Ethereum Classic Mainnet",
+//  "symbol": "ETC",
+//  "rpcPrimary": "https://ethereumclassic.network",
+//  "rpcFailover": "https://ethereumclassic.network",
+//  "rpcTestnet": "https://kotti.ethereumclassic.network",
+//  "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
+//},
