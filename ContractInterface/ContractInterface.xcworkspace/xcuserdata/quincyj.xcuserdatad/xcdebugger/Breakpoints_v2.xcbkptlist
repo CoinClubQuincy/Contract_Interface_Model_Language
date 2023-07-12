@@ -646,8 +646,8 @@
             filePath = "ContractInterface/Compiler/Wallets.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "checkAddresTxn(address:)"
             landmarkType = "7">
             <Locations>
@@ -769,8 +769,8 @@
             filePath = "ContractInterface/Compiler/Wallets.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "checkAddresTxn(address:)"
             landmarkType = "7">
             <Locations>
@@ -892,8 +892,8 @@
             filePath = "ContractInterface/Compiler/Wallets.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "checkAddresTxn(address:)"
             landmarkType = "7">
             <Locations>
@@ -1078,6 +1078,22 @@
                   offsetFromSymbolStart = "1344">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1DA51780-AF6E-4CA6-BBAA-768559FB998F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ContractInterface/Compiler/Wallets.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "XRC20abi"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

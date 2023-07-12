@@ -62,19 +62,146 @@ class CoinPriceViewModel: ObservableObject {
 class Web3wallet: ObservableObject {
     
     @Published var walletTotal: BigUInt = 0
-    @Published var rpc:String = "http://127.0.0.1:8545"
+    @State var rpc:String = "http://127.0.0.1:8545"
     var clientUrl:String = ""
     init() {
         Task{
             var walletAddy  = createWallet(seed: "1234")
             print("Addresses -- User")
-            print(walletAddy)
-            await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
-            await retrieveLocalAccounts()
+//            print(walletAddy)
+//            //print(await Send(from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003", value: 10, to: "0xCc3ec4D393e9879786aF9F213098b88893A0beA8"))
+//            print( await nameXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
+//            print( await symbolXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
+//            print( await balanceXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
+//            await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+//            await retrieveLocalAccounts()
         }
     }
+    var XRC20abi:String = """
+[
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalSupply",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "name": "balance",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "_to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  }
+]
+
+"""
     func changeRPC(RPC:String){
         rpc = RPC
+    }
+    func sendXRC20(contractAddress:String,from:String,value:BigInt,to:String) async{
+        await WriteDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "transfer", param: [to,String(value)], from: from)
+    }
+    func balanceXRC20(contractAddress:String,address:String) async{
+        await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "balanceOf", param: [address], from: address)
+    }
+    func nameXRC20(contractAddress:String,address:String) async{
+        await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "name", param: [], from: address)
+    }
+    func symbolXRC20(contractAddress:String,address:String) async{
+        await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "symbol", param: [], from: address)
     }
     //check
     func checkAddresTxn(address:String) async ->([String],Int){
@@ -167,7 +294,7 @@ class Web3wallet: ObservableObject {
         //let nonce = try await web3?.eth.getTransactionCount(for: EthereumAddress(from, type: .normal) ?? <#default value#>)
         if let address = EthereumAddress(from, type: .normal) {
             let nonce = try! await web3?.eth.getTransactionCount(for: address)
-            transaction.nonce = nonce ?? 0
+                transaction.nonce = nonce ?? 0
         } else {
             transaction.nonce = 0
             print("Failed to get nonce")
