@@ -62,7 +62,7 @@ class CoinPriceViewModel: ObservableObject {
 class Web3wallet: ObservableObject {
     
     @Published var walletTotal: BigUInt = 0
-    @State var rpc:String = "http://127.0.0.1:8545"
+    @Published var rpc:String = "http://127.0.0.1:8545"
     var clientUrl:String = ""
     init() {
         Task{
