@@ -436,7 +436,7 @@ struct Wallets: View {
     @State private var isPresentingScanner = false
     @State private var scannedCode: String = "Send To"
     
-    @State var networkSymbol:String
+    @AppStorage("networkSymbol")  var networkSymbol:String = "XDC"
     @AppStorage("networkrpc") private var networkrpc:String = ""
     @State private var localAcounts:[String] = []
     //MARK: body
@@ -602,7 +602,7 @@ struct Wallets: View {
                     }
                 }
                 Section("Tokens"){
-                    HStack{
+                    VStack{
                         switch networkSymbol{
                         case "XDC":
                             ForEach(xdcNetworkContracts, id: \.self) { contract in
@@ -907,22 +907,30 @@ struct ContractRow: View {
     let contract: String
     @State private var contractName: String = "Loading..."
     @State private var contractAmount: String = "Loading..."
+    @State private var contractSymbol: String = "Loading..."
     @StateObject var web3 = Web3wallet()
     var wallets = Wallets(networkSymbol: "XDC")
     var body: some View {
         HStack {
             Circle()
                 .frame(width: 30)
-            Text(contractName)
-            Text(contractAmount)
+            VStack(alignment: .leading){
+                Text(contractSymbol)
+                    .font(.headline)
+                Text(contractName)
+                    .font(.caption)
+            }
             Spacer()
+            Text(contractAmount)
         }
         .onAppear {
             Task {
                 let name = try await contractName(contract: contract)
                 let amount = try await contractTokenAmount(contract: contract)
+                let symbol = try await contractSymbol(contract: contract)
                 contractName = name
                 contractAmount = amount
+                contractSymbol = symbol
             }
         }
     }
@@ -935,6 +943,11 @@ struct ContractRow: View {
     func contractTokenAmount(contract: String) async -> String {
         var result = "Text"
         result = await web3.balanceXRC20(contractAddress: contract, address: wallets.currentWallet)
+        return result
+    }
+    func contractSymbol(contract: String) async -> String {
+        var result = "Text"
+        result = await web3.symbolXRC20(contractAddress: contract, address: wallets.currentWallet)
         return result
     }
 }

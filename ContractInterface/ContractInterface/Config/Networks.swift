@@ -98,7 +98,7 @@ func parseNetworkInfo(symbol: String, network: NetworkRPC) -> (String, String, S
 }
 
 let xdcNetworkContracts:[String] = []
-let ganachehNetworkContracts:[String] = ["0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b"]
+let ganachehNetworkContracts:[String] = ["0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b","0x078c1ed4ff59C60D80e0dd908aDeaA8095D8EcF5"]
 // JSON data containing the network information
 let networkRPCs = """
     [
