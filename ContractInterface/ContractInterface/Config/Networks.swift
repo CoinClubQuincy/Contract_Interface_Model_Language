@@ -97,6 +97,8 @@ func parseNetworkInfo(symbol: String, network: NetworkRPC) -> (String, String, S
     return nil
 }
 
+let xdcNetworkContracts:[String] = []
+let ganachehNetworkContracts:[String] = ["0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b"]
 // JSON data containing the network information
 let networkRPCs = """
     [
@@ -109,14 +111,6 @@ let networkRPCs = """
         "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
       },
       {
-        "name": "ETH",
-        "symbol": "ETH",
-        "rpcPrimary": "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID",
-        "rpcFailover": "https://eth-mainnet.alchemyapi.io/v2/YOUR_ALCHEMY_API_KEY",
-        "rpcTestnet": "https://ropsten.infura.io/v3/YOUR_INFURA_PROJECT_ID",
-        "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
-      },
-      {
         "name": "Ganache",
         "symbol": "Ganache",
         "rpcPrimary": "HTTP://127.0.0.1:8545",
@@ -126,6 +120,8 @@ let networkRPCs = """
       }
     ]
 """
+
+
 
 //{
 //  "name": "Binance Smart Chain Mainnet",
@@ -149,5 +145,13 @@ let networkRPCs = """
 //  "rpcPrimary": "https://ethereumclassic.network",
 //  "rpcFailover": "https://ethereumclassic.network",
 //  "rpcTestnet": "https://kotti.ethereumclassic.network",
+//  "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
+//},
+//{
+//  "name": "ETH",
+//  "symbol": "ETH",
+//  "rpcPrimary": "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID",
+//  "rpcFailover": "https://eth-mainnet.alchemyapi.io/v2/YOUR_ALCHEMY_API_KEY",
+//  "rpcTestnet": "https://ropsten.infura.io/v3/YOUR_INFURA_PROJECT_ID",
 //  "priceFeed": "https://api.coingecko.com/api/v3/simple/price?ids=xdce-crowd-sale&vs_currencies=usd"
 //},

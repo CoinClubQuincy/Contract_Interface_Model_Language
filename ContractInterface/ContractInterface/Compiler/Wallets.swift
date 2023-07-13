@@ -70,10 +70,10 @@ class Web3wallet: ObservableObject {
             print("Addresses -- User")
 //            print(walletAddy)
 //            //print(await Send(from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003", value: 10, to: "0xCc3ec4D393e9879786aF9F213098b88893A0beA8"))
-//            print( await nameXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
+            //print( await nameXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
 //            print( await symbolXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
 //            print( await balanceXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
-//            await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
+            await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
 //            await retrieveLocalAccounts()
         }
     }
@@ -194,14 +194,14 @@ class Web3wallet: ObservableObject {
     func sendXRC20(contractAddress:String,from:String,value:BigInt,to:String) async{
         await WriteDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "transfer", param: [to,String(value)], from: from)
     }
-    func balanceXRC20(contractAddress:String,address:String) async{
-        await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "balanceOf", param: [address], from: address)
+    func balanceXRC20(contractAddress:String,address:String) async ->String{
+        return await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "balanceOf", param: [address], from: address)
     }
-    func nameXRC20(contractAddress:String,address:String) async{
-        await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "name", param: [], from: address)
+    func nameXRC20(contractAddress:String,address:String) async ->String{
+        return await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "name", param: [], from: address)
     }
-    func symbolXRC20(contractAddress:String,address:String) async{
-        await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "symbol", param: [], from: address)
+    func symbolXRC20(contractAddress:String,address:String) async ->String{
+        return await ReadDApp(abiString: XRC20abi, ContractAddress: contractAddress, Function: "symbol", param: [], from: address)
     }
     //check
     func checkAddresTxn(address:String) async ->([String],Int){
@@ -603,19 +603,29 @@ struct Wallets: View {
                 }
                 Section("Tokens"){
                     HStack{
-                        HStack {
-                            Circle()
-                                .frame(width: 30)
-                            Text("PLI")
-                            Text("150,340")
-                            Spacer()
-                            Text("$243.43")
+                        switch networkSymbol{
+                        case "XDC":
+                            ForEach(xdcNetworkContracts, id: \.self) { contract in
+                                ContractRow(contract: contract)
+                            }
+                        case "Ganache":
+                            ForEach(ganachehNetworkContracts, id: \.self) { contract in
+                                ContractRow(contract: contract)
+                            }
+                        default:
+                            ForEach(xdcNetworkContracts, id: \.self) { contract in
+                                ContractRow(contract: contract)
+                            }
                         }
                     }
+                }
+                .onAppear{
+                    
                 }
             }
         }.listStyle(.grouped)
     }
+
     
     var changeSettings: some View{
         Button(action: {
@@ -893,3 +903,38 @@ struct ListItem: View{
     }
 }
 
+struct ContractRow: View {
+    let contract: String
+    @State private var contractName: String = "Loading..."
+    @State private var contractAmount: String = "Loading..."
+    @StateObject var web3 = Web3wallet()
+    var wallets = Wallets(networkSymbol: "XDC")
+    var body: some View {
+        HStack {
+            Circle()
+                .frame(width: 30)
+            Text(contractName)
+            Text(contractAmount)
+            Spacer()
+        }
+        .onAppear {
+            Task {
+                let name = try await contractName(contract: contract)
+                let amount = try await contractTokenAmount(contract: contract)
+                contractName = name
+                contractAmount = amount
+            }
+        }
+    }
+    
+    func contractName(contract: String) async -> String {
+        var result = "Text"
+        result = await web3.nameXRC20(contractAddress: contract, address: wallets.currentWallet)
+        return result
+    }
+    func contractTokenAmount(contract: String) async -> String {
+        var result = "Text"
+        result = await web3.balanceXRC20(contractAddress: contract, address: wallets.currentWallet)
+        return result
+    }
+}
