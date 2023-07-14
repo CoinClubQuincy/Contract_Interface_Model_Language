@@ -68,126 +68,8 @@ class Web3wallet: ObservableObject {
         Task{
             var walletAddy  = createWallet(seed: "1234")
             print("Addresses -- User")
-//            print(walletAddy)
-//            //print(await Send(from: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003", value: 10, to: "0xCc3ec4D393e9879786aF9F213098b88893A0beA8"))
-            //print( await nameXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
-//            print( await symbolXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
-//            print( await balanceXRC20(contractAddress: "0x8fBf99110408C29d0E2fe19B58B39b2078b6B87b", address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003"))
-            await checkAddresTxn(address: "0xD69B4e5e5A7D5913Ca2d462810592fcd22F6E003")
-//            await retrieveLocalAccounts()
         }
     }
-    var XRC20abi:String = """
-[
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "name",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "symbol",
-    "outputs": [
-      {
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "totalSupply",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "name": "balance",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "transfer",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "name": "_from",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "name": "_to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "name": "_value",
-        "type": "uint256"
-      }
-    ],
-    "name": "Transfer",
-    "type": "event"
-  }
-]
-
-"""
     func changeRPC(RPC:String){
         rpc = RPC
     }
@@ -214,6 +96,7 @@ class Web3wallet: ObservableObject {
         // Retrieve the details of each transaction
         for i in 0..<transactionCount {
             do {
+                
                 let transaction = try await web3!.eth.transactionDetails(i.serialize())
                 print(transaction.transaction.description.base58EncodedString)
                 let next = try await web3!.eth.transactionReceipt(transaction.transaction.hash ?? Data())
@@ -700,10 +583,9 @@ struct Wallets: View {
             switch SendComplete {
             case true:
                 List{
-                    
                     Section("Transaction"){
                         //Refactor into struct!!!!!!!!!
-                        ListItem(leftItem: "Network:", rightItem: "XDC")
+                        ListItem(leftItem: "Network:", rightItem: networkSymbol)
                         ListItem(leftItem: "Txn Hash::", rightItem: txnHash)
                         ListItem(leftItem: "To:", rightItem: sendto)
                         ListItem(leftItem: "From:", rightItem: currentWallet)
@@ -902,6 +784,22 @@ struct ListItem: View{
         }
     }
 }
+
+extension Web3wallet {
+    var XRC20abi: String {
+        return """
+        [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"}]
+        """
+    }
+    
+    var XRC1155abi: String {
+        return """
+        [{"constant":false,"inputs":[{"name":"_initialSupply","type":"uint256"},{"name":"_uri","type":"string"}],"name":"create","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_tokenId","type":"uint256"},{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_tokenId","type":"uint256"},{"name":"_amount","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_operator","type":"address"},{"name":"_approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_operator","type":"address"}],"name":"isApprovedOrOwner","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_tokenId","type":"uint256"},{"name":"_amount","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"mint","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_tokenId","type":"uint256"}],"name":"uri","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_tokenIds","type":"uint256[]"},{"name":"_amounts","type":"uint256[]"},{"name":"_data","type":"bytes"}],"name":"safeBatchTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_tokenId","type":"uint256"},{"name":"_account","type":"address"},{"name":"_amount","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_operator","type":"address"},{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_id","type":"uint256"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"TransferSingle","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_operator","type":"address"},{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_ids","type":"uint256[]"},{"indexed":false,"name":"_values","type":"uint256[]"}],"name":"TransferBatch","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_operator","type":"address"},{"indexed":false,"name":"_approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_operator","type":"address"},{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_ids","type":"uint256[]"},{"indexed":false,"name":"_values","type":"uint256[]"},{"indexed":false,"name":"_data","type":"bytes"}],"name":"Received","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_operator","type":"address"},{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_ids","type":"uint256[]"},{"indexed":false,"name":"_values","type":"uint256[]"},{"indexed":false,"name":"_data","type":"bytes"}],"name":"Sent","type":"event"}]
+        """
+    }
+}
+
+
 
 struct ContractRow: View {
     let contract: String
