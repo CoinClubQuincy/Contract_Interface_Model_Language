@@ -18,7 +18,7 @@ PODS:
     - secp256k1.swift (~> 0.1.0)
 
 DEPENDENCIES:
-  - web3swift (~> 3.0)
+  - web3swift (~> 3.1.2)
   - XDC3Swift
 
 SPEC REPOS:
@@ -44,6 +44,6 @@ SPEC CHECKSUMS:
   web3swift: 8496f6615c3a1f86e7c9e5fe16c5422ef181527b
   XDC3Swift: 0aa3113aaec116ee27bc7dd3b86fb9064aa09efe
 
-PODFILE CHECKSUM: 492868ea25d5c3244327039aa8766cf05fcddafc
+PODFILE CHECKSUM: 74a2b2201ad5969095ef8fe45fb1c3156a918007
 
 COCOAPODS: 1.11.3
