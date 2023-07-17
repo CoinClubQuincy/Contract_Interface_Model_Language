@@ -68,6 +68,12 @@ class Web3wallet: ObservableObject {
         Task{
             var walletAddy  = createWallet(seed: "1234")
             print("Addresses -- User")
+            let seed = "my-secret-seed"
+
+            print("Addresses -- User")
+            print(createWallet(seed: seed))
+            print(createWallet(seed: seed))
+            showAddresses()
         }
     }
     func changeRPC(RPC:String){
@@ -118,16 +124,26 @@ class Web3wallet: ObservableObject {
             let keydata = try! JSONEncoder().encode(keystore?.keystoreParams)
             let keystoreString = String(data: keydata, encoding: .utf8)
 
-            print("Keystore: \(keystoreString!)")
+            //print("Keystore: \(keystoreString!)")
 
             let address = keystore?.addresses![0]
             keystore?.isHDKeystore = true
-            keystore?.keystoreParams?.isHDWallet = true
-            print("Address: \(address?.address)")
+            keystore?.keystoreParams?.isHDWallet = false
+            //print("Address: \(address?.address)")
+            print("Address: \(keystore?.addresses)")
             return address?.address ?? "Error"
         } catch {
             print("Error creating wallet: \(error)")
-            return ""
+            return "Error creating wallet:"
+        }
+    }
+    
+    
+    func showAddresses() {
+        let keystore = EthereumKeystoreV3("1234")
+        let addresses = keystore?.addresses ?? []
+        for address in addresses {
+            print("Address: \(address.address)")
         }
     }
 
