@@ -1,6 +1,11 @@
 # Uncomment the next line to define a global platform for your project
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '16.0'
+
+name: CIML
+source 'https://github.com/CoinClubQuincy/Contract_Interface_Model_Language'
+platform: ios, macos
+dependencies:
+  - web3swift
+  - XDC3Swift
 
 target 'ContractInterface' do
   use_frameworks!
