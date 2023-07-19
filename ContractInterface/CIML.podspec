@@ -81,7 +81,8 @@ source 'https://github.com/goinstant/pods-specs-public'
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/CoinClubQuincy/CIML'", :tag => "#{spec.version}" }
+  spec.source = { :git => "https://github.com/CoinClubQuincy/CIML", :tag => "#{spec.version}" }
+
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
