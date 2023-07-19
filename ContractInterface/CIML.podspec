@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "Contract_Interface_Model_Language"
+  spec.name         = "CIML"
   spec.version      = "0.0.1"
   spec.summary      = "CIML - is built to allow Smart contract Developers to be able to launch dynamic UI's for their smart contracts on multiple devices with minimal effort and with a powerful result. CIML Aims to be the Standard for Smart Contract UI code Development for Mobile application development."
 
@@ -78,7 +78,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/CoinClubQuincy/Contract_Interface_Model_Language", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/CoinClubQuincy/CIML'", :tag => "#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
