@@ -15,6 +15,9 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/goinstant/pods-specs-public'
+
   spec.name         = "CIML"
   spec.version      = "0.0.1"
   spec.summary      = "CIML - is built to allow Smart contract Developers to be able to launch dynamic UI's for their smart contracts on multiple devices with minimal effort and with a powerful result. CIML Aims to be the Standard for Smart Contract UI code Development for Mobile application development."
@@ -115,8 +118,8 @@ Pod::Spec.new do |spec|
   #  the lib prefix of their name.
   #
 
-  spec.framework  = "Contract_Interface_Model_Language"
-  spec.frameworks = "Contract_Interface_Model_Language", "web3swift", "XDC3Swift"
+  spec.framework  = "CIML"
+  spec.frameworks = "CIML", "web3swift", "XDC3Swift"
 
   # spec.library   = "iconv"
   # spec.libraries = "iconv", "xml2"
