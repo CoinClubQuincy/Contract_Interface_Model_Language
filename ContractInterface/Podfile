@@ -1,7 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 
 name: CIML
-source 'https://github.com/CoinClubQuincy/Contract_Interface_Model_Language'
+source 'https://github.com/CoinClubQuincy/CIML'
 platform: ios, macos
 dependencies:
   - web3swift
