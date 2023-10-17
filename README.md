@@ -4,6 +4,137 @@
 
 
 https://youtu.be/9Pho88SSpsU
+
+## Table of Contents
+- [Video Demonstration](#video-demonstration)
+- [What is CIML](#what-is-ciml)
+- [Why I created CIML](#why-i-created-ciml)
+- [CIML Consists of 2 Parts](#ciml-consists-of-2-parts)
+- [Web3Swift SDK](#web3swift-sdk)
+- [CIML No Code Builder App](#ciml-no-code-builder-app)
+- [What is a CIML Document](#what-is-a-ciml-document)
+- [What are CIML Objects](#what-are-ciml-objects)
+- [How CIML Interacts with Smart Contracts](#how-ciml-interacts-with-smart-contracts)
+- [The Contract Interface Builder (No Code UI Solution)](#the-contract-interface-builder-no-code-ui-solution)
+- [The DApp Internet and How to Use the SDK](#the-dapp-internet-and-how-to-use-the-sdk)
+
+## Video Demonstration
+[Link to Video Demonstration]
+
+## What is CIML
+Contract Interface Markup Language (CIML) is a framework that uses a specified JSON schema interface to display the same layout on multiple devices without the need for developers to code multiple interfaces for those devices.
+
+## Why I created CIML
+The creation of CIML was motivated by the challenges in blockchain app development:
+- Each DApp requires users to download a software wallet, leading to complications and security concerns.
+- DApp developers need to create secure software wallets just to enable their DApps.
+- Developing a DApp typically involves writing code for every interface it's going to be on, such as iOS, Android, and WebJS, which is time-consuming and requires the maintenance of different codebases.
+
+CIML aims to address these challenges by allowing a single mobile application to interact with multiple DApps on the network, simplifying DApp development and enhancing user experience.
+
+## CIML Consists of 2 Parts
+### CIML Software Development Kit
+The CIML SDK is a library designed for multiple languages and devices. It allows CIML Documents to compile applications for various devices without requiring blockchain developers to create different interface applications for smart contracts. The CIML SDK includes a built-in software wallet for EVM networks, a landing page for downloaded DApps, and a QR scanning feature for reading CIML Document URLs.
+
+### CIML Documents
+CIML Documents are JSON files that contain CIML objects, contract bytecode, and ABI information. These documents can be compiled on any device or app that uses the CIML SDK, making smart contract development accessible on multiple devices.
+
+## Web3Swift SDK
+- Description: This is a development tool that includes the CIML library to compile apps on demand, as well as a set of other tools for developers.
+
+## CIML No Code Builder App
+- Contract Interface - Allows users to create CIML Documents that interact with the contract and a software wallet without needing to be a mobile developer or code.
+- This app can create and compile applications with wallet signing and contract interfacing capabilities.
+- It displays an app icon for the DApp in the DApps Display page, making DApps on the blockchain appear like native apps on your phone.
+
+## What is a CIML Document
+A CIML Document is a JSON file that adheres to the CIML Schema. This schema can be read by the CIML SDK, which resides in a mobile app (iOS, Android) or other devices like web apps or desktop applications. It allows developers to write a single document.
+
+## What are CIML Objects
+CIML Objects are the building blocks of the language, describing the interface and mapping it to the smart contract:
+- Text: On-screen text for users to see.
+- Button: Users can click and engage in actions on-screen or on-chain.
+- Icon: Reference SF symbols over a library of symbols.
+- Views: Specify the object, its location, and the page it's on.
+- Variables: Can change both on-chain and locally to add dynamics to the application.
+- Function: Maps smart contract functions to the application and uses a library of local functions to make the app more dynamic.
+- Images (Coming soon): Can be referenced in the application over the internet.
+
+Example CIML Objects:
+- Text/Button
+```json
+{
+   "name": "textorButton1",
+   "type": "Text",
+   "value": "var1",
+   "foreGroundColor":"black",
+   "font":"headlines",
+   "frame":[100,50],
+   "alignment":"center",
+   "backgroundColor":"white",
+   "cornerRadius":0.0,
+   "bold":false,
+   "fontWeight":"regular",
+   "shadow":0.0,
+   "padding":20
+}
+```
+ 
+- TextField
+```json
+{
+   "name": "textField1",
+   "type": "TextField",
+   "value": "var1",
+   "textField": "enter info",
+   "foreGroundColor":"gray",
+   "frame":[100,50],
+   "alignment":"center",
+   "backgroundColor":"white",
+   "cornerRadius":10.0,
+   "shadow":10.0,
+   "padding":20
+}
+```
+
+- Icon
+```json
+{
+   "name": "icon1",
+   "type": "sysimage",
+   "value": "gear",
+   "foregroundcolor":"black",
+   "frame":[100,50],
+   "padding":20
+}
+
+```
+
+- Views
+```json
+{
+   "View": 0,
+   "Object": "text1",
+   "location": 5
+}
+
+```
+
+- Variables
+```json
+{
+   "name": "var1",
+   "type": "string",
+   "value": "This is a text"
+}
+
+```
+
+
+```json
+```
+
+
 # CIML File
 
 ```json
