@@ -154,7 +154,7 @@ Example CIML Objects:
   "contractMainnet": ["xdcerG45fCgvgh&%vhvctcr678BB"],
   "contractTestnet": ["xdcers4d5fr6t7y8uj98ugyftghdw2"],
   "screenShots":[""],
-  "abi": ""
+  "abi": "",
   "byteCode": "",
   "variables": [],
   "functions": [],
