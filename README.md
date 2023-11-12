@@ -144,7 +144,7 @@ Example CIML Objects:
   "cimlVersion": "1.0.1",
   "appVersion": "0.0.1",
   "contractLanguage": "solidity ^0.8.10",
-  "network":"XDC",
+  "network":["XDC"],
   "name": "LedgerContract",
   "symbol": "LC",
   "logo": "https\\:ipfs.address.url.jpeg",
