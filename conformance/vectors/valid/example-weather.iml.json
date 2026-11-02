@@ -1,0 +1,188 @@
+{
+  "description": "The weather.iml.json example.",
+  "document": {
+    "schema": "iml/1",
+    "id": "example.weather",
+    "version": "1.0.0",
+    "title": "Weather forecast",
+    "description": "Current conditions from Open-Meteo, a free public API.",
+    "bindings": {
+      "api": {
+        "kind": "openapi",
+        "server": "https://api.open-meteo.com",
+        "spec": {
+          "inline": {
+            "openapi": "3.1.0",
+            "info": {
+              "title": "Weather forecast",
+              "version": "1.0.0",
+              "description": "Current conditions from Open-Meteo, a free public API."
+            },
+            "servers": [
+              {
+                "url": "https://api.open-meteo.com"
+              }
+            ],
+            "paths": {
+              "/v1/forecast": {
+                "get": {
+                  "operationId": "getForecast",
+                  "summary": "Get current temperature",
+                  "tags": [
+                    "Forecast"
+                  ],
+                  "parameters": [
+                    {
+                      "name": "latitude",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                        "type": "number"
+                      }
+                    },
+                    {
+                      "name": "longitude",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                        "type": "number"
+                      }
+                    },
+                    {
+                      "name": "current",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                        "type": "string",
+                        "enum": [
+                          "temperature_2m",
+                          "wind_speed_10m"
+                        ]
+                      }
+                    }
+                  ],
+                  "responses": {
+                    "200": {
+                      "description": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "root": "root",
+    "objects": {
+      "getforecast.latitude": {
+        "type": "field",
+        "purpose": "The latitude input of getForecast",
+        "accessibility": {
+          "label": "Latitude"
+        },
+        "field": {
+          "name": "getforecast.latitude",
+          "label": "Latitude",
+          "required": true,
+          "inputType": "number"
+        }
+      },
+      "getforecast.longitude": {
+        "type": "field",
+        "purpose": "The longitude input of getForecast",
+        "accessibility": {
+          "label": "Longitude"
+        },
+        "field": {
+          "name": "getforecast.longitude",
+          "label": "Longitude",
+          "required": true,
+          "inputType": "number"
+        }
+      },
+      "getforecast.current": {
+        "type": "field",
+        "purpose": "The current input of getForecast",
+        "accessibility": {
+          "label": "Current"
+        },
+        "field": {
+          "name": "getforecast.current",
+          "label": "Current",
+          "required": true,
+          "inputType": "select",
+          "options": [
+            {
+              "label": "temperature_2m",
+              "value": "temperature_2m"
+            },
+            {
+              "label": "wind_speed_10m",
+              "value": "wind_speed_10m"
+            }
+          ]
+        }
+      },
+      "getforecast.submit": {
+        "type": "action",
+        "purpose": "Runs GET /v1/forecast",
+        "accessibility": {
+          "label": "Get current temperature"
+        },
+        "action": {
+          "binding": "api",
+          "operation": "getForecast",
+          "inputs": {
+            "latitude": {
+              "field": "getforecast.latitude"
+            },
+            "longitude": {
+              "field": "getforecast.longitude"
+            },
+            "current": {
+              "field": "getforecast.current"
+            }
+          },
+          "effect": "read"
+        }
+      },
+      "getforecast": {
+        "type": "form",
+        "purpose": "Inputs for getForecast",
+        "accessibility": {
+          "label": "Get current temperature"
+        },
+        "children": [
+          "getforecast.latitude",
+          "getforecast.longitude",
+          "getforecast.current",
+          "getforecast.submit"
+        ]
+      },
+      "panel.forecast": {
+        "type": "panel",
+        "purpose": "Operations tagged Forecast",
+        "accessibility": {
+          "label": "Forecast"
+        },
+        "children": [
+          "getforecast"
+        ]
+      },
+      "root": {
+        "type": "workspace",
+        "purpose": "An interface for Weather forecast",
+        "accessibility": {
+          "label": "Weather forecast"
+        },
+        "children": [
+          "panel.forecast"
+        ]
+      }
+    },
+    "integrity": {
+      "digest": "sha256:3a00ef7d814676343c1ca0eb96dda2709968cc33a2440ab4a9a25a974dabc05e"
+    }
+  }
+}

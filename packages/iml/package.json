@@ -1,0 +1,14 @@
+{
+  "name": "@ciml/openapi",
+  "version": "2.0.0",
+  "description": "IML: render-safe interfaces for HTTP APIs described by OpenAPI.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "repository": { "type": "git", "url": "git+https://github.com/CoinClubQuincy/Contract_Interface_Model_Language.git", "directory": "packages/iml" },
+  "scripts": { "build": "tsc -b" },
+  "dependencies": { "@ciml/core": "workspace:*", "@noble/hashes": "^1.6.1" }
+}

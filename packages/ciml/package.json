@@ -1,0 +1,14 @@
+{
+  "name": "@ciml/evm",
+  "version": "2.0.0",
+  "description": "CIML: render-safe interfaces for EVM smart contracts.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "repository": { "type": "git", "url": "git+https://github.com/CoinClubQuincy/Contract_Interface_Model_Language.git", "directory": "packages/ciml" },
+  "scripts": { "build": "tsc -b" },
+  "dependencies": { "@ciml/core": "workspace:*", "viem": "^2.21.54" }
+}

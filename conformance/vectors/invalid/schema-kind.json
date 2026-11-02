@@ -1,0 +1,209 @@
+{
+  "description": "A ciml/2 document cannot have an API binding.",
+  "expect": [
+    "E_SCHEMA_KIND"
+  ],
+  "document": {
+    "schema": "ciml/2",
+    "id": "vector.contract",
+    "version": "1.0.0",
+    "title": "Vector",
+    "tokens": {
+      "color": {
+        "accent": "#0b6e4f"
+      }
+    },
+    "bindings": {
+      "c": {
+        "kind": "openapi",
+        "server": "https://api.example.com",
+        "spec": {
+          "inline": {
+            "openapi": "3.1.0",
+            "info": {
+              "title": "Vector",
+              "version": "1.0.0"
+            },
+            "servers": [
+              {
+                "url": "https://api.example.com"
+              }
+            ],
+            "paths": {
+              "/items/{id}": {
+                "get": {
+                  "operationId": "getItem",
+                  "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "responses": {
+                    "200": {
+                      "description": "OK"
+                    }
+                  }
+                },
+                "delete": {
+                  "operationId": "deleteItem",
+                  "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "responses": {
+                    "204": {
+                      "description": "Gone"
+                    }
+                  }
+                }
+              },
+              "/items": {
+                "post": {
+                  "operationId": "createItem",
+                  "requestBody": {
+                    "required": true,
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "type": "object",
+                          "required": [
+                            "name"
+                          ],
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "responses": {
+                    "201": {
+                      "description": "Created"
+                    }
+                  }
+                }
+              },
+              "/secure": {
+                "get": {
+                  "operationId": "getSecure",
+                  "parameters": [
+                    {
+                      "name": "Authorization",
+                      "in": "header",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "responses": {
+                    "200": {
+                      "description": "OK"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "data": {
+      "total": {
+        "binding": "c",
+        "operation": "total"
+      }
+    },
+    "root": "root",
+    "objects": {
+      "root": {
+        "type": "workspace",
+        "purpose": "Root",
+        "accessibility": {
+          "label": "Root"
+        },
+        "children": [
+          "total",
+          "form"
+        ]
+      },
+      "total": {
+        "type": "metric",
+        "purpose": "Total",
+        "accessibility": {
+          "label": "Total"
+        },
+        "value": {
+          "data": "total"
+        }
+      },
+      "form": {
+        "type": "form",
+        "purpose": "Send",
+        "accessibility": {
+          "label": "Send"
+        },
+        "children": [
+          "to",
+          "amount",
+          "go"
+        ]
+      },
+      "to": {
+        "type": "field",
+        "purpose": "To",
+        "accessibility": {
+          "label": "To"
+        },
+        "field": {
+          "name": "to",
+          "inputType": "address"
+        }
+      },
+      "amount": {
+        "type": "field",
+        "purpose": "Amount",
+        "accessibility": {
+          "label": "Amount"
+        },
+        "field": {
+          "name": "amount",
+          "inputType": "amount",
+          "decimals": 6
+        }
+      },
+      "go": {
+        "type": "action",
+        "purpose": "Send",
+        "accessibility": {
+          "label": "Send"
+        },
+        "action": {
+          "binding": "c",
+          "operation": "send",
+          "effect": "write",
+          "inputs": {
+            "to": {
+              "field": "to"
+            },
+            "amount": {
+              "field": "amount"
+            }
+          }
+        }
+      }
+    }
+  }
+}

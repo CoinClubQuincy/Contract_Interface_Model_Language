@@ -19,3 +19,6 @@ coverage/
 .DS_Store
 xcuserdata/
 legacy/ios-app/Pods/
+out/
+cache/
+.vite/

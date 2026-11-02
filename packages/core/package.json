@@ -1,0 +1,14 @@
+{
+  "name": "@ciml/core",
+  "version": "2.0.0",
+  "description": "Shared interface model, validator and digest for CIML and IML documents.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "files": ["dist"],
+  "repository": { "type": "git", "url": "git+https://github.com/CoinClubQuincy/Contract_Interface_Model_Language.git", "directory": "packages/core" },
+  "scripts": { "build": "tsc -b" },
+  "dependencies": { "@noble/hashes": "^1.6.1", "ajv": "^8.17.1" }
+}

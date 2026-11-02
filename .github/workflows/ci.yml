@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - name: Generated files are up to date
+        run: |
+          pnpm generate
+          git diff --exit-code spec examples/documents conformance/vectors
+      - name: Unit, conformance and end-to-end tests
+        run: pnpm test
+      - name: The end-to-end tests really ran
+        run: command -v anvil && command -v forge
+      - run: pnpm --filter ciml-playground build
+      - name: The CLI works from its build
+        run: |
+          node packages/cli/dist/cli.js validate examples/documents/erc20.ciml.json
+          node packages/cli/dist/cli.js validate examples/documents/weather.iml.json

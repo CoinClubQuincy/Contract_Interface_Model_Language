@@ -1,0 +1,198 @@
+{
+  "description": "An extension with a fallback.",
+  "document": {
+    "schema": "ciml/2",
+    "id": "vector.contract",
+    "version": "1.0.0",
+    "title": "Vector",
+    "tokens": {
+      "color": {
+        "accent": "#0b6e4f"
+      }
+    },
+    "bindings": {
+      "c": {
+        "kind": "evm",
+        "chainId": 1,
+        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "abi": [
+          {
+            "type": "function",
+            "name": "total",
+            "stateMutability": "view",
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "type": "function",
+            "name": "send",
+            "stateMutability": "nonpayable",
+            "inputs": [
+              {
+                "name": "to",
+                "type": "address"
+              },
+              {
+                "name": "amount",
+                "type": "uint256"
+              }
+            ],
+            "outputs": []
+          },
+          {
+            "type": "function",
+            "name": "fund",
+            "stateMutability": "payable",
+            "inputs": [],
+            "outputs": []
+          },
+          {
+            "type": "function",
+            "name": "pick",
+            "stateMutability": "view",
+            "inputs": [
+              {
+                "name": "id",
+                "type": "uint256"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "",
+                "type": "uint256"
+              }
+            ]
+          },
+          {
+            "type": "function",
+            "name": "pick",
+            "stateMutability": "view",
+            "inputs": [
+              {
+                "name": "name",
+                "type": "string"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "",
+                "type": "uint256"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "data": {
+      "total": {
+        "binding": "c",
+        "operation": "total"
+      }
+    },
+    "root": "root",
+    "objects": {
+      "root": {
+        "type": "workspace",
+        "purpose": "Root",
+        "accessibility": {
+          "label": "Root"
+        },
+        "children": [
+          "total",
+          "form",
+          "fancy"
+        ]
+      },
+      "total": {
+        "type": "metric",
+        "purpose": "Total",
+        "accessibility": {
+          "label": "Total"
+        },
+        "value": {
+          "data": "total"
+        }
+      },
+      "form": {
+        "type": "form",
+        "purpose": "Send",
+        "accessibility": {
+          "label": "Send"
+        },
+        "children": [
+          "to",
+          "amount",
+          "go"
+        ]
+      },
+      "to": {
+        "type": "field",
+        "purpose": "To",
+        "accessibility": {
+          "label": "To"
+        },
+        "field": {
+          "name": "to",
+          "inputType": "address"
+        }
+      },
+      "amount": {
+        "type": "field",
+        "purpose": "Amount",
+        "accessibility": {
+          "label": "Amount"
+        },
+        "field": {
+          "name": "amount",
+          "inputType": "amount",
+          "decimals": 6
+        }
+      },
+      "go": {
+        "type": "action",
+        "purpose": "Send",
+        "accessibility": {
+          "label": "Send"
+        },
+        "action": {
+          "binding": "c",
+          "operation": "send",
+          "effect": "write",
+          "inputs": {
+            "to": {
+              "field": "to"
+            },
+            "amount": {
+              "field": "amount"
+            }
+          }
+        }
+      },
+      "fancy": {
+        "type": "extension",
+        "purpose": "A custom widget",
+        "accessibility": {
+          "label": "Fancy"
+        },
+        "extension": {
+          "id": "example.fancy",
+          "version": "1.0.0",
+          "fallback": "plain"
+        }
+      },
+      "plain": {
+        "type": "text",
+        "purpose": "Fallback",
+        "accessibility": {
+          "label": "Plain"
+        },
+        "text": "Plain"
+      }
+    }
+  }
+}

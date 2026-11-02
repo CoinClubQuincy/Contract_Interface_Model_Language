@@ -1,0 +1,11 @@
+:root { color-scheme: light dark; }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: Canvas; color: CanvasText; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 100vh; }
+.editor { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-inline-end: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.editor h1 { margin: 0; font-size: 1.25rem; }
+.editor p { margin: 0 0 8px; }
+.editor label { font-size: .875rem; font-weight: 600; }
+.editor select { padding: 6px; font: inherit; }
+.editor textarea { flex: 1; min-height: 24rem; font: 13px/1.45 ui-monospace, monospace; padding: 8px; }
+.preview { padding: 16px; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 800px) { .layout { grid-template-columns: minmax(0, 1fr); } .editor { border-inline-end: 0; } }

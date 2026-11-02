@@ -1,0 +1,24 @@
+/* Optional default look. Every rule uses low specificity so a host can override it. */
+.ciml-root { color-scheme: light dark; font: 16px/1.5 system-ui, sans-serif; color: var(--ciml-color-text, CanvasText); background: var(--ciml-color-surface, Canvas); }
+.ciml-root *, .ciml-root *::before, .ciml-root *::after { box-sizing: border-box; }
+.ciml-panel, .ciml-screen, .ciml-page, .ciml-form { display: flex; flex-direction: column; gap: 12px; padding: 16px; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: 8px; margin-block: 12px; }
+.ciml-panel > h2, .ciml-screen > h2, .ciml-page > h2, .ciml-form > h3 { margin: 0; font-size: 1rem; }
+.ciml-field label { display: block; font-size: .875rem; margin-block-end: 4px; }
+.ciml-field input:not([type="checkbox"]), .ciml-field select { width: 100%; padding: 8px; font: inherit; }
+.ciml-action { align-self: flex-start; padding: 8px 14px; font: inherit; cursor: pointer; }
+.ciml-action:disabled { cursor: not-allowed; opacity: .6; }
+.ciml-metric { margin: 0; display: flex; justify-content: space-between; gap: 16px; overflow-wrap: anywhere; }
+.ciml-metric dt { font-weight: 600; }
+.ciml-metric dd { margin: 0; }
+.ciml-document, .ciml-code { white-space: pre-wrap; overflow-wrap: anywhere; overflow: auto; max-height: 24rem; margin: 0; padding: 8px; background: color-mix(in srgb, currentColor 6%, transparent); border-radius: 4px; }
+.ciml-error { color: light-dark(#b3261e, #ffb4ab); }
+.ciml-trust { padding: 8px 12px; border-radius: 6px; margin-block-end: 12px; border: 1px solid currentColor; }
+.ciml-trust[data-level="digest-invalid"] { color: light-dark(#b3261e, #ffb4ab); font-weight: 600; }
+.ciml-overlay { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; background: rgb(0 0 0 / .5); }
+.ciml-dialog { width: min(36rem, 100%); max-height: 90vh; overflow: auto; padding: 20px; background: Canvas; color: CanvasText; border-radius: 10px; }
+.ciml-dialog h2 { margin: 0 0 12px; font-size: 1.125rem; }
+.ciml-dialog dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0 0 12px; }
+.ciml-dialog dd { margin: 0; overflow-wrap: anywhere; font-family: ui-monospace, monospace; font-size: .875rem; }
+.ciml-dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.ciml-warning { padding: 8px; margin-block-end: 8px; border-inline-start: 3px solid light-dark(#b3261e, #ffb4ab); }
+.ciml-action-group { display: flex; flex-direction: column; gap: 8px; }

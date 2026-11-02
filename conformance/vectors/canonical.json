@@ -1,0 +1,25 @@
+{
+  "description": "RFC 8785 cases. input is JSON text, expected is the exact canonical output.",
+  "cases": [
+    {
+      "name": "rfc8785-example",
+      "input": "{\"numbers\":[333333333.33333329,1E30,4.50,2e-3,0.000000000000000000000000001],\"string\":\"\\u20ac$\\u000F\\u000aA'\\u0042\\u0022\\u005c\\\\\\\"\\/\",\"literals\":[null,true,false]}",
+      "expected": "{\"literals\":[null,true,false],\"numbers\":[333333333.3333333,1e+30,4.5,0.002,1e-27],\"string\":\"€$\\u000f\\nA'B\\\"\\\\\\\\\\\"/\"}"
+    },
+    {
+      "name": "rfc8785-sorting",
+      "input": "{\"\\u20ac\":\"Euro Sign\",\"\\r\":\"Carriage Return\",\"\\ufb33\":\"Hebrew Letter Dalet With Dagesh\",\"1\":\"One\",\"\\ud83d\\ude00\":\"Emoji: Grinning Face\",\"\\u0080\":\"Control\",\"\\u00f6\":\"Latin Small Letter O With Diaeresis\"}",
+      "expected": "{\"\\r\":\"Carriage Return\",\"1\":\"One\",\"\":\"Control\",\"ö\":\"Latin Small Letter O With Diaeresis\",\"€\":\"Euro Sign\",\"😀\":\"Emoji: Grinning Face\",\"דּ\":\"Hebrew Letter Dalet With Dagesh\"}"
+    },
+    {
+      "name": "nesting",
+      "input": "{\"b\":[{\"d\":1,\"c\":2}],\"a\":{}}",
+      "expected": "{\"a\":{},\"b\":[{\"c\":2,\"d\":1}]}"
+    },
+    {
+      "name": "numbers",
+      "input": "[0,-0,1.0,1e21,1e-7,100]",
+      "expected": "[0,0,1,1e+21,1e-7,100]"
+    }
+  ]
+}

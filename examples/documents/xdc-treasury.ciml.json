@@ -1,0 +1,257 @@
+{
+  "schema": "ciml/2",
+  "id": "example.xdc-treasury",
+  "version": "1.0.0",
+  "title": "Community Treasury",
+  "description": "A hand-written example on XDC. The address is a placeholder, with no contract behind it.",
+  "locale": "en",
+  "tokens": {
+    "color": {
+      "accent": "#0b6e4f",
+      "danger": "#b3261e"
+    },
+    "spacing": {
+      "roomy": "20px"
+    },
+    "radius": {
+      "card": "12px"
+    }
+  },
+  "bindings": {
+    "treasury": {
+      "kind": "evm",
+      "chainId": 50,
+      "address": "0x1111111111111111111111111111111111111111",
+      "abi": [
+        {
+          "type": "function",
+          "name": "reserves",
+          "stateMutability": "view",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "paused",
+          "stateMutability": "view",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "deposit",
+          "stateMutability": "payable",
+          "inputs": [],
+          "outputs": []
+        },
+        {
+          "type": "function",
+          "name": "withdraw",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "outputs": []
+        }
+      ]
+    }
+  },
+  "data": {
+    "reserves": {
+      "binding": "treasury",
+      "operation": "reserves"
+    },
+    "paused": {
+      "binding": "treasury",
+      "operation": "paused"
+    }
+  },
+  "root": "root",
+  "objects": {
+    "root": {
+      "type": "workspace",
+      "purpose": "Manage the community treasury",
+      "accessibility": {
+        "label": "Community Treasury"
+      },
+      "children": [
+        "summary",
+        "give",
+        "pay"
+      ]
+    },
+    "summary": {
+      "type": "panel",
+      "purpose": "Current state of the treasury",
+      "accessibility": {
+        "label": "Summary"
+      },
+      "presentation": {
+        "inset": "{spacing.roomy}",
+        "rounding": "{radius.card}"
+      },
+      "children": [
+        "summary.reserves",
+        "summary.paused"
+      ]
+    },
+    "summary.reserves": {
+      "type": "metric",
+      "purpose": "XDC held by the treasury",
+      "accessibility": {
+        "label": "Reserves (XDC)"
+      },
+      "value": {
+        "data": "reserves",
+        "format": "amount",
+        "decimals": 18
+      },
+      "presentation": {
+        "tone": "{color.accent}"
+      }
+    },
+    "summary.paused": {
+      "type": "status",
+      "purpose": "Whether withdrawals are paused",
+      "accessibility": {
+        "label": "Withdrawals paused"
+      },
+      "value": {
+        "data": "paused",
+        "format": "boolean"
+      }
+    },
+    "give": {
+      "type": "form",
+      "purpose": "Add XDC to the treasury",
+      "accessibility": {
+        "label": "Deposit"
+      },
+      "children": [
+        "give.amount",
+        "give.submit"
+      ]
+    },
+    "give.amount": {
+      "type": "field",
+      "purpose": "How much XDC to deposit",
+      "accessibility": {
+        "label": "Amount of XDC"
+      },
+      "field": {
+        "name": "depositAmount",
+        "inputType": "amount",
+        "decimals": 18,
+        "required": true
+      }
+    },
+    "give.submit": {
+      "type": "action",
+      "purpose": "Send the deposit",
+      "accessibility": {
+        "label": "Deposit"
+      },
+      "presentation": {
+        "variant": "primary"
+      },
+      "action": {
+        "binding": "treasury",
+        "operation": "deposit",
+        "effect": "write",
+        "value": {
+          "field": "give.amount"
+        },
+        "confirm": {
+          "title": "Deposit to the treasury"
+        }
+      }
+    },
+    "pay": {
+      "type": "form",
+      "purpose": "Pay out from the treasury",
+      "accessibility": {
+        "label": "Withdraw"
+      },
+      "children": [
+        "pay.to",
+        "pay.amount",
+        "pay.submit"
+      ]
+    },
+    "pay.to": {
+      "type": "field",
+      "purpose": "Who receives the payment",
+      "accessibility": {
+        "label": "Recipient",
+        "hint": "An XDC address written with the 0x prefix"
+      },
+      "field": {
+        "name": "recipient",
+        "inputType": "address",
+        "required": true,
+        "format": "addressName"
+      }
+    },
+    "pay.amount": {
+      "type": "field",
+      "purpose": "How much XDC to pay",
+      "accessibility": {
+        "label": "Amount of XDC"
+      },
+      "field": {
+        "name": "payAmount",
+        "inputType": "amount",
+        "decimals": 18,
+        "required": true,
+        "format": "tokenAmount"
+      }
+    },
+    "pay.submit": {
+      "type": "action",
+      "purpose": "Send the payment",
+      "accessibility": {
+        "label": "Withdraw"
+      },
+      "presentation": {
+        "variant": "danger"
+      },
+      "action": {
+        "binding": "treasury",
+        "operation": "withdraw",
+        "effect": "write",
+        "inputs": {
+          "to": {
+            "field": "pay.to"
+          },
+          "amount": {
+            "field": "pay.amount"
+          }
+        },
+        "confirm": {
+          "title": "Pay from the treasury",
+          "body": "Payments cannot be reversed."
+        }
+      }
+    }
+  },
+  "integrity": {
+    "digest": "sha256:3dabf9614061e40e911db78c60e589cfda3d42d6998aeadf8699b4519d070583"
+  }
+}

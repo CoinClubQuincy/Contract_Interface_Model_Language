@@ -1,0 +1,490 @@
+{
+  "schema": "ciml/2",
+  "id": "example.usdc",
+  "version": "1.0.0",
+  "title": "USD Coin",
+  "description": "Generated from the ERC-20 ABI with: ciml from-abi",
+  "bindings": {
+    "contract": {
+      "kind": "evm",
+      "chainId": 1,
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "abi": [
+        {
+          "type": "function",
+          "name": "name",
+          "stateMutability": "view",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "symbol",
+          "stateMutability": "view",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "decimals",
+          "stateMutability": "view",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint8"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "totalSupply",
+          "stateMutability": "view",
+          "inputs": [],
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "balanceOf",
+          "stateMutability": "view",
+          "inputs": [
+            {
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "allowance",
+          "stateMutability": "view",
+          "inputs": [
+            {
+              "name": "owner",
+              "type": "address"
+            },
+            {
+              "name": "spender",
+              "type": "address"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "transfer",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "type": "function",
+          "name": "approve",
+          "stateMutability": "nonpayable",
+          "inputs": [
+            {
+              "name": "spender",
+              "type": "address"
+            },
+            {
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "outputs": [
+            {
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "data": {
+    "d_name": {
+      "binding": "contract",
+      "operation": "name"
+    },
+    "d_symbol": {
+      "binding": "contract",
+      "operation": "symbol"
+    },
+    "d_decimals": {
+      "binding": "contract",
+      "operation": "decimals"
+    },
+    "d_totalsupply": {
+      "binding": "contract",
+      "operation": "totalSupply"
+    }
+  },
+  "root": "root",
+  "objects": {
+    "name": {
+      "type": "metric",
+      "purpose": "Shows the result of name",
+      "accessibility": {
+        "label": "Name"
+      },
+      "value": {
+        "data": "d_name",
+        "format": "text"
+      }
+    },
+    "symbol": {
+      "type": "metric",
+      "purpose": "Shows the result of symbol",
+      "accessibility": {
+        "label": "Symbol"
+      },
+      "value": {
+        "data": "d_symbol",
+        "format": "text"
+      }
+    },
+    "decimals": {
+      "type": "metric",
+      "purpose": "Shows the result of decimals",
+      "accessibility": {
+        "label": "Decimals"
+      },
+      "value": {
+        "data": "d_decimals",
+        "format": "number"
+      }
+    },
+    "totalsupply": {
+      "type": "metric",
+      "purpose": "Shows the result of totalSupply",
+      "accessibility": {
+        "label": "Total Supply"
+      },
+      "value": {
+        "data": "d_totalsupply",
+        "format": "amount",
+        "decimals": 6
+      }
+    },
+    "balanceof.account": {
+      "type": "field",
+      "purpose": "The account input of balanceOf",
+      "accessibility": {
+        "label": "Account"
+      },
+      "field": {
+        "name": "balanceof.account",
+        "inputType": "address",
+        "label": "Account",
+        "required": true,
+        "format": "addressName"
+      }
+    },
+    "balanceof.submit": {
+      "type": "action",
+      "purpose": "Runs balanceOf",
+      "accessibility": {
+        "label": "Balance Of"
+      },
+      "action": {
+        "binding": "contract",
+        "operation": "balanceOf",
+        "inputs": {
+          "account": {
+            "field": "balanceof.account"
+          }
+        },
+        "effect": "read"
+      }
+    },
+    "balanceof": {
+      "type": "form",
+      "purpose": "Inputs for balanceOf",
+      "accessibility": {
+        "label": "Balance Of"
+      },
+      "children": [
+        "balanceof.account",
+        "balanceof.submit"
+      ]
+    },
+    "allowance.owner": {
+      "type": "field",
+      "purpose": "The owner input of allowance",
+      "accessibility": {
+        "label": "Owner"
+      },
+      "field": {
+        "name": "allowance.owner",
+        "inputType": "address",
+        "label": "Owner",
+        "required": true,
+        "format": "addressName"
+      }
+    },
+    "allowance.spender": {
+      "type": "field",
+      "purpose": "The spender input of allowance",
+      "accessibility": {
+        "label": "Spender"
+      },
+      "field": {
+        "name": "allowance.spender",
+        "inputType": "address",
+        "label": "Spender",
+        "required": true,
+        "format": "addressName"
+      }
+    },
+    "allowance.submit": {
+      "type": "action",
+      "purpose": "Runs allowance",
+      "accessibility": {
+        "label": "Allowance"
+      },
+      "action": {
+        "binding": "contract",
+        "operation": "allowance",
+        "inputs": {
+          "owner": {
+            "field": "allowance.owner"
+          },
+          "spender": {
+            "field": "allowance.spender"
+          }
+        },
+        "effect": "read"
+      }
+    },
+    "allowance": {
+      "type": "form",
+      "purpose": "Inputs for allowance",
+      "accessibility": {
+        "label": "Allowance"
+      },
+      "children": [
+        "allowance.owner",
+        "allowance.spender",
+        "allowance.submit"
+      ]
+    },
+    "transfer.to": {
+      "type": "field",
+      "purpose": "The to input of transfer",
+      "accessibility": {
+        "label": "To"
+      },
+      "field": {
+        "name": "transfer.to",
+        "inputType": "address",
+        "label": "To",
+        "required": true,
+        "format": "addressName"
+      }
+    },
+    "transfer.amount": {
+      "type": "field",
+      "purpose": "The amount input of transfer",
+      "accessibility": {
+        "label": "Amount"
+      },
+      "field": {
+        "name": "transfer.amount",
+        "inputType": "amount",
+        "label": "Amount",
+        "required": true,
+        "decimals": 6,
+        "format": "tokenAmount"
+      }
+    },
+    "transfer.submit": {
+      "type": "action",
+      "purpose": "Sends a transfer transaction",
+      "accessibility": {
+        "label": "Transfer"
+      },
+      "action": {
+        "binding": "contract",
+        "operation": "transfer",
+        "inputs": {
+          "to": {
+            "field": "transfer.to"
+          },
+          "amount": {
+            "field": "transfer.amount"
+          }
+        },
+        "effect": "write",
+        "confirm": {
+          "title": "Transfer"
+        }
+      }
+    },
+    "transfer": {
+      "type": "form",
+      "purpose": "Inputs for transfer",
+      "accessibility": {
+        "label": "Transfer"
+      },
+      "children": [
+        "transfer.to",
+        "transfer.amount",
+        "transfer.submit"
+      ]
+    },
+    "approve.spender": {
+      "type": "field",
+      "purpose": "The spender input of approve",
+      "accessibility": {
+        "label": "Spender"
+      },
+      "field": {
+        "name": "approve.spender",
+        "inputType": "address",
+        "label": "Spender",
+        "required": true,
+        "format": "addressName"
+      }
+    },
+    "approve.amount": {
+      "type": "field",
+      "purpose": "The amount input of approve",
+      "accessibility": {
+        "label": "Amount"
+      },
+      "field": {
+        "name": "approve.amount",
+        "inputType": "amount",
+        "label": "Amount",
+        "required": true,
+        "decimals": 6,
+        "format": "tokenAmount"
+      }
+    },
+    "approve.submit": {
+      "type": "action",
+      "purpose": "Sends a approve transaction",
+      "accessibility": {
+        "label": "Approve"
+      },
+      "action": {
+        "binding": "contract",
+        "operation": "approve",
+        "inputs": {
+          "spender": {
+            "field": "approve.spender"
+          },
+          "amount": {
+            "field": "approve.amount"
+          }
+        },
+        "effect": "write",
+        "confirm": {
+          "title": "Approve"
+        }
+      }
+    },
+    "approve": {
+      "type": "form",
+      "purpose": "Inputs for approve",
+      "accessibility": {
+        "label": "Approve"
+      },
+      "children": [
+        "approve.spender",
+        "approve.amount",
+        "approve.submit"
+      ]
+    },
+    "overview": {
+      "type": "panel",
+      "purpose": "Current values read from the contract",
+      "accessibility": {
+        "label": "Overview"
+      },
+      "children": [
+        "name",
+        "symbol",
+        "decimals",
+        "totalsupply"
+      ]
+    },
+    "reads": {
+      "type": "panel",
+      "purpose": "Queries that take inputs",
+      "accessibility": {
+        "label": "Look up"
+      },
+      "children": [
+        "balanceof",
+        "allowance"
+      ]
+    },
+    "writes": {
+      "type": "panel",
+      "purpose": "Transactions that change on-chain state",
+      "accessibility": {
+        "label": "Actions"
+      },
+      "children": [
+        "transfer",
+        "approve"
+      ]
+    },
+    "root": {
+      "type": "workspace",
+      "purpose": "An interface for USD Coin",
+      "accessibility": {
+        "label": "USD Coin"
+      },
+      "children": [
+        "overview",
+        "reads",
+        "writes"
+      ]
+    }
+  },
+  "integrity": {
+    "digest": "sha256:2b2077608bf60e4af45ac7e2eb85a7f932688c8713c49a17ee2e189bf90ec21c"
+  }
+}

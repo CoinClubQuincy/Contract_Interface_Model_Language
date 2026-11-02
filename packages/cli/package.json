@@ -1,0 +1,15 @@
+{
+  "name": "@ciml/cli",
+  "version": "2.0.0",
+  "description": "Command line tools for CIML and IML documents.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+  "bin": { "ciml": "./dist/cli.js" },
+  "files": ["dist"],
+  "repository": { "type": "git", "url": "git+https://github.com/CoinClubQuincy/Contract_Interface_Model_Language.git", "directory": "packages/cli" },
+  "scripts": { "build": "tsc -b" },
+  "dependencies": { "@ciml/core": "workspace:*", "@ciml/evm": "workspace:*", "@ciml/openapi": "workspace:*", "viem": "^2.21.54" }
+}
