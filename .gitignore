@@ -10,3 +10,12 @@ ContractInterface/ContractInterface/Assets.xcassets/echo.imageset/ECHO Logo.png
 ContractInterface/ContractInterface/Assets.xcassets/XTB.imageset/Contents.json
 ContractInterface/ContractInterface/Assets.xcassets/XTB.imageset/joshua-rawson-harris-N58H0FtcenQ-unsplash.jpg
 ContractInterface/ContractInterface/Compiler/.DS_Store
+
+# v2 workspace
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.DS_Store
+xcuserdata/
+legacy/ios-app/Pods/

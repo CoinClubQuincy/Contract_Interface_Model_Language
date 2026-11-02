@@ -1,0 +1,10 @@
+[
+    {
+        "name": "icon1",
+        "type": "sysimage", 
+        "value": "gear",
+        "foregroundcolor":"black",
+        "frame":[100,50],
+        "padding":20
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "functionName": "var1",
+        "type": "function",
+        "inputValue": ["var (string)","var2 (int)","var3 (bool)"],
+        "outputValue": ["var4 (bool)", "var5 (int)"]
+    },
+    {
+        "functionName": "var1",
+        "type": "function",
+        "inputValue": ["var (string)","var2 (int)","var3 (bool)"],
+        "outputValue": ["var4 (bool)", "var5 (int)"]
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "name": "var1",
+        "type": "string",
+        "value": "This is a text"
+    },
+    {
+        "name": "_button1",
+        "type": "var-text1",
+        "value": "new string"
+    },
+    {
+        "name": "_button1",
+        "type": "var-textField-textField1",
+        "value": "wString"
+    }
+]

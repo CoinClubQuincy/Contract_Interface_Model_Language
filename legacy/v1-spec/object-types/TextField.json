@@ -1,0 +1,15 @@
+[
+    {
+        "name": "textField1",
+        "type": "textField", 
+        "value": "var1",
+        "textField": "enter info",
+        "foreGroundColor":"gray",
+        "frame":[100,50],
+        "alignment":"center",
+        "backgroundColor":"white",
+        "cornerRadius":10.0,
+        "shadow":10.0,
+        "padding":20
+    }
+]

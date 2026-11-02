@@ -1,0 +1,17 @@
+[
+    {
+        "name": "textorButton1",
+        "type": "Text", 
+        "value": "var1",
+        "foreGroundColor":"black",
+        "font":"headlines",
+        "frame":[100,50],
+        "alignment":"center",
+        "backgroundColor":"white",
+        "cornerRadius":0.0,
+        "bold":false,
+        "fontWeight":"regular",
+        "shadow":0.0,
+        "padding":20
+    }
+]

@@ -1,0 +1,258 @@
+[
+  {
+    "cimlVersion": "1.0.1",
+    "appVersion": "0.0.1",
+    "contractLanguage": "solidity ^0.8.10",
+    "name": "Test 3",
+    "symbol": "LC",
+    "logo": "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/LOGO/logo.png",
+    "thumbnail": "https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/THUMBNAIL/XDC.png",
+    "websitelink":"https\\:DAppletSite.com",
+    "cimlURL":"https://test-youtube-engine-xxxx.s3.amazonaws.com/CIML/Example-3.json",
+    "description": "This is example 3 app this is the descriptions",
+    "networks":["XDC"],
+    "contractMainnet": "0x9D5B39393F30e2D1716756F3dcBb73c4cd1481C6",
+    "screenShots":[""],
+    "abi": "[{@inputs@:[],@stateMutability@:@nonpayable@,@type@:@constructor@},{@inputs@:[],@name@:@Bool@,@outputs@:[{@internalType@:@bool@,@name@:@@,@type@:@bool@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[],@name@:@Numb@,@outputs@:[{@internalType@:@uint256@,@name@:@@,@type@:@uint256@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[],@name@:@String@,@outputs@:[{@internalType@:@string@,@name@:@@,@type@:@string@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[],@name@:@read@,@outputs@:[{@internalType@:@uint256@,@name@:@@,@type@:@uint256@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[{@internalType@:@bool@,@name@:@_bool@,@type@:@bool@}],@name@:@writeBool@,@outputs@:[{@internalType@:@bool@,@name@:@@,@type@:@bool@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[{@internalType@:@uint256@,@name@:@_int@,@type@:@uint256@}],@name@:@writeINT@,@outputs@:[{@internalType@:@uint256@,@name@:@@,@type@:@uint256@}],@stateMutability@:@view@,@type@:@function@},{@inputs@:[{@internalType@:@string@,@name@:@_string@,@type@:@string@}],@name@:@writeString@,@outputs@:[{@internalType@:@string@,@name@:@@,@type@:@string@}],@stateMutability@:@view@,@type@:@function@}]",
+    "byteCode": "--bytes--",
+    "variables": [
+      {
+        "name": "_button1",
+        "type": "var-text1",
+        "value": "new string"
+      },
+      {
+        "name": "text1",
+        "type": "text",
+        "value": "Forum test"
+      },
+      {
+        "name": "text2",
+        "type": "text",
+        "value": "test write"
+      },
+      {
+        "name": "textField1",
+        "type": "textField",
+        "value": "text1"
+      },      
+      {
+        "name": "background",
+        "type": "0",
+        "value": "#ffa8e2"
+      },
+      {
+        "name": "background",
+        "type": "1",
+        "value": "#FFA500"
+      },
+      {
+        "name": "button1",
+        "type": "text",
+        "value": "Write to test"
+      },
+      {
+        "name": "_button2",
+        "type": "Send10x6FfB1b55C080aF7057c9E3390CEb54A94d55B4bf",
+        "value": "1000000000000000000"
+      }
+    ],
+    "functions": [],
+    "objects": [
+        {
+          "name": "text1",
+          "type": "text", 
+          "value": "this is the else statement",
+          "foreGroundColor":".black",
+          "font":"headlines",
+          "frame":[100,50],
+          "alignment":"center",
+          "backgroundColor":".white",
+          "cornerRadius":0.0,
+          "bold":false,
+          "fontWeight":"regular",
+          "shadow":0.0,
+          "padding":20
+      },
+      {
+        "name": "textField1",
+        "type": "textField", 
+        "value": "text1",
+        "textField": "enter name",
+        "foreGroundColor":"gray",
+        "frame":[150,50],
+        "alignment":"center",
+        "backgroundColor":"white",
+        "cornerRadius":10.0,
+        "shadow":10.0,
+        "padding":20
+    },
+    {
+      "name": "textField2",
+      "type": "textField", 
+      "value": "text1",
+      "textField": "enter name",
+      "foreGroundColor":"gray",
+      "frame":[150,50],
+      "alignment":"center",
+      "backgroundColor":"white",
+      "cornerRadius":10.0,
+      "shadow":10.0,
+      "padding":20
+  },
+  {
+    "name": "textField3",
+    "type": "textField", 
+    "value": "text1",
+    "textField": "enter name",
+    "foreGroundColor":"gray",
+    "frame":[150,50],
+    "alignment":"center",
+    "backgroundColor":"white",
+    "cornerRadius":10.0,
+    "shadow":10.0,
+    "padding":20
+},
+{
+  "name": "textField4",
+  "type": "textField", 
+  "value": "text1",
+  "textField": "enter name",
+  "foreGroundColor":"gray",
+  "frame":[150,50],
+  "alignment":"center",
+  "backgroundColor":"white",
+  "cornerRadius":10.0,
+  "shadow":10.0,
+  "padding":20
+},
+      {
+        "name": "text3",
+        "type": "text", 
+        "value": "Second Page",
+        "foreGroundColor":".black",
+        "font":"headlines",
+        "frame":[100,50],
+        "alignment":"center",
+        "backgroundColor":".white",
+        "cornerRadius":0.0,
+        "bold":false,
+        "fontWeight":"regular",
+        "shadow":0.0,
+        "padding":20
+    },
+      {
+        "name": "text2",
+        "type": "text", 
+        "value": " This is Test1 text ",
+        "foreGroundColor":".black",
+        "font":"headlines",
+        "frame":[300,400],
+        "alignment":"center",
+        "backgroundColor":".white",
+        "cornerRadius":0.0,
+        "bold":false,
+        "fontWeight":"regular",
+        "shadow":0.0,
+        "padding":20
+    },
+    {
+      "name": "icon1",
+      "type": "sysimage", 
+      "value": "square.and.pencil.circle.fill",
+      "foregroundcolor":".black",
+      "frame":[50,50],
+      "padding":20
+  },
+  {
+    "name": "button1",
+    "type": "button", 
+    "value": "write",
+    "foreGroundColor":".black",
+    "font":"headlines",
+    "frame":[100,50],
+    "alignment":"center",
+    "backgroundColor":".white",
+    "cornerRadius":10.0,
+    "bold":false,
+    "fontWeight":"regular",
+    "shadow":0.0,
+    "padding":20
+},
+{
+  "name": "button2",
+  "type": "button", 
+  "value": "next page",
+  "foreGroundColor":".black",
+  "font":"headlines",
+  "frame":[100,50],
+  "alignment":"center",
+  "backgroundColor":".white",
+  "cornerRadius":10.0,
+  "bold":false,
+  "fontWeight":"regular",
+  "shadow":0.0,
+  "padding":20
+}
+    ],
+    "views": [
+      {
+        "View": 0,
+        "Object": "text1",
+        "location": 5
+      },
+      {
+        "View": 0,
+        "Object": "text2",
+        "location": 95
+      },
+      {
+        "View": 0,
+        "Object": "textField1",
+        "location": 23
+      },
+      {
+        "View": 0,
+        "Object": "textField2",
+        "location": 41
+      },
+      {
+        "View": 0,
+        "Object": "textField3",
+        "location": 59
+      },
+      {
+        "View": 0,
+        "Object": "textField4",
+        "location": 77
+      },
+      {
+        "View": 0,
+        "Object": "text2",
+        "location": 50
+      },
+      {
+        "View": 0,
+        "Object": "icon1",
+        "location": 9
+      },
+      {
+        "View": 0,
+        "Object": "button1",
+        "location": 111
+      },
+      {
+        "View": 0,
+        "Object": "button2",
+        "location": 115
+      }
+    ],
+    "metadata": [
+      "Top Descriptor",
+      "xdc",
+      "document",
+      "test",
+      "downloadable"
+    ]
+  }
+]
