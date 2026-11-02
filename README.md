@@ -1,18 +1,43 @@
+<div align="center">
+
+<img src=".github/assets/banner.svg" alt="CIML and IML: describe an interface as data, render it anywhere, safely" width="100%">
+
 # CIML and IML
 
-Describe an interface as data. Render it anywhere, safely.
+**Describe an interface as data. Render it anywhere, safely.**
+
+<a href="https://github.com/CoinClubQuincy/Contract_Interface_Model_Language/actions/workflows/ci.yml"><img alt="CI status" src="https://img.shields.io/github/actions/workflow/status/CoinClubQuincy/Contract_Interface_Model_Language/ci.yml?branch=main&style=flat-square&label=CI"></a>
+<a href="LICENSE"><img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-3b82f6?style=flat-square"></a>
+<img alt="TypeScript: strict" src="https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square">
+<img alt="status: unreleased, not audited" src="https://img.shields.io/badge/status-unreleased,_not_audited-f59e0b?style=flat-square">
+
+[Try it](#try-it) · [See it work](#see-it-work) · [Generate a document](#generate-a-document) · [Specification](spec/model.md) · [Security](SECURITY.md) · [Roadmap](ROADMAP.md)
+
+</div>
 
 A CIML or IML document is a JSON file that says what an interface is for: its screens, fields, values and actions, and what each action calls. It holds no code. A renderer turns it into a working interface, and a runtime checks and performs each call.
 
-| Format | Schema | Binds to | Runtime package |
-|---|---|---|---|
-| **CIML**, Contract Interface Model Language | `ciml/2` | EVM smart contracts, through their ABI | `@ciml/evm` |
-| **IML**, Interface Model Language | `iml/1` | HTTP APIs, through their OpenAPI spec | `@ciml/openapi` |
+<table>
+<tr>
+<th width="50%">CIML, Contract Interface Model Language</th>
+<th width="50%">IML, Interface Model Language</th>
+</tr>
+<tr>
+<td>Interfaces for <b>EVM smart contracts</b>, bound through their ABI.<br><br>Schema <code>ciml/2</code><br>Runtime <code>@ciml/evm</code></td>
+<td>Interfaces for <b>HTTP APIs</b>, bound through their OpenAPI spec.<br><br>Schema <code>iml/1</code><br>Runtime <code>@ciml/openapi</code></td>
+</tr>
+</table>
 
 Both share one model, one validator and one renderer.
 
 > [!IMPORTANT]
 > **Status: v2 is unreleased and has had no independent security audit.** The packages are not on npm yet, so install from source. Do not put real funds behind it until you have reviewed it yourself. See [SECURITY.md](SECURITY.md).
+
+<p align="center">
+  <img src=".github/assets/playground.png" alt="The playground: a weather document on the left, and the working interface it produces on the right, showing a live API result" width="900">
+  <br>
+  <sub>The playground, calling a live public weather API. Everything on the right comes from the document on the left.</sub>
+</p>
 
 ## Why
 
@@ -20,10 +45,39 @@ A contract's ABI says what can be called, not what it means. So every project wr
 
 A document separates the two. It can be generated, reviewed, hashed and signed, and any compatible app can show it. Because it holds no code, a hostile document has far less to work with than a hostile web page:
 
-- **Nothing to execute.** Scripts and markup are refused, and all text is shown as plain text.
-- **Checked against the real interface.** Every call is compared with the ABI or OpenAPI spec. A document cannot call a function that does not exist, or describe a state-changing call as a read.
-- **The review shows what will really happen.** Before anything changes state, the runtime decodes the call and tests it. The document's own description appears separately, as a claim.
-- **No keys.** CIML uses the wallet you already have, through EIP-1193 and EIP-6963. It never asks a wallet to sign raw data.
+| Protection | What it means |
+|---|---|
+| **Nothing to execute** | Scripts and markup are refused, and all text is shown as plain text. |
+| **Checked against the real interface** | Every call is compared with the ABI or OpenAPI spec. A document cannot call a function that does not exist, or describe a state-changing call as a read. |
+| **The review shows what will really happen** | Before anything changes state, the runtime decodes the call and tests it. The document's own description appears separately, as a claim. |
+| **No keys** | CIML uses the wallet you already have, through EIP-1193 and EIP-6963. It never asks a wallet to sign raw data. |
+
+## How it works
+
+```mermaid
+flowchart LR
+    A["Contract ABI or<br>OpenAPI spec"] -->|"ciml from-abi<br>ciml from-openapi"| B["Document<br>(JSON)"]
+    B --> V{Validator}
+    V -->|"fails"| X["Refused:<br>nothing is shown"]
+    V -->|"passes"| D["Renderer"]
+    D --> E["The user acts"]
+    E --> F["Runtime decodes<br>and tests the call"]
+    F --> G["Review dialog"]
+    G -->|"confirmed"| H["Wallet or API"]
+```
+
+## See it work
+
+<table>
+<tr>
+<td width="50%"><img src=".github/assets/review.png" alt="A review dialog showing the target contract, the decoded mint call, the recipient and the amount, with Cancel and Continue buttons"></td>
+<td width="50%"><img src=".github/assets/refused.png" alt="A rendered page saying the interface was not displayed because it failed validation, listing a forbidden script key"></td>
+</tr>
+<tr>
+<td><b>Review before signing.</b> The decoded call comes from the runtime. The document's words are shown only as what "the interface describes this as".</td>
+<td><b>Refuse, don't render.</b> A document carrying a <code>script</code> key is not displayed at all, and the reason is shown instead.</td>
+</tr>
+</table>
 
 ## Try it
 
@@ -46,7 +100,8 @@ The playground puts a document beside its rendered interface, and the checks run
 alias ciml="node $PWD/packages/cli/dist/cli.js"
 
 # From a contract ABI, or a compiler artifact that contains one
-ciml from-abi Token.json --chain-id 50 --address 0xYourContract --id my.token --title "My Token" --token-decimals 18 -o token.ciml.json
+ciml from-abi Token.json --chain-id 50 --address 0xYourContract \
+  --id my.token --title "My Token" --token-decimals 18 -o token.ciml.json
 
 # From an OpenAPI 3.x spec
 ciml from-openapi openapi.json --id my.api -o api.iml.json
@@ -95,6 +150,11 @@ const report = await verifyCiml(document);
 For an API, use `ApiRuntime` and `validateIml` from `@ciml/openapi`. Give `ApiRuntime` a `token` provider if the API needs sign-in.
 
 ## A document
+
+A complete document for sending a token. Other documents, including an API and an XDC treasury, are in [`examples/documents`](examples/documents).
+
+<details>
+<summary><b>Show the JSON</b></summary>
 
 ```json
 {
@@ -150,7 +210,7 @@ For an API, use `ApiRuntime` and `validateIml` from `@ciml/openapi`. Give `ApiRu
 }
 ```
 
-More in [`examples/documents`](examples/documents).
+</details>
 
 ## Repository
 
@@ -165,6 +225,18 @@ More in [`examples/documents`](examples/documents).
 | [`conformance/`](conformance) | Language-neutral test vectors, for building another implementation |
 | `examples/` | Documents, test contracts, playground |
 | [`legacy/`](legacy) | CIML v1, archived. **Do not use with real funds.** |
+
+## How it has been tested
+
+| Check | Result | Where it runs |
+|---|---|---|
+| Unit and integration tests | **363 passing**, including 12 against a real local chain (Anvil and Forge) | CI |
+| Conformance vectors | **47 invalid and 8 valid documents**, plus canonical digest vectors, for checking any implementation | CI |
+| Mutation test | **49 of 49** deliberately broken safety checks were caught by the tests | One-off, before this release |
+| Real browser, API | Live weather call in headless Chrome, sent only to the server the document names | One-off, before this release |
+| Real browser, contract | A test wallet to a local chain: cancelling sends nothing, confirming sends one transaction and the chain agrees, a wrong network is blocked | One-off, before this release |
+
+**Not yet tested:** a real wallet such as MetaMask, a real testnet or mainnet transaction, and an independent security audit.
 
 ## Limits today
 
